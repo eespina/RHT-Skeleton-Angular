@@ -1,0 +1,60 @@
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+# dependencies
+/node_modules
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+# System Files
+.DS_Store
+Thumbs.db
+# Angular - TypeScript (.NET Core compiler outputs)
+**/src/main.min.css
+**/src/app/**/*.map
+**/src/app/**/*.map
+**/src/main.js
+**/src/main.js.map
+**/src/app/app.component.js
+**/src/app/app.component.js.map
+**/src/app/app.module.js
+**/src/app/app.module.js.map
+# Front-End
+bower_components
+package-lock.json
+**/src/task_runner/css
+**/src/task_runner/js/vendor
+**/src/task_runner/_main-styl.scss
+**/src/task_runner/css/main.concat.css
+**/src/task_runner/js/scripts.concat.js
+**/src/task_runner/scripts.concat.js
+# Miscellaneous
+private-config.json
+packages/
+.vs/
