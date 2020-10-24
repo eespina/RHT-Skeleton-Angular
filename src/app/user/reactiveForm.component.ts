@@ -1,6 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
 import { CustomValidators } from '../shared/custom.validators';
+import { ActivatedRoute } from '@angular/router';
+import { ExampleService } from '../example/example.service';
+import { IExample } from '../example/example';
 
 @Component({
     selector: 'reactive-form-example',
@@ -65,9 +68,10 @@ export class ReactiveFormComponent implements OnInit {
         'dynamicProficiency': ''
     };    // no longer needed since the logValidationErrors method would take care of this at runtime
 
-    constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService) { }
 
     ngOnInit() {
+        console.log("inside ReactiveFormComponent.ngOnInit");
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -125,6 +129,51 @@ export class ReactiveFormComponent implements OnInit {
         this.reactiveFormGroup.get('contactPreference').valueChanges.subscribe((data: string) => {
             this.onContactPreference_Changed(data);
         });
+
+        //Use the ActivatedRoute service and subscribe to it's paramMap observable. this helps move the ID of whichever example you wish to EDIT
+        this.route.paramMap.subscribe(params => {
+            //create a const to store the passing parameter
+            const userName = params.get('userName');
+            console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
+            if(userName){
+                console.log(`userId of ${userName} was passed`);
+                this.getEditExample(userName) //this MAY already be in another service (to get the specific example according to the ID)
+            }
+            else{
+                //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
+                console.log(`userId was NOT passed, so eID was ${userName}`);
+                
+            }
+        });
+        console.log("Leaving ReactiveFormComponent.ngOnInit method");
+    }
+
+    getEditExample(userName: string){
+        console.log('inside getEditExample');
+        this.exampleService.getExampleById(userName).subscribe(
+            (exData) => {
+                if (exData == null) {
+                } else {
+                    console.log('RECEIVED getEditExample data');
+                    this.loadRealDataPatchClick(exData);
+                }
+            },
+            (error) => {
+                console.log(error);
+            });
+    }
+
+    loadRealDataPatchClick(example: IExample){
+        //we want to bind the retreived example details to the form controls on the reactiveForm
+        console.log('inside loadRealDataPatchClick()');
+        this.reactiveFormGroup.patchValue({
+            firstName: example.firstName,
+            lastName: example.lastName,
+            userName: example.userName,
+            email: example.email,
+            password: example.password
+        });
+
     }
 
     /*  below is the technique of using Reractive forms WITHOUT FormBuilder. It only uses FormGroup and FormControl and it has a parameterless constructor.
@@ -209,6 +258,7 @@ export class ReactiveFormComponent implements OnInit {
 
         //This is just fake data that exists so I don't have to sample data from the database (or any persisted information)
         this.reactiveFormGroup.setValue({   //  "setValue" would be useful for setting data loaded from some other material
+        
             firstName: 'FakeFirstname',
             lastName: '',
             userName: 'FakeUserName',
@@ -238,6 +288,7 @@ export class ReactiveFormComponent implements OnInit {
     //This is the PATCH version that would NOT include the nested values. If you used the setValue in the "loadFakeDataClick()" function,
     //without the nested values, it will complain about not having the nested elements included
     loadFakeDataPatchClick(): void {
+        console.log('inside loadFakeDataPatchClick()');
         this.reactiveFormGroup.patchValue({
             firstName: 'FakeFirstname',
             lastName: 'FakeLastName',

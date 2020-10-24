@@ -6,7 +6,7 @@
     </thead>
     <tbody>
         <tr>
-            <td>Example Id (userName)</td>
+            <td>UserName</td>
             <td>{{ example.userName }}</td>
         </tr>
         <tr>
@@ -21,6 +21,9 @@
 </table>
 <div *ngIf="!example">{{ statusMessage }}</div>
 <br />
+<div *ngIf="example && example.userName">
+    <input type="button" value="Edit Example" (click)="onEditButtonClick(example.userName)" />
+</div>
 <div>
     <input type="button" value="Back To Examples List" (click)="onBackButtonClick()" />
 </div>
