@@ -4,6 +4,7 @@ import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
 import { ExampleService } from '../example/example.service';
 import { IExample } from '../example/example';
+import { IExampleArray } from '../example/exampleArray';
 
 @Component({
     selector: 'reactive-form-example',
@@ -135,7 +136,7 @@ export class ReactiveFormComponent implements OnInit {
             //create a const to store the passing parameter
             const userName = params.get('userName');
             console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
-            if(userName){
+            if(userName && userName != '0'){
                 console.log(`userId of ${userName} was passed`);
                 this.getEditExample(userName) //this MAY already be in another service (to get the specific example according to the ID)
             }
@@ -154,8 +155,9 @@ export class ReactiveFormComponent implements OnInit {
             (exData) => {
                 if (exData == null) {
                 } else {
+                    //load fake exampleArray Data
                     console.log('RECEIVED getEditExample data');
-                    this.loadRealDataPatchClick(exData);
+                    this.loadRealDataPatchClick(exData);    //load the entire example data using this PATCH method
                 }
             },
             (error) => {
@@ -173,7 +175,25 @@ export class ReactiveFormComponent implements OnInit {
             email: example.email,
             password: example.password
         });
+        console.log('example.exampleArray.COUNT = ' + example.exampleArray.length);
+        //Binding existing data to a form array, use the SET CONTROL method
+        this.reactiveFormGroup.setControl('dynamicNestedGroup', this.setExistingDynamicFormGroupWithFakeData(example.exampleArray)) //use this method to replace an existing control (in this case, its the fff array)
+    }
 
+    setExistingDynamicFormGroupWithFakeData(dynamicExampleSet: IExampleArray[]): FormArray{
+        console.log('inside setExistingDynamicFormGroupWithFakeData method');
+        let formArray = new FormArray([]);
+        
+        //loop through each dynamicExample set
+        dynamicExampleSet.forEach(d => {
+            formArray.push( this.fb.group({
+                dynamicNestedGroupName: d.dynamicNestedGroupName,
+                dynamicExperienceInYears: d.dynamicExperienceInYears,
+                dynamicProficiency: d.dynamicProficiency
+            }));
+        });
+
+        return formArray;
     }
 
     /*  below is the technique of using Reractive forms WITHOUT FormBuilder. It only uses FormGroup and FormControl and it has a parameterless constructor.
@@ -197,9 +217,13 @@ export class ReactiveFormComponent implements OnInit {
                 proficiency: new FormControl()
             })
         });
-    }*/
+    }
+    
+    */
 
     loadFakeDataClick(): void {
+
+        console.log('inside loadFakeDataClick method');
 
         //-------------------------- FormArray Example
         const formArray = new FormArray([//can create a Formarray like this, with the 'new' keyword
@@ -282,7 +306,7 @@ export class ReactiveFormComponent implements OnInit {
 
         //now we're also logging to the console through the following method
         this.logValidationErrors(this.reactiveFormGroup);
-        console.log(this.formErrors);
+        console.log('loadFakeDataClick are ' + this.formErrors + '. FINISHED with the method');
     }
 
     //This is the PATCH version that would NOT include the nested values. If you used the setValue in the "loadFakeDataClick()" function,
@@ -300,6 +324,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     onSubmit(): void {
+        console.log('inside ReactiveForm\'s onSubmit()');
         console.log(this.reactiveFormGroup.value);  //right now, just prints the object
     }
 
@@ -345,6 +370,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     DisableNestFormClick() {    //example of disableing the NESTED controls only
+        console.log('DisableNestFormClick() method ENTERED');
         const group = this.reactiveFormGroup;
         Object.keys(group.controls).forEach((key: string) => {//use a loop with a forEach to get all the keys and loop over each key
             //the abstractControl variable can be, either, a FormControl or a NESTED FormGroup, so we need to check which it is
@@ -375,6 +401,7 @@ export class ReactiveFormComponent implements OnInit {
 
     //dynamically add a dynamic formgrouping
     addDynamicFormGroup(): FormGroup {
+        console.log('addDynamicFormGroup - Adding a new Dynamic Group');
         return this.fb.group({
             dynamicNestedGroupName: ['', Validators.required],
             dynamicExperienceInYears: ['', Validators.required],
@@ -383,11 +410,16 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     addDynamicGroupButton_Click(): void {
+        console.log('addDynamicGroupButton_Click - ADDING a new Dynamic Group');
         (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup')).push(this.addDynamicFormGroup());   //need to type cast it into a FormArray to be able to use the 'push' method
     }
 
-    removeDynamicGroup_click(index: number): void{
-        (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup')).removeAt(index);
+    removeDynamicGroup_click(index: number): void {
+        console.log('removeDynamicGroup_click - REMOVING an existing Dynamic Group');
+        const exampleArray = (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup'));
+        exampleArray.removeAt(index);
+        exampleArray.markAsDirty();
+        exampleArray.markAsTouched();
     }
 }
 
