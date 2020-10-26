@@ -12,6 +12,7 @@ import { IExampleArray } from '../example/exampleArray';
 })
 export class ReactiveFormComponent implements OnInit {
     reactiveFormGroup: FormGroup;
+    isUpdate: boolean;
 
     //example showing how to use the Component class to hold the validation syntax instead of having it inside the .html
     validationMessages = {
@@ -73,6 +74,7 @@ export class ReactiveFormComponent implements OnInit {
 
     ngOnInit() {
         console.log("inside ReactiveFormComponent.ngOnInit");
+        console.log("isUpdate is " + this.isUpdate);
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -83,7 +85,7 @@ export class ReactiveFormComponent implements OnInit {
             emailGroup: this.fb.group({
                 email: ['', [Validators.required, Validators.email, CustomValidators.emailDomainValidator('email.com')]],
                 confirmEmail: ['', Validators.required]
-            }, { validator: matchEmailValidator }),//tie the customer validator function to the nested form group
+            }, { validator: CustomValidators.matchEmailValidator }),//tie the customer validator function to the nested form group
             phone: [''],
             password: [''],
             nestedGroup: this.fb.group({
@@ -139,13 +141,16 @@ export class ReactiveFormComponent implements OnInit {
             if(userName && userName != '0'){
                 console.log(`userId of ${userName} was passed`);
                 this.getEditExample(userName) //this MAY already be in another service (to get the specific example according to the ID)
+                this.isUpdate = true;
             }
             else{
                 //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
                 console.log(`userId was NOT passed, so eID was ${userName}`);
-                
+                this.isUpdate = false;
             }
+            console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
         });
+        console.log("isUpdate is " + this.isUpdate);
         console.log("Leaving ReactiveFormComponent.ngOnInit method");
     }
 
@@ -356,7 +361,6 @@ export class ReactiveFormComponent implements OnInit {
                 this.logValidationErrors(abstractControl);   //recursively call the same method for the NESTED form group
             }
 
-
             ////if the instance is a formArray, then we have to get inside the forgroup by recursively calling it with the FormGroup being passed in
             //if (abstractControl instanceof FormArray) {
             //    for (const control of abstractControl.controls) {
@@ -369,7 +373,7 @@ export class ReactiveFormComponent implements OnInit {
         });
     }
 
-    DisableNestFormClick() {    //example of disableing the NESTED controls only
+    DisableNestFormClick() {    //example of disabling the NESTED controls only
         console.log('DisableNestFormClick() method ENTERED');
         const group = this.reactiveFormGroup;
         Object.keys(group.controls).forEach((key: string) => {//use a loop with a forEach to get all the keys and loop over each key
@@ -420,19 +424,5 @@ export class ReactiveFormComponent implements OnInit {
         exampleArray.removeAt(index);
         exampleArray.markAsDirty();
         exampleArray.markAsTouched();
-    }
-}
-
-//Returns an object with a Key(string)/Value(any) pair if there is a validation error. If there's no error, it will return null 
-function matchEmailValidator(group: AbstractControl): { [key: string]: any } | null {
-    //we'll opass our nested formgroup (emailFormGroup)
-    const emailControl = group.get('email');
-    const confirmEmailControl = group.get('confirmEmail');
-
-    //prestine means the user didn't have an opportunity to start typeing in the confrim email form conrtol
-    if (emailControl.value === confirmEmailControl.value || confirmEmailControl.pristine) {
-        return null;
-    } else {
-        return { 'emailMisMatch': true };
     }
 }
