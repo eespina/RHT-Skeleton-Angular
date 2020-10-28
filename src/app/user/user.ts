@@ -11,7 +11,7 @@ export interface IUser {    //DO NOT use these for both User and a person (examp
     tokenHandleViewModel: ITokenInfo;
 
     // isAdmin: boolean;
-    // isActive: boolean;
+    isActive: boolean;
 
 }
 

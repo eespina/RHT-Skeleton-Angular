@@ -16,8 +16,9 @@ export class ReactiveFormComponent implements OnInit {
     isUpdate: boolean;
     example: IExample;
     user: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
-        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }, tokenHandleViewModel: { expiration: new Date(), token: ''}
-        //, CurrentAdministeringUser: '', isActive: true, userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
+        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
+            , tokenHandleViewModel: { expiration: new Date(), token: ''}, isActive: true
+        //, CurrentAdministeringUser: '', userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
     } as IUser; //needed to Updating and Registration
 
     //example showing how to use the Component class to hold the validation syntax instead of having it inside the .html
@@ -359,15 +360,10 @@ export class ReactiveFormComponent implements OnInit {
     mapFormValuesToExamplesModel(): boolean{
         console.log('inside mapFormValuesToExamplesModel(): ' + this.reactiveFormGroup.value.firstName + ' and ' + this.reactiveFormGroup.value.password);
         try{
-            this.example.firstName = this.reactiveFormGroup.value.firstName;
-            this.example.email = this.reactiveFormGroup.value.email;
-            this.example.password = this.reactiveFormGroup.value.password;
-            this.example.lastName = this.reactiveFormGroup.value.lastName;
-            this.example.userName = this.reactiveFormGroup.value.userName;
 
-            //IUser things
+            //TODO - REMEMBER to check if there are values for the required fields. Required fields are established in the API, so if you send this will empty data, a 400 may get returned from the API
             this.user.firstName = this.reactiveFormGroup.value.firstName;
-            this.user.email = this.reactiveFormGroup.value.email;
+            this.user.email = this.reactiveFormGroup.value.emailGroup.email;
             this.user.password = this.reactiveFormGroup.value.password;
             this.user.lastName = this.reactiveFormGroup.value.lastName;
             this.user.userName = this.reactiveFormGroup.value.userName;
