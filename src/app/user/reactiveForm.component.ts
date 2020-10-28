@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
 import { CustomValidators } from '../shared/custom.validators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExampleService } from '../example/example.service';
 import { IExample } from '../example/example';
 import { IExampleArray } from '../example/exampleArray';
+import { IUser } from './user';
 
 @Component({
     selector: 'reactive-form-example',
@@ -13,6 +14,11 @@ import { IExampleArray } from '../example/exampleArray';
 export class ReactiveFormComponent implements OnInit {
     reactiveFormGroup: FormGroup;
     isUpdate: boolean;
+    example: IExample;
+    user: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
+        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }, tokenHandleViewModel: { expiration: new Date(), token: ''}
+        //, CurrentAdministeringUser: '', isActive: true, userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
+    } as IUser; //needed to Updating and Registration
 
     //example showing how to use the Component class to hold the validation syntax instead of having it inside the .html
     validationMessages = {
@@ -70,7 +76,7 @@ export class ReactiveFormComponent implements OnInit {
         'dynamicProficiency': ''
     };    // no longer needed since the logValidationErrors method would take care of this at runtime
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService) { }
+    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router) { }
 
     ngOnInit() {
         console.log("inside ReactiveFormComponent.ngOnInit");
@@ -158,11 +164,13 @@ export class ReactiveFormComponent implements OnInit {
         console.log('inside getEditExample');
         this.exampleService.getExampleById(userName).subscribe(
             (exData) => {
-                if (exData == null) {
+                if (exData == null){
+                    console.log('getExampleById returned NO data');
                 } else {
-                    //load fake exampleArray Data
-                    console.log('RECEIVED getEditExample data');
                     this.loadRealDataPatchClick(exData);    //load the entire example data using this PATCH method
+
+                    //populate the example property
+                    this.example = exData;
                 }
             },
             (error) => {
@@ -331,6 +339,45 @@ export class ReactiveFormComponent implements OnInit {
     onSubmit(): void {
         console.log('inside ReactiveForm\'s onSubmit()');
         console.log(this.reactiveFormGroup.value);  //right now, just prints the object
+
+        if (this.mapFormValuesToExamplesModel()){
+            //Do we care if it's a Register or an Update ???
+            console.log('mapFormValuesToExamplesModel returned TRUE');
+
+            if(this.isUpdate){
+                this.exampleService.updateExample(this.user).subscribe(  //subscribe to the observable that returns void
+                    //navigate the user to he list route once the update is complete
+                    () => this.router.navigate(['/examples', this.example.userName]),
+                    (error: any)  => console.log('ERROR inside onSubmit: ' + error)
+                );
+            } else {
+                //TODO - implement Registration service method
+            }
+        }
+    }
+
+    mapFormValuesToExamplesModel(): boolean{
+        console.log('inside mapFormValuesToExamplesModel(): ' + this.reactiveFormGroup.value.firstName + ' and ' + this.reactiveFormGroup.value.password);
+        try{
+            this.example.firstName = this.reactiveFormGroup.value.firstName;
+            this.example.email = this.reactiveFormGroup.value.email;
+            this.example.password = this.reactiveFormGroup.value.password;
+            this.example.lastName = this.reactiveFormGroup.value.lastName;
+            this.example.userName = this.reactiveFormGroup.value.userName;
+
+            //IUser things
+            this.user.firstName = this.reactiveFormGroup.value.firstName;
+            this.user.email = this.reactiveFormGroup.value.email;
+            this.user.password = this.reactiveFormGroup.value.password;
+            this.user.lastName = this.reactiveFormGroup.value.lastName;
+            this.user.userName = this.reactiveFormGroup.value.userName;
+
+            return true;
+            
+        } catch (ex){
+            console.log('ERROR inside mapFormValuesToExamplesModel(): ' + ex);
+            return false;
+        }
     }
 
     //An example of looping through each control in the group. useful for Rest of controls, enable/disable form controls validation set/clears, mark dirty/touch/etc..

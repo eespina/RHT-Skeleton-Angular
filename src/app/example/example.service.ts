@@ -2,12 +2,13 @@
 import { Router } from '@angular/router';
 import { IExample } from './example';
 // import { Http } from '@angular/http'; //import { Http, Response } from '@angular/http'; (NOT using Response here, it's been moved to the AuthService)
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../user/auth.service';
 // import 'rxjs/operator/map';
 // import 'rxjs/operator/catch';
 // import 'rxjs/observable/throw';
+import { IUser } from '../user/user';
 import 'rxjs';
 import { catchError } from 'rxjs/operators';
 //import 'rxjs/add/Observable/of';    //perhaps ANOTHER way of doing a get from somewhere (probably from in-memory data)
@@ -21,7 +22,7 @@ export class ExampleService {
 
     getExamples(): Observable<IExample[]> {
         //var examples = this._http.get<IExample[]>('http://localhost:53465/api/examples').delay(4130)    //can ALSO use this as an alternative (includes the '<IExample[]>' as the type returned from the observable)
-        var examples = this._http.get<IExample[]>(this.baseUrl + "examples")//.delay(4130)    //delay is just used to test the loading words and css animation
+        var examples = this._http.get<IExample[]>(`${this.baseUrl}examples/`)//.delay(4130)    //delay is just used to test the loading words and css animation
             //.map((response: Response) => <IExample[]>response.json())
             //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
 
@@ -41,6 +42,15 @@ export class ExampleService {
 
             //UPDATED the older way to 'catch'... previously was "  .catch(error => this._auth.handleError(error));    ". NOT sure this applies for " .map" function, but seems to work
             .pipe(catchError(error => this._auth.handleError(error)));
+    }
+
+    updateExample(user: IUser): Observable<IUser> {
+        console.log('inside updateExample()');
+        const httpOptions = { headers: new HttpHeaders({ 'Content-Type':  'application/json' }) };
+        var updatedUser = this._http.put<IUser>(`${this.baseUrl}examples/${user.userName}`, user, httpOptions)
+            .pipe(catchError(error => this._auth.handleError));
+        
+        return updatedUser;
     }
 
     //handleError(error: Response) {

@@ -102,8 +102,7 @@
                         </div>
                         <br />
                         <div class="btn-toolbar">
-                            <button class="btn btn-primary" type="button" [ngClass]="{ 'showHide' : !isUpdate }">REGISTER</button><!--NOT WORKING right now -->
-                            <button class="btn btn-primary" type="submit" [ngClass]="{ 'showHide' : isUpdate }">UPDATE</button><!--NOT WORKING right now -->
+                            <button class="btn btn-primary" type="submit" [ngClass]="{ 'showHide' : !isUpdate }">REGISTER/UPDATE</button><!--   TODO - Toggle the Button's value  -->
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataClick()">Load Fake Data</button>
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataPatchClick()">Load Fake PATCH Data</button>
                             <button class="btn btn-primary" type="button" (click)="DisableNestFormClick()">Disable Nest Form</button>
