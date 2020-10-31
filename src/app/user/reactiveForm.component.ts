@@ -6,6 +6,7 @@ import { ExampleService } from '../example/example.service';
 import { IExample } from '../example/example';
 import { IExampleArray } from '../example/exampleArray';
 import { IUser } from './user';
+import { AuthService } from '../user/auth.service';
 
 @Component({
     selector: 'reactive-form-example',
@@ -14,6 +15,7 @@ import { IUser } from './user';
 export class ReactiveFormComponent implements OnInit {
     reactiveFormGroup: FormGroup;
     isUpdate: boolean;
+    registerOrUpdate: string;
     example: IExample;
     user: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
         firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
@@ -77,7 +79,7 @@ export class ReactiveFormComponent implements OnInit {
         'dynamicProficiency': ''
     };    // no longer needed since the logValidationErrors method would take care of this at runtime
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router) { }
+    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router, private _auth: AuthService) { }
 
     ngOnInit() {
         console.log("inside ReactiveFormComponent.ngOnInit");
@@ -149,11 +151,13 @@ export class ReactiveFormComponent implements OnInit {
                 console.log(`userId of ${userName} was passed`);
                 this.getEditExample(userName) //this MAY already be in another service (to get the specific example according to the ID)
                 this.isUpdate = true;
+                this.registerOrUpdate = 'UPDATE';
             }
             else{
                 //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
                 console.log(`userId was NOT passed, so eID was ${userName}`);
                 this.isUpdate = false;
+                this.registerOrUpdate = 'REGISTER';
             }
             console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
         });
@@ -349,10 +353,19 @@ export class ReactiveFormComponent implements OnInit {
                 this.exampleService.updateExample(this.user).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
                     () => this.router.navigate(['/examples', this.example.userName]),
-                    (error: any)  => console.log('ERROR inside onSubmit: ' + error)
-                );
+                    (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error)));
             } else {
-                //TODO - implement Registration service method
+                this._auth.registerUser(this.user)
+                .subscribe(
+                    () => {
+                        console.log('user ' + this.user.userName + ' CREATED');
+                        this.router.navigate(['/examples', this.user.userName]);
+                    },
+                    (error: any)  => {
+                        console.log('Changes not saved');
+                        //TODO - create a message to the user about the error(s)
+                        console.log('ERROR inside onSubmit Creating User: ' + JSON.stringify(error));
+                    });
             }
         }
     }
@@ -367,7 +380,9 @@ export class ReactiveFormComponent implements OnInit {
             this.user.password = this.reactiveFormGroup.value.password;
             this.user.lastName = this.reactiveFormGroup.value.lastName;
             this.user.userName = this.reactiveFormGroup.value.userName;
-
+            this.user.administeringUserEmail = this._auth.loggedInUser.email;
+            this.user.userType = { id: 2, name:''};
+            console.log('this._auth.loggedInUser.email = ' + this._auth.loggedInUser.email);
             return true;
             
         } catch (ex){
