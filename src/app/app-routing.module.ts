@@ -41,6 +41,6 @@ import { AuthService } from './user/auth.service';
 })
 export class AppRoutingModule {
     constructor(private router: Router) {
-
+        console.log('Hey everybody, I\'m inside the AppRoutingModule !');
     }
 }
