@@ -1,12 +1,16 @@
-﻿export interface IExample {
+﻿import { IExampleArray } from './exampleArray';
 
+export interface IExample {
+    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     userName: string;
     createDate: Date;
     isActive: Boolean;
-	nonExistingProperty?: string;   //This exists to show an example of possible null information
+    password: string;
+    exampleArray: IExampleArray[];
+	nullExampleProperty?: string;   //This exists to show an example of possible null information (does NOT exist)
 
     //exampleId: number;
     //exampleString: string;

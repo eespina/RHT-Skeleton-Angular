@@ -43,6 +43,11 @@ export class ExampleComponent implements OnInit {
         this.subscription.unsubscribe();
     }
 
+    onEditButtonClick(userName: string): void {
+        console.log(`inside onEditButtonClick() with ${userName} as the parameter'd ID`);
+        this._router.navigate(['/reactiveForm', userName]); // "userName", which is the parameter value, MUST match the reactiveForm's 'params.get('userName');' syntax
+    }
+
     ngOnInit() {
         this._activatedRoute.paramMap.subscribe(
             params => {
@@ -68,7 +73,7 @@ export class ExampleComponent implements OnInit {
                             this.statusMessage = 'Example Does NOT Exist';
                         } else {
                             this.example = exData;
-                            console.log('RECEIVED exDATA in Obesrvable-Params version');
+                            console.log(`RECEIVED exDATA of example ${exData.userName} in Obesrvable-Params version`);
                         }
                     },
                     (error) => {

@@ -11,9 +11,10 @@ import { NgForm } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
     registeringUser: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
-        firstName: '', lastName: '', userName: '', password: '', administeringUserEmail: '',
-        email: '', isActive: true, userType: { id: 0, name: '' }, id: 0, isAdmin: false, tokenHandleViewModel: { expiration: '', token: '' }
-    } as IUser;
+        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
+            , tokenHandleViewModel: { expiration: new Date(), token: ''}, isActive: true
+        //, CurrentAdministeringUser: '', userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
+    } as IUser; //needed to Updating and Registration
 
     @ViewChild('registrationForm') public createExampleForm: NgForm
 

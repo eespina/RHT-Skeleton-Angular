@@ -34,7 +34,7 @@
                                 <input id="email" type="text" class="form-control" formControlName="email" (blur)="logValidationErrors()">
                                 <span class="help-block" *ngIf="formErrors.email">{{formErrors.email}}</span>
                             </div>
-                            <div class="form-group" [ngClass]="{ 'has-error' : formErrors.confirmEmail || formErrors.emailGroup}">
+                            <div class="form-group" [ngClass]="{ 'has-error' : formErrors.confirmEmail || formErrors.emailGroup}"><!--should hide this if it's NOT an new form (i.e. if its an update) with some ngIf maigic-->
                                 <label for="confirmEmail" class="col-lg-3">Confirm Email</label>
                                 <input id="confirmEmail" type="text" class="form-control" formControlName="confirmEmail" (blur)="logValidationErrors()">
                                 <span class="help-block" *ngIf="formErrors.confirmEmail || formErrors.emailGroup">
@@ -88,7 +88,7 @@
                                                 <span class="glyphicon glyphicon-remove">X</span>
                                             </button>
                                         </div>
-                                        <label [attr.for]="'dynamicExperienceInYears' + i">Dynamic Array Nested Group</label><!-- 'for' does not have attribute binding, so we use 'attr'-->
+                                        <label [attr.for]="'dynamicExperienceInYears' + i">Years of Experience</label><!-- 'for' does not have attribute binding, so we use 'attr'-->
                                         <input type="text" [id]="'dynamicExperienceInYears' + i" formControlName="dynamicExperienceInYears" />
                                     </div>
                                     <div class="form-group">
@@ -102,7 +102,7 @@
                         </div>
                         <br />
                         <div class="btn-toolbar">
-                            <button class="btn btn-primary" type="submit">Register</button>
+                            <button class="btn btn-primary" type="submit">{{registerOrUpdate}}</button><!--   TODO - Toggle the Button's value  -->
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataClick()">Load Fake Data</button>
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataPatchClick()">Load Fake PATCH Data</button>
                             <button class="btn btn-primary" type="button" (click)="DisableNestFormClick()">Disable Nest Form</button>

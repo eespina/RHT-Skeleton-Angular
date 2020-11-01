@@ -16,7 +16,7 @@ import { AuthService } from './user/auth.service';
         RouterModule.forRoot([
             { path: 'home', component: HomeComponent },
             { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] },
-            { path: 'reactiveForm', component: ReactiveFormComponent, canActivate: [AuthGuard] },
+            { path: 'reactiveForm/:userName', component: ReactiveFormComponent, canActivate: [AuthGuard] },
             { path: 'login', component: LoginComponent },
             {
                 path: 'examples', component: ExampleListComponent, canActivate: [AuthGuard] //data: { preload: true } (used for PreloaderService),
@@ -41,6 +41,6 @@ import { AuthService } from './user/auth.service';
 })
 export class AppRoutingModule {
     constructor(private router: Router) {
-
+        console.log('Hey everybody, I\'m inside the AppRoutingModule !');
     }
 }

@@ -32,8 +32,8 @@ export class ExampleListComponent {
 
     ngOnInit() {
         this._exampleService.getExamples()
-            .subscribe((data) => {
-                this.examples = data;
+            .subscribe((exampleList) => {
+                this.examples = exampleList;
                 this.filteredExamples = this.examples;
                 this.showSpinner = false;
             },
