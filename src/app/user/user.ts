@@ -1,15 +1,16 @@
-export interface IUser {
-    id: number;
+export interface IUser {    //DO NOT use these for both User and a person (example.ts stuff), for this is too much together
+    // userId: string;
     firstName: string;
     lastName: string;
     email: string;
     userName: string;
     password: string;
     userType: IUserType;
-    administeringUserEmail: string
+    // CurrentAdministeringUser: string;
+    administeringUserEmail: string;
     tokenHandleViewModel: ITokenInfo;
 
-    isAdmin: boolean;
+    // isAdmin: boolean;
     isActive: boolean;
 
 }
@@ -21,7 +22,7 @@ export interface IUserType {
 
 export interface ITokenInfo {
     token: string;
-    expiration: string;
+    expiration: Date;
 }
 
 //export class User implements IUser {
