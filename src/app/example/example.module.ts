@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
+import { ExampleRoutingModule } from './example-routing.module';
 
 //Services
 import { ExampleService } from './example.service'; //COULD have stayed in the root module, but moved here since this is specific to EXAMPLE things anyway
@@ -20,6 +21,7 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
 @NgModule({
   imports: [
     CommonModule,
+    ExampleRoutingModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule

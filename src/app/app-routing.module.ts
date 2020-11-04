@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './user/register.component';
-import { ReactiveFormComponent } from './user/reactiveForm.component';
 import { LoginComponent } from './user/login.component';
 import { PageNotFoundComponent } from './shared/pageNotFound.component';
-import { ExampleComponent } from './example/example.component';
-import { ExampleListComponent } from './example/exampleList.component';
 import { AuthGuard } from './user/auth-route-guard.service';
 // import { PreloaderService } from './shared/preloader.service';   TODO - maybe fix this
 import { AuthService } from './user/auth.service';
@@ -15,13 +11,7 @@ import { AuthService } from './user/auth.service';
     imports: [
         RouterModule.forRoot([
             { path: 'home', component: HomeComponent },
-            { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] },
-            { path: 'reactiveForm/:userName', component: ReactiveFormComponent, canActivate: [AuthGuard] },
             { path: 'login', component: LoginComponent },
-            {
-                path: 'examples', component: ExampleListComponent, canActivate: [AuthGuard] //data: { preload: true } (used for PreloaderService),
-            },
-            { path: 'examples/:userName', component: ExampleComponent, canActivate: [AuthGuard] },//{ path: 'examples/:userName/:id', .....  - to use more parameters
             { path: '', redirectTo: '/home', pathMatch: 'full' },
             { path: '**', component: PageNotFoundComponent }    //Precedence matters, use this last as a'Catch All' route
             //, loadChildren: 'app/examples/example.module#ExampleModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,

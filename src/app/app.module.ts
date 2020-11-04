@@ -23,12 +23,12 @@ import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
     imports: [
+        // HttpModule,
         HttpClientModule,
         BrowserModule,
         FormsModule,
-        // HttpModule,
-        AppRoutingModule,
-        ExampleModule
+        ExampleModule,
+        AppRoutingModule
         //InMemoryWebApiModule.forRoot()
     ],
     declarations: [
