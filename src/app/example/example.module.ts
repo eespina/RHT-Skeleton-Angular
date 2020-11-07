@@ -31,17 +31,18 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
     ExampleListComponent,
     ExampleDisplayComponent,
     ExampleCountComponent,
-    ExampleComponent],
-    providers:[
-      ExampleService,
-      ExampleSingletonService
-    ],
-    exports:[
+    ExampleComponent
+  ],
+  providers: [
+    ExampleService,
+    ExampleSingletonService
+  ],
+  exports: [
 
-      // //an example that show that Any module that import this Example Module. example is inside the register.component.html page and it should now show both forms
-      // //I do NOT beleive that anything is really dependent upon this
-      // ReactiveFormComponent  //this is no longer needed as I have commented out the register.componenet.html area that contains this selector
-    ]
+    // //an example that show that Any module that import this Example Module. example is inside the register.component.html page and it should now show both forms
+    // //I do NOT beleive that anything is really dependent upon this
+    // ReactiveFormComponent  //this is no longer needed as I have commented out the register.componenet.html area that contains this selector
+  ]
 })
 export class ExampleModule {
   //created this file for the sole purpose of alleviating the amount of imports inside the already expanded AppModule class
