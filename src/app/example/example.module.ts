@@ -2,9 +2,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { ExampleRoutingModule } from './example-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 //Services
 import { ExampleService } from './example.service'; //COULD have stayed in the root module, but moved here since this is specific to EXAMPLE things anyway
@@ -24,10 +24,10 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
     ExampleRoutingModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    SharedModule
   ],
   declarations: [
-    ReactiveFormComponent ,
+    ReactiveFormComponent,
     ExampleListComponent,
     ExampleDisplayComponent,
     ExampleCountComponent,
@@ -38,9 +38,9 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
     ],
     exports:[
 
-      //an example that show that Any module that import this Example Module. example is inside the register.component.html page and it should now show both forms
-      //I do NOT beleive that anything is really dependent upon this
-      ReactiveFormComponent
+      // //an example that show that Any module that import this Example Module. example is inside the register.component.html page and it should now show both forms
+      // //I do NOT beleive that anything is really dependent upon this
+      // ReactiveFormComponent  //this is no longer needed as I have commented out the register.componenet.html area that contains this selector
     ]
 })
 export class ExampleModule {
