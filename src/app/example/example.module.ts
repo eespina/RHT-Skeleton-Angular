@@ -1,14 +1,12 @@
 //Modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from '../app-routing.module';
+// import { AppRoutingModule } from '../app-routing.module';  //Is commented out because it causes errors about multiple module loading when in play
 import { ExampleRoutingModule } from './example-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 //Services
 import { ExampleService } from './example.service'; //COULD have stayed in the root module, but moved here since this is specific to EXAMPLE things anyway
-import { ExampleSingletonService } from './exampleSingleton.service'; //COULD have stayed in the root module, but moved here since this is specific to EXAMPLE things anyway
 
 //Components
 import { ExampleDisplayComponent } from './example-display.component';
@@ -20,9 +18,8 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
 
 @NgModule({
   imports: [
-    CommonModule,
     ExampleRoutingModule,
-    AppRoutingModule,
+    // AppRoutingModule,  //Is commented out because it causes errors about multiple module loading when in play
     FormsModule,
     SharedModule
   ],
@@ -34,8 +31,7 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
     ExampleComponent
   ],
   providers: [
-    ExampleService,
-    ExampleSingletonService
+    ExampleService
   ],
   exports: [
 

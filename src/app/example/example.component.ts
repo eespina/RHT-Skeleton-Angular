@@ -17,8 +17,7 @@ export class ExampleComponent implements OnInit {
     statusMessage: string = 'Loading Data, Please Wait ...';
     subscription: Subscription;
 
-    constructor(private _exampleService: ExampleService, private _activatedRoute: ActivatedRoute, private _router: Router) {
-    }
+    constructor(private _exampleService: ExampleService, private _activatedRoute: ActivatedRoute, private _router: Router) {    }
 
     onBackButtonClick(): void {
         this._router.navigate(['/examples']);
