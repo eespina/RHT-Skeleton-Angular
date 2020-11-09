@@ -17,8 +17,7 @@ export class ExampleComponent implements OnInit {
     statusMessage: string = 'Loading Data, Please Wait ...';
     subscription: Subscription;
 
-    constructor(private _exampleService: ExampleService, private _activatedRoute: ActivatedRoute, private _router: Router) {
-    }
+    constructor(private _exampleService: ExampleService, private _activatedRoute: ActivatedRoute, private _router: Router) {    }
 
     onBackButtonClick(): void {
         this._router.navigate(['/examples']);
@@ -45,7 +44,7 @@ export class ExampleComponent implements OnInit {
 
     onEditButtonClick(userName: string): void {
         console.log(`inside onEditButtonClick() with ${userName} as the parameter'd ID`);
-        this._router.navigate(['/reactiveForm', userName]); // "userName", which is the parameter value, MUST match the reactiveForm's 'params.get('userName');' syntax
+        this._router.navigate(['examples/reactiveForm', userName]); // "userName", which is the parameter value, MUST match the reactiveForm's 'params.get('userName');' syntax
     }
 
     ngOnInit() {
