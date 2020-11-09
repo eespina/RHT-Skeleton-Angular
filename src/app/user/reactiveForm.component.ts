@@ -352,14 +352,14 @@ export class ReactiveFormComponent implements OnInit {
             if(this.isUpdate){
                 this.exampleService.updateExample(this.user).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
-                    () => this.router.navigate(['/examples', this.example.userName]),
+                    () => this.router.navigate(['/examples/example', this.example.userName]),
                     (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error)));
             } else {
                 this._auth.registerUser(this.user)
                 .subscribe(
                     () => {
                         console.log('user ' + this.user.userName + ' CREATED');
-                        this.router.navigate(['/examples', this.user.userName]);
+                        this.router.navigate(['/examples/example', this.user.userName]);
                     },
                     (error: any)  => {
                         console.log('Changes not saved');
