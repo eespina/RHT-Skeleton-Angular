@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 // import { ExampleModule } from './example/example.module';    //commented out to showcase Lazy Loading
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';  //HttpClientModule
 // import { HttpModule } from '@angular/http';
+//import {MatIconModule} from '@angular/animations/';
 
 //Services
 import { AuthService } from './user/auth.service';
@@ -19,7 +20,8 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './shared/pageNotFound.component';
 import { RegisterComponent } from './user/register.component';
 import { LoginComponent } from './user/login.component';
-import { HeaderComponent } from './shared/header.component';
+// import { HeaderComponent } from './shared/header.component';<!--depracated-->
+import { NavbarComponent } from './shared/navbar.component';
 import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
@@ -39,7 +41,8 @@ import { FooterComponent } from './shared/footer.component';
         AppComponent,
         HomeComponent,
         LoginComponent,
-        HeaderComponent,
+        // HeaderComponent,<!--depracated-->
+        NavbarComponent,
         FooterComponent,
         RegisterComponent,
         PageNotFoundComponent],
