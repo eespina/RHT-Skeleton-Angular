@@ -13,6 +13,7 @@ import { AuthService } from './user/auth.service';
 import { AuthGuard } from './user/auth-route-guard.service';
 import { TokenInterceptorService } from './user/token-interceptor.service';
 import { ExampleSingletonService } from './example/exampleSingleton.service';
+import { DataService } from './shared/data.service';
 
 //Componenets
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ import { FooterComponent } from './shared/footer.component';
     providers: [    // placed here because it is used in multiple components
         AuthService,
         AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+        DataService,    //Example of using a share-able service between the Login and Header Components (but can be used for much mroe userful shared services)
         ExampleSingletonService //Moved back here from 'ExampleModule' due to lazy loading errors surrounding "NullInjectorError: No provider for Service, etc.."
     ]
 })

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { Router } from '@angular/router'
+import { DataService } from '../shared/data.service';
 
 @Component({
     selector: 'responsive-app-navbar',
@@ -8,9 +9,9 @@ import { Router } from '@angular/router'
 })
 export class NavbarComponent {
 
-    constructor(private _auth: AuthService, private _router: Router) { }
+    constructor(private _auth: AuthService, private _router: Router, private _dataService: DataService) { }
     navbarOpen: boolean;
-    LogInOrLogOut: string = "Log In";
+    LogInOrLogOut: string;
     mobileW: string = '767';
     tabletW: string = '992';
     isPhone: boolean;
@@ -22,6 +23,8 @@ export class NavbarComponent {
 
     ngOnInit(){
         console.log('inside ngOnInit()');
+        this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
+        console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
     }
 
     ngAfterContentInit() {
