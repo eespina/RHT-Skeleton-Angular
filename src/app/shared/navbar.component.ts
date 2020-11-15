@@ -10,6 +10,7 @@ import { DataService } from '../shared/data.service';
 export class NavbarComponent {
 
     constructor(private _auth: AuthService, private _router: Router, private _dataService: DataService) { }
+    isCookieEnabled: boolean = true;
     navbarOpen: boolean;
     LogInOrLogOut: string;
     mobileW: string = '767';
@@ -25,6 +26,8 @@ export class NavbarComponent {
         console.log('inside ngOnInit()');
         this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
         console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
+        this.checkCookie();
+        console.log('leaving ngOnInit()');
     }
 
     ngAfterContentInit() {
@@ -61,5 +64,21 @@ export class NavbarComponent {
         if (this._router) {
             this._router.navigate(['/login']);
         }
+    }
+    
+    checkCookie(){
+        console.log('INSIDE navbar\' scheckCookie');
+        var cookieEnabled = navigator.cookieEnabled;
+        console.log('cookieEnabled = ' +  cookieEnabled);
+        if (!cookieEnabled){ 
+            // document.cookie = "testcookie";
+            // cookieEnabled = document.cookie.indexOf("testcookie")!=-1;
+            // console.log('cookieEnabled INSIDE "if" satement = ' +  cookieEnabled);
+            this.isCookieEnabled = false;
+        }
+        console.log('cookieEnabled OUTSIDE = ' +  cookieEnabled);
+        var cookieEnabledTwo = navigator.cookieEnabled;
+        console.log('cookieEnabledTwo = ' +  cookieEnabledTwo);
+        console.log('LEAVING navbar\' scheckCookie');
     }
 }
