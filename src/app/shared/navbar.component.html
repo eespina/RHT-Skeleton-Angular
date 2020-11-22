@@ -1,40 +1,41 @@
 <header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-		<div class="name-description">
+	<nav [ngClass]="isMobile() ? 'navbar navbar-expand-lg navbar-dark bg-dark' : navbarOpen ? 'sideNav-closed' : 'sidenav' ">
+		<!-- <div class="name-description" [ngClass]="{ 'show': !isMobile() }">
 			<span>Enrico Espina - Combat Ninja <i style="font-family: times;">(ret.)</i>
 			</span>
-		</div>
-
-		<button class="navbar-toggler" type="button" (click)="toggleNavbar_click()">
-			<span class="navbar-toggler-icon"></span>
+		</div> Not using this anymore-->
+		<button [ngClass]="isMobile() ? 'navbar-toggler' : 'closebtn'" type="button" (click)="toggleNavbar_click()">
+			<span [ngClass]="{ 'navbar-toggler-icon': isMobile() }"><i [ngClass]="isMobile() ? 'hide' : navbarOpen ? 'arrow right' : 'arrow left'"></i></span>
 		</button>
-
-		<div class="collapse navbar-collase" [ngClass]="{ 'show': navbarOpen }">
-			<!-- <ul class="nav-right-list"></ul> -->
-			<ul class="navbar-nav mr-auto" [ngClass]="{ 'mr-auto-not-working': !isMobile() }">
+		<div class="navbar-collase" [ngClass]="{ 'hide': navbarOpen }">
+			<!-- <ul class="nav-right-list"></ul> NOT BEING USED-->
+			<ul class="navbar-nav mr-auto"><!--</ul> [ngClass]="{ 'mr-auto-not-working': !isMobile() }">-->
+				<!-- <li routerActive="bootstrap-mimic-active" [ngClass]="{ 'show': !navbarOpen }">
+					<a class="closebtn linkCrappyAndDirtyVersion" (click)="toggleNavbar_click()">&times;</a>
+				</li> -->
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a routerLink="/home" routerLinkActive="active" class="navbar-link">Home</a>
 				</li>
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a routerLink="/examples" routerLinkActive="active" class="navbar-link">Examples</a>
-					<!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
+					<!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes NOT BEING USED-->
 				</li>
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a routerLink="examples/reactiveForm/0" routerLinkActive="active">Reactive Form Example</a>
 				</li>
-				<!--<li routerActive="bootstrap-mimic-active"><a routerLink="[{ outlets: { secondaryExampleRouterOutlet: ['Another-Link-Parameters-Array-specifying-secondary-path'] } }]">Home</a></li>-->
-				<!-- The above uses the example below. this syntax, here, should be implemented as such elsewhere (SHOULD USE CODE INSTEAD)-->
+				<!--<li routerActive="bootstrap-mimic-active"><a routerLink="[{ outlets: { secondaryExampleRouterOutlet: ['Another-Link-Parameters-Array-specifying-secondary-path'] } }]">Home</a></li> NOT BEING USED-->
+				<!-- The above uses the example below. this syntax, here, should be implemented as such elsewhere (SHOULD USE CODE INSTEAD) NOT BEING USED-->
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a routerLink="examples/register" routerLinkActive="active">Template-Driven Form Example</a>
 				</li>
-				<!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
+				<!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes NOT BEING USED-->
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a id="loginLogoutPlaceholder" (click)="loginOrOutUser()">{{LogInOrLogOut}}</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
+
 	<div class="warning-row" [hidden]="isCookieEnabled">
 		<h3>Cookie's are NOT enabled, Just an FYI</h3>
 	</div>

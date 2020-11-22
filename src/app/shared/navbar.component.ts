@@ -35,13 +35,12 @@ export class NavbarComponent {
         this.isPhone = window.matchMedia("(min-width: " + this.mobileW + "px)").matches;
         this.isTablet = window.matchMedia("(min-width: " + this.tabletW + "px)").matches;
         console.log('isPhone = ' + this.isPhone + ', isTablet = ' +  this.isTablet);
-
-        this.navbarOpen = this.isMobile() ? false : true;
-        
+        this.navbarOpen = this.isMobile();
         console.log('navbarOpen = ' + this.navbarOpen);
     }
 
     isMobile(): boolean {
+        console.log('isMobile = ' + (!this.isPhone && !this.isTablet));
         return !this.isPhone && !this.isTablet;
     }
 

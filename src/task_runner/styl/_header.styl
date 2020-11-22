@@ -1,17 +1,94 @@
 header
-	position fixed
-	width 100%
-	z-index 1
-	.mr-auto-not-working
+//Side-nav included version
+	.sidenav
+		height 100%
+		width 250px
 		position fixed
-		right 0
+		z-index 1
 		top 0
-		li
-			margin-right: 25px
-			margin-top: 10px
-#loginLogoutPlaceholder
-	cursor pointer
-	color $color-primary
+		left 0
+		background-color #111
+		overflow-x hidden
+		transition 0.5s
+		padding-top 60px
+		a
+			padding 8px 8px 8px 32px
+			text-decoration none
+			font-size 25px
+			color #818181
+			display block
+			transition 0.3s
+		.closebtn
+			position absolute
+			top 15px
+			right 15px
+			font-size 36px
+			margin-left 50px
+			background transparent
+			border none
+			color $color-off-white
+			transform rotate(135deg)
+			-webkit-transform rotate(135deg)
+			.arrow
+				border solid $color-off-white
+				border-width 0 5px 5px 0
+				display inline-block
+				padding 3px
+		.closebtn:focus
+			outline none !important
+	.sideNav-closed
+		height 100%
+		width 50px
+		position fixed
+		z-index 1
+		top 0
+		left 0
+		background-color #111
+		overflow-x hidden
+		transition 0.5s
+		padding-top 60px
+		ul
+			display none
+		.closebtn
+			position absolute
+			top 0
+			right 15px
+			font-size 36px
+			margin-left 50px
+			background transparent
+			border none
+			color $color-off-white
+			transform rotate(-45deg)
+			-webkit-transform rotate(-45deg)
+			.arrow
+				border solid $color-off-white
+				border-width 0 5px 5px 0
+				display inline-block
+				padding 3px
+		.closebtn:focus
+			outline none !important
+	@media screen and (max-height 450px)
+		.sidenav
+			padding-top 15px
+		.sidenav a
+			font-size 18px
+//Side-nav included version
+
+
+//BELOW is the non-side Nav way of the header
+// 	position fixed
+// 	width 100%
+// 	z-index 1
+// 	.mr-auto-not-working
+// 		position fixed
+// 		right 0
+// 		top 0
+// 		li
+// 			margin-right 25px
+// 			margin-top 10px
+// #loginLogoutPlaceholder
+// 	cursor pointer
+// 	color $color-primary
 
 //BELOW is the OLD way of the header (depracted)
 // header
