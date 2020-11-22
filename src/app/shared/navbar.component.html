@@ -1,9 +1,8 @@
 <header>
 	<nav [ngClass]="isMobile() ? 'navbar navbar-expand-lg navbar-dark bg-dark' : navbarOpen ? 'sideNav-closed' : 'sidenav' ">
-		<!-- <div class="name-description" [ngClass]="{ 'show': !isMobile() }">
-			<span>Enrico Espina - Combat Ninja <i style="font-family: times;">(ret.)</i>
-			</span>
-		</div> Not using this anymore-->
+		<div class="name-description" [ngClass]="{ 'hide': !isMobile() }">
+			<span>Enrico Espina - Combat Ninja <i style="font-family: times;">(ret.)</i></span>
+		</div>
 		<button [ngClass]="isMobile() ? 'navbar-toggler' : 'closebtn'" type="button" (click)="toggleNavbar_click()">
 			<span [ngClass]="{ 'navbar-toggler-icon': isMobile() }"><i [ngClass]="isMobile() ? 'hide' : navbarOpen ? 'arrow right' : 'arrow left'"></i></span>
 		</button>
@@ -35,6 +34,46 @@
 			</ul>
 		</div>
 	</nav>
+
+	<!--BELOW is the area for using NON-side navigation with-->
+	
+	<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+		<div class="name-description">
+			<span>Enrico Espina - Combat Ninja <i style="font-family: times;">(ret.)</i>
+			</span>
+		</div>
+
+		<button class="navbar-toggler" type="button" (click)="toggleNavbar_click()">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collase" [ngClass]="{ 'show': navbarOpen }"> -->
+			<!--(COMMENTED LINE)  <ul class="nav-right-list"></ul> -->
+			<!-- <ul class="navbar-nav mr-auto" [ngClass]="{ 'mr-auto-not-working': !isMobile() }">
+				<li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a routerLink="/home" routerLinkActive="active" class="navbar-link">Home</a>
+				</li>
+				<li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a routerLink="/examples" routerLinkActive="active" class="navbar-link">Examples</a> -->
+					<!--(COMMENTED LINE) [routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
+				<!-- </li>
+				<li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a routerLink="examples/reactiveForm/0" routerLinkActive="active">Reactive Form Example</a>
+				</li> -->
+				<!--(COMMENTED LINE) <li routerActive="bootstrap-mimic-active"><a routerLink="[{ outlets: { secondaryExampleRouterOutlet: ['Another-Link-Parameters-Array-specifying-secondary-path'] } }]">Home</a></li>-->
+				<!--(COMMENTED LINE)  The above uses the example below. this syntax, here, should be implemented as such elsewhere (SHOULD USE CODE INSTEAD)-->
+				<!-- <li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a routerLink="examples/register" routerLinkActive="active">Template-Driven Form Example</a>
+				</li> -->
+				<!--(COMMENTED LINE) [routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
+				<!-- <li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a id="loginLogoutPlaceholder" (click)="loginOrOutUser()">{{LogInOrLogOut}}</a>
+				</li>
+			</ul>
+		</div>
+	</nav> -->
+	<!--ABOVE is the area for using NON-side navigation with-->
 
 	<div class="warning-row" [hidden]="isCookieEnabled">
 		<h3>Cookie's are NOT enabled, Just an FYI</h3>

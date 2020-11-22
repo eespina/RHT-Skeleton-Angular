@@ -35,7 +35,10 @@ export class NavbarComponent {
         this.isPhone = window.matchMedia("(min-width: " + this.mobileW + "px)").matches;
         this.isTablet = window.matchMedia("(min-width: " + this.tabletW + "px)").matches;
         console.log('isPhone = ' + this.isPhone + ', isTablet = ' +  this.isTablet);
-        this.navbarOpen = this.isMobile();
+
+        this.navbarOpen = this.isMobile();  //  <-- is the version used for the Side Navigation version
+        //this.navbarOpen = this.isMobile() ? false : true;;  //    <-- is the version used for the NON-SIde Navigation version
+
         console.log('navbarOpen = ' + this.navbarOpen);
     }
 
