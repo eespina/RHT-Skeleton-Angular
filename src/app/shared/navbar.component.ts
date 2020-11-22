@@ -43,7 +43,7 @@ export class NavbarComponent {
     }
 
     isMobile(): boolean {
-        console.log('isMobile = ' + (!this.isPhone && !this.isTablet));
+        //console.log('isMobile = ' + (!this.isPhone && !this.isTablet));   causing too many logs
         return !this.isPhone && !this.isTablet;
     }
 
