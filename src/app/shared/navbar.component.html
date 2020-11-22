@@ -8,7 +8,7 @@
 		</button>
 		<div class="navbar-collase" [ngClass]="{ 'hide': navbarOpen }">
 			<!-- <ul class="nav-right-list"></ul> NOT BEING USED-->
-			<ul class="navbar-nav mr-auto"><!--</ul> [ngClass]="{ 'mr-auto-not-working': !isMobile() }">-->
+			<ul class="navbar-nav mr-auto" (click)="isMobile() ? navbarOpen = !navbarOpen : navbarOpen = navbarOpen"><!--</ul> [ngClass]="{ 'mr-auto-not-working': !isMobile() }">-->
 				<!-- <li routerActive="bootstrap-mimic-active" [ngClass]="{ 'show': !navbarOpen }">
 					<a class="closebtn linkCrappyAndDirtyVersion" (click)="toggleNavbar_click()">&times;</a>
 				</li> -->
