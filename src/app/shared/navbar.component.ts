@@ -60,9 +60,8 @@ export class NavbarComponent {
                     console.log('Error Logging Out User');
                     this._auth.handleError(err);
             });
-        }else{
-            this.LogInOrLogOut = "Log Out";
         }
+        
         if (this._router) {
             this._router.navigate(['/login']);
         }
