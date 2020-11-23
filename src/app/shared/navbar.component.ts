@@ -52,8 +52,10 @@ export class NavbarComponent {
             this._auth.logoutUser()
             .subscribe(
                 res => {
-                    this.LogInOrLogOut = "Log In";
+                    // this.LogInOrLogOut = "Log In";
                     this._auth.logoutUserLocal(false);// no need to redirect because it will happen after this method is true
+                    this._dataService.changeLogInOrOutStatus("Log In");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
+                    this._dataService.changeLoggedInStatus(false);
                 },
                 err => {
                     //Log something HERE to somewhere

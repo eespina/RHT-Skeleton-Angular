@@ -23,6 +23,8 @@ import { RegisterComponent } from './user/register.component';
 import { LoginComponent } from './user/login.component';
 // import { HeaderComponent } from './shared/header.component';<!--depracated-->
 import { NavbarComponent } from './shared/navbar.component';
+import { NavbarTopComponent } from './shared/navbar-top.component';
+import { NestedExampleTopComponent } from './nested/nested-example-top.component';
 import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
@@ -43,7 +45,9 @@ import { FooterComponent } from './shared/footer.component';
         HomeComponent,
         LoginComponent,
         // HeaderComponent,<!--depracated-->
+        NestedExampleTopComponent,
         NavbarComponent,
+        NavbarTopComponent,
         FooterComponent,
         RegisterComponent,
         PageNotFoundComponent],

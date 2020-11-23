@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
                     localStorage.setItem('token', res.tokenHandleViewModel.token);
                     console.log('CHANGING LogInOrOutStatus to \'Log Out\'');
                     this._dataService.changeLogInOrOutStatus("Log Out");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
+                    this._dataService.changeLoggedInStatus(true);
                     this.isSuccessfulLogin = true;
                     this._router.navigate(['/home']);
                     this._auth.loggedInUser.email = res.email;

@@ -1,0 +1,18 @@
+<div class="navbar-top" *ngIf="isLoggedIn">
+    <div class="navbar-collase" [ngClass]="{ 'show': navbarOpen }">
+        <ul>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a routerLink="/home" routerLinkActive="active" class="navbar-link">Home</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a routerLink="/examples" routerLinkActive="active" class="navbar-link">Examples</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a routerLink="examples/reactiveForm/0" routerLinkActive="active">Reactive Form Example</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a routerLink="examples/register" routerLinkActive="active">Template-Driven Form Example</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -5,9 +5,16 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 @Injectable()
 export class DataService {
     private messageSource = new BehaviorSubject<string>("Log In");
+    public isLoggedInSource = new BehaviorSubject<boolean>(false);
     currentMessage = this.messageSource.asObservable();
+    loggedInStatus = this.isLoggedInSource.asObservable();
     
     constructor() { }
+
+    changeLoggedInStatus(isLoggedIn: boolean){
+        this.isLoggedInSource.next(isLoggedIn);
+        console.log('loggedInStatus changed to ' + isLoggedIn);        
+    }
 
     changeLogInOrOutStatus(message: string) {
         this.messageSource.next(message);
