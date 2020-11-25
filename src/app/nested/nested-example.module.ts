@@ -5,10 +5,10 @@ import { NestedExampleRoutingModule } from './nested-example-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 //Components
-import { NestedExampleChildOneComponent } from './nested-example-child-one.component';
-import { NestedExampleChildTwoComponent } from './nested-example-child-two.component';
-import { NestedExampleTopComponent } from './nested-example-top.component';
-import { NestedNavbarExampleComponent } from './nested-navbar-example';
+// import { NestedExampleChildOneComponent } from './nested-example-child-one.component';
+// import { NestedExampleChildTwoComponent } from './nested-example-child-two.component';
+// import { NestedExampleTopComponent } from './nested-example-top.component';
+// import { NestedNavbarExampleComponent } from './nested-navbar-example';
 
 
 @NgModule({
@@ -18,10 +18,10 @@ import { NestedNavbarExampleComponent } from './nested-navbar-example';
       SharedModule
   ],
   declarations: [
-      NestedNavbarExampleComponent,
-      NestedExampleTopComponent,
-      NestedExampleChildOneComponent,
-      NestedExampleChildTwoComponent
+    //   NestedNavbarExampleComponent,
+    //   NestedExampleTopComponent,
+    //   NestedExampleChildOneComponent,
+    //   NestedExampleChildTwoComponent
     ],
     providers: [ ],
     exports: [

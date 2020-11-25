@@ -27,6 +27,10 @@ import { NavbarComponent } from './shared/navbar.component';
 // import { NavbarTopComponent } from './shared/navbar-top.component';  //  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
 //import { NestedExampleTopComponent } from './nested/nested-example-top.component';    nested inside it's own module inside the NESTED folder
 import { FooterComponent } from './shared/footer.component';
+import { NestedNavbarExampleComponent } from './nested/nested-navbar-example';
+import { NestedExampleChildOneComponent } from './nested/nested-example-child-one.component';
+import { NestedExampleChildTwoComponent } from './nested/nested-example-child-two.component';
+import { NestedExampleTopComponent } from './nested/nested-example-top.component';
 
 @NgModule({
     imports: [
@@ -46,6 +50,10 @@ import { FooterComponent } from './shared/footer.component';
         AppComponent,
         HomeComponent,
         LoginComponent,
+        NestedNavbarExampleComponent,
+        NestedExampleTopComponent,
+        NestedExampleChildOneComponent,
+        NestedExampleChildTwoComponent,
         // HeaderComponent,<!--depracated-->
         //NestedExampleTopComponent,    nested inside it's own module inside the NESTED folder
         NavbarComponent,
