@@ -13,11 +13,11 @@ export class DataService {
 
     changeLoggedInStatus(isLoggedIn: boolean){
         this.isLoggedInSource.next(isLoggedIn);
-        console.log('loggedInStatus changed to ' + isLoggedIn);        
+        //console.log('loggedInStatus changed to ' + isLoggedIn);        
     }
 
     changeLogInOrOutStatus(message: string) {
         this.messageSource.next(message);
-        console.log('Message changed to ' + message);
+        //console.log('Message changed to ' + message);
     }
 }

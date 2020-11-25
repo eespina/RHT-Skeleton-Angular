@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
     ngAfterViewInit() {}
 
     upArrowButton_click(){
-        console.log('inside upArrowButton_click');
+        //console.log('inside upArrowButton_click');
         window.scroll({
             top: 0,
             left: 0,

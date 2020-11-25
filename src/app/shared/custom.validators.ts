@@ -30,7 +30,7 @@ export class CustomValidators {
 
     //Returns an object with a Key(string)/Value(any) pair if there is a validation error. If there's no error, it will return null 
     static matchEmailValidator(group: AbstractControl): { [key: string]: any } | null {
-        console.log('inside matchEmailValidator() method');
+        //console.log('inside matchEmailValidator() method');
         //we'll opass our nested formgroup (emailFormGroup)
         const emailControl = group.get('email');
         const confirmEmailControl = group.get('confirmEmail');

@@ -22,7 +22,7 @@ export class NavbarTopComponent {
     //toggleNavbar_click() { this.navbarOpen = !this.navbarOpen; }    
 
     ngOnInit(){
-        console.log('NavbarTopComponent inside ngOnInit()');
+        //console.log('NavbarTopComponent inside ngOnInit()');
         this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
         this._dataService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
         this.isLoggedIn = this._auth.loggedIn();

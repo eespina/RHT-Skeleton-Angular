@@ -23,27 +23,27 @@ export class NavbarComponent {
     }    
 
     ngOnInit(){
-        console.log('inside ngOnInit()');
+        //console.log('inside ngOnInit()');
         this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
-        console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
+        //console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
         this.checkCookie();
-        console.log('leaving ngOnInit()');
+        //console.log('leaving ngOnInit()');
     }
 
     ngAfterContentInit() {
-        console.log('inside ngAfterViewInit()');
+        //console.log('inside ngAfterViewInit()');
         this.isPhone = window.matchMedia("(min-width: " + this.mobileW + "px)").matches;
         this.isTablet = window.matchMedia("(min-width: " + this.tabletW + "px)").matches;
-        console.log('isPhone = ' + this.isPhone + ', isTablet = ' +  this.isTablet);
+        //console.log('isPhone = ' + this.isPhone + ', isTablet = ' +  this.isTablet);
 
         this.navbarOpen = this.isMobile();  //  <-- is the version used for the Side Navigation version
         //this.navbarOpen = this.isMobile() ? false : true;;  //    <-- is the version used for the NON-SIde Navigation version
 
-        console.log('navbarOpen = ' + this.navbarOpen);
+        //console.log('navbarOpen = ' + this.navbarOpen);
     }
 
     isMobile(): boolean {
-        //console.log('isMobile = ' + (!this.isPhone && !this.isTablet));   causing too many logs
+        ////console.log('isMobile = ' + (!this.isPhone && !this.isTablet));   causing too many logs
         return !this.isPhone && !this.isTablet;
     }
 
@@ -70,18 +70,18 @@ export class NavbarComponent {
     }
     
     checkCookie(){
-        console.log('INSIDE navbar\' scheckCookie');
+        //console.log('INSIDE navbar\' scheckCookie');
         var cookieEnabled = navigator.cookieEnabled;
-        console.log('cookieEnabled = ' +  cookieEnabled);
+        //console.log('cookieEnabled = ' +  cookieEnabled);
         if (!cookieEnabled){ 
             // document.cookie = "testcookie";
             // cookieEnabled = document.cookie.indexOf("testcookie")!=-1;
-            // console.log('cookieEnabled INSIDE "if" satement = ' +  cookieEnabled);
+            // //console.log('cookieEnabled INSIDE "if" satement = ' +  cookieEnabled);
             this.isCookieEnabled = false;
         }
-        console.log('cookieEnabled OUTSIDE = ' +  cookieEnabled);
+        //console.log('cookieEnabled OUTSIDE = ' +  cookieEnabled);
         var cookieEnabledTwo = navigator.cookieEnabled;
-        console.log('cookieEnabledTwo = ' +  cookieEnabledTwo);
-        console.log('LEAVING navbar\' scheckCookie');
+        //console.log('cookieEnabledTwo = ' +  cookieEnabledTwo);
+        //console.log('LEAVING navbar\' scheckCookie');
     }
 }

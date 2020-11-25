@@ -18,11 +18,11 @@ export class NestedNavbarExampleComponent implements OnInit {
     isLoggedIn: boolean;
 
     ngOnInit(){
-        console.log('NestedNavbarExampleComponent inside ngOnInit()');
+        //console.log('NestedNavbarExampleComponent inside ngOnInit()');
         this._dataService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
-        console.log('this._auth.loggedIn() = ' + this._auth.loggedIn());
+        //console.log('this._auth.loggedIn() = ' + this._auth.loggedIn());
         this.isLoggedIn = this._auth.loggedIn();
-        console.log('this._auth.loggedIn() AFTER = ' + this._auth.loggedIn());
+        //console.log('this._auth.loggedIn() AFTER = ' + this._auth.loggedIn());
     }
 
     ngAfterContentInit() {

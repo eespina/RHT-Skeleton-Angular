@@ -1,6 +1,6 @@
 ﻿import { IExampleArray } from './exampleArray';
 
-export interface IExample {
+export interface IExample { //we've mixed IUser and IExample (angular). Should NOT be an issue creating new POCO/POJO entities in the future
     userId: string;
     email: string;
     firstName: string;

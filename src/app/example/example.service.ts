@@ -45,7 +45,7 @@ export class ExampleService {
     }
 
     updateExample(user: IUser): Observable<IUser> {
-        console.log('inside updateExample()');
+        //console.log('inside updateExample()');
         const httpOptions = { headers: new HttpHeaders({ 'Content-Type':  'application/json' }) };
         var updatedUser = this._http.put<IUser>(`${this.baseUrl}examples/${user.userName}`, user, httpOptions)
             .pipe(catchError(error => this._auth.handleError));
