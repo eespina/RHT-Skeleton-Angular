@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';  //HttpClientModule
 // import { HttpModule } from '@angular/http';
 //import {MatIconModule} from '@angular/animations/';
+// import { NestedExampleModule } from './nested/nested-example.module';
 
 //Services
 import { AuthService } from './user/auth.service';
@@ -23,8 +24,8 @@ import { RegisterComponent } from './user/register.component';
 import { LoginComponent } from './user/login.component';
 // import { HeaderComponent } from './shared/header.component';<!--depracated-->
 import { NavbarComponent } from './shared/navbar.component';
-import { NavbarTopComponent } from './shared/navbar-top.component';
-import { NestedExampleTopComponent } from './nested/nested-example-top.component';
+// import { NavbarTopComponent } from './shared/navbar-top.component';  //  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
+//import { NestedExampleTopComponent } from './nested/nested-example-top.component';    nested inside it's own module inside the NESTED folder
 import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { FooterComponent } from './shared/footer.component';
 
         //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)
         // ExampleModule,   //commented out to showcase Lazy Loading
-        
+        // NestedExampleModule,
+
         AppRoutingModule
         //InMemoryWebApiModule.forRoot()
     ],
@@ -45,9 +47,9 @@ import { FooterComponent } from './shared/footer.component';
         HomeComponent,
         LoginComponent,
         // HeaderComponent,<!--depracated-->
-        NestedExampleTopComponent,
+        //NestedExampleTopComponent,    nested inside it's own module inside the NESTED folder
         NavbarComponent,
-        NavbarTopComponent,
+        // NavbarTopComponent,  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
         FooterComponent,
         RegisterComponent,
         PageNotFoundComponent],

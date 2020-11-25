@@ -3,9 +3,6 @@ import { Router, RouterModule, Routes, PreloadAllModules } from '@angular/router
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './user/login.component';
 import { PageNotFoundComponent } from './shared/pageNotFound.component';
-import { NestedExampleTopComponent } from './nested/nested-example-top.component';
-import { NestedExampleChildOneComponent } from './nested/nested-example-child-one.component';
-import { NestedExampleChildTwoComponent } from './nested/nested-example-child-two.component';
 import { AuthGuard } from './user/auth-route-guard.service';
 // import { PreloaderService } from './shared/preloader.service';   TODO - maybe fix this
 import { AuthService } from './user/auth.service';
@@ -14,14 +11,14 @@ import { CustomPreloadingService } from './custom-preloading.service';
 const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    {
-        path: 'nested-example-top', component: NestedExampleTopComponent, canActivate: [AuthGuard],
-        children: [
-            { path: 'nested-example-child-one', component: NestedExampleChildOneComponent },
-            { path: 'nested-example-child-two', component: NestedExampleChildTwoComponent }
-        ]
-    },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
+    {
+        path: 'nested-examples',
+        data: {
+            preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
+        },
+        loadChildren: () => import('./nested/nested-example.module').then(m => m.NestedExampleModule)
+    },
     
     //, loadChildren: 'app/examples/example.module#ExampleModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,
     //Lazy Loading of Features in the future(ALSO, remove the 'path' attribute in the Feature Module's @ngModule RouterModule.forChild([ { path: [HERE] } ])..

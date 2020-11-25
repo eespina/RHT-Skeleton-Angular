@@ -1,31 +1,28 @@
-//<!--depracated, NOTHING in this file is being used (just reference, and can/should be deleted in a real project-->
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { DataService } from '../shared/data.service';
 
 @Component({
-    selector: 'navbar-top',
-    templateUrl: './navbar-top.component.html'
+    selector: 'nested-navbar-example',
+    templateUrl: './nested-navbar-example.html'
 })
-export class NavbarTopComponent {
-//THIS ENTIRE COMPONENT ALONGSIDE THE HTML IS NOT BEING USED
+export class NestedNavbarExampleComponent implements OnInit {
+
     constructor(private _auth: AuthService, private _dataService: DataService) { }
     isCookieEnabled: boolean = true;
     navbarOpen: boolean;
-    LogInOrLogOut: string;
     mobileW: string = '767';
     tabletW: string = '992';
     isPhone: boolean;
     isTablet: boolean;
     isLoggedIn: boolean;
-    
-    //toggleNavbar_click() { this.navbarOpen = !this.navbarOpen; }    
 
     ngOnInit(){
-        console.log('NavbarTopComponent inside ngOnInit()');
-        this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
+        console.log('NestedNavbarExampleComponent inside ngOnInit()');
         this._dataService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
+        console.log('this._auth.loggedIn() = ' + this._auth.loggedIn());
         this.isLoggedIn = this._auth.loggedIn();
+        console.log('this._auth.loggedIn() AFTER = ' + this._auth.loggedIn());
     }
 
     ngAfterContentInit() {
