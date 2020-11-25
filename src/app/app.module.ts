@@ -13,7 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';  //H
 import { AuthService } from './user/auth.service';
 import { AuthGuard } from './user/auth-route-guard.service';
 import { TokenInterceptorService } from './user/token-interceptor.service';
-import { ExampleSingletonService } from './example/exampleSingleton.service';
+// import { ExampleSingletonService } from './example/exampleSingleton.service';    //Moved to Example Module for lazy loading demostration purposes
 import { DataService } from './shared/data.service';
 
 //Componenets
@@ -60,7 +60,7 @@ import { FooterComponent } from './shared/footer.component';
         AuthService,
         AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
         DataService,    //Example of using a share-able service between the Login and Header Components (but can be used for much mroe userful shared services)
-        ExampleSingletonService //Moved back here from 'ExampleModule' due to lazy loading errors surrounding "NullInjectorError: No provider for Service, etc.."
+        // ExampleSingletonService    //Moved to Example Module for lazy loading demostration purposes
     ]
 })
 export class AppModule { }
