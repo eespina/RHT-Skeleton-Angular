@@ -7,7 +7,7 @@ import { IExample } from '../example/example';
 import { IExampleArray } from '../example/exampleArray';
 import { IUser } from './user';
 import { AuthService } from '../user/auth.service';
-import { of } from 'rxjs';
+import { of } from 'rxjs';  //this isn't being used
 
 @Component({
     selector: 'reactive-form-example',
