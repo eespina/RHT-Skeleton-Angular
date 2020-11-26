@@ -20,7 +20,7 @@ export class ExampleDisplayComponent implements OnInit, OnChanges {
             var change = changes[p];
             var from = JSON.stringify(change.previousValue);
             var to = JSON.stringify(change.currentValue);
-            console.log('changes from ' + from + ' to ' + to + '.');    //TODO - Get rid of this console logging.
+            //console.log('changes from ' + from + ' to ' + to + '.');    //TODO - Get rid of this console logging.
         }
     }
     
@@ -29,7 +29,7 @@ export class ExampleDisplayComponent implements OnInit, OnChanges {
     //  it errors the application due to multiple loading's of the "AppRoutingModule" module.
     //  Not every module that is to be lazy loaded should have to put up with that.
     onExample_click(userNameToPassAsParameter) {
-        console.log('inside onExample_click');
+        //console.log('inside onExample_click');
         this._router.navigate(['/examples/example', userNameToPassAsParameter]);
     }
 }

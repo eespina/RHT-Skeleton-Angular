@@ -12,6 +12,13 @@ const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
+    {
+        path: 'nested-examples',
+        data: {
+            preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
+        },
+        loadChildren: () => import('./nested/nested-example.module').then(m => m.NestedExampleModule)
+    },
     
     //, loadChildren: 'app/examples/example.module#ExampleModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,
     //Lazy Loading of Features in the future(ALSO, remove the 'path' attribute in the Feature Module's @ngModule RouterModule.forChild([ { path: [HERE] } ])..
@@ -52,6 +59,6 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule {
     constructor(private router: Router) {
-        console.log('Hey everybody, I\'m inside the AppRoutingModule constructor!');
+        //console.log('Hey everybody, I\'m inside the AppRoutingModule constructor!');
     }
 }

@@ -1,3 +1,4 @@
+//we've mixed IUser and IExample (angular). Should NOT be an issue creating new POCO/POJO entities in the future
 export interface IUser {    //DO NOT use these for both User and a person (example.ts stuff), for this is too much together
     // userId: string;
     firstName: string;

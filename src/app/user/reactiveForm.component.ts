@@ -7,6 +7,7 @@ import { IExample } from '../example/example';
 import { IExampleArray } from '../example/exampleArray';
 import { IUser } from './user';
 import { AuthService } from '../user/auth.service';
+import { of } from 'rxjs';  //this isn't being used
 
 @Component({
     selector: 'reactive-form-example',
@@ -82,8 +83,8 @@ export class ReactiveFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router, private _auth: AuthService) { }
 
     ngOnInit() {
-        console.log("inside ReactiveFormComponent.ngOnInit");
-        console.log("isUpdate is " + this.isUpdate);
+        //console.log("inside ReactiveFormComponent.ngOnInit");
+        //console.log("isUpdate is " + this.isUpdate);
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -112,24 +113,24 @@ export class ReactiveFormComponent implements OnInit {
         //firstName - subscribe to the valueChanges observable of firstName formControl
         this.reactiveFormGroup.get('firstName').valueChanges.subscribe(value => {
             //specify an annonymous function that gets executed everytime the value of the formControl changes
-            console.log('firstName value changed to "' + value + '"');
+            //console.log('firstName value changed to "' + value + '"');
         });
 
         //lastName - subscribe to the valueChanges observable of lastName formControl
         this.reactiveFormGroup.get('lastName').valueChanges.subscribe((val: string) => {
-            console.log('lastName value length is ' + val.length);
+            //console.log('lastName value length is ' + val.length);
         });
 
         //subscribe to the ROOT form group
         this.reactiveFormGroup.valueChanges.subscribe((jsonValue: any) => {   //'any' is the default type
             //specify an annonymous function that gets executed everytime the value of the formControl changes
-            console.log('form changed to (json) of ' + JSON.stringify(jsonValue));
+            //console.log('form changed to (json) of ' + JSON.stringify(jsonValue));
         });
 
         //subscribe to the NESTED form group
         this.reactiveFormGroup.get('nestedGroup').valueChanges.subscribe((jsonValue: any) => {   //'any' is the default type
             //specify an annonymous function that gets executed everytime the value of the formControl changes
-            console.log('NESTED form changed to (json) of ' + JSON.stringify(jsonValue));
+            //console.log('NESTED form changed to (json) of ' + JSON.stringify(jsonValue));
         });
 
         //automatically do the validation logic through subscription
@@ -146,32 +147,33 @@ export class ReactiveFormComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             //create a const to store the passing parameter
             const userName = params.get('userName');
-            console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
+            //console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
             if(userName && userName != '0'){
-                console.log(`userId of ${userName} was passed`);
+                //console.log(`userId of ${userName} was passed`);
                 this.getEditExample(userName) //this MAY already be in another service (to get the specific example according to the ID)
                 this.isUpdate = true;
                 this.registerOrUpdate = 'UPDATE';
             }
             else{
                 //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
-                console.log(`userId was NOT passed, so eID was ${userName}`);
+                //console.log(`userId was NOT passed, so eID was ${userName}`);
                 this.isUpdate = false;
                 this.registerOrUpdate = 'REGISTER';
             }
-            console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
+            //console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
         });
-        console.log("isUpdate is " + this.isUpdate);
-        console.log("Leaving ReactiveFormComponent.ngOnInit method");
+        //console.log("isUpdate is " + this.isUpdate);
+        //console.log("Leaving ReactiveFormComponent.ngOnInit method");
     }
 
     getEditExample(userName: string){
-        console.log('inside getEditExample');
+        //console.log('inside getEditExample');
         this.exampleService.getExampleById(userName).subscribe(
             (exData) => {
                 if (exData == null){
-                    console.log('getExampleById returned NO data');
+                    //console.log('getExampleById returned NO data');
                 } else {
+                    //console.log('Example Array is = ' + JSON.stringify(exData));
                     this.loadRealDataPatchClick(exData);    //load the entire example data using this PATCH method
 
                     //populate the example property
@@ -179,13 +181,23 @@ export class ReactiveFormComponent implements OnInit {
                 }
             },
             (error) => {
-                console.log(error);
+                //console.log(error);
             });
     }
 
-    loadRealDataPatchClick(example: IExample){
+    loadRealDataPatchClick(example: IExample){  //NOT loading properly because we've collaborated IExampel and IUser irresposnsibly
+        // if(example){
+        //     if(example.exampleArray){
+        //         console.log('example.exampleArray.COUNT = ' + example.exampleArray.length);
+        //         console.log('Example Array is = ' + JSON.stringify(example));
+        //     } else {
+        //         console.log('example.exampleArray is, unfortunately, at ' + example.exampleArray);
+        //     }
+        //     console.log('example is, unfortunately, at ' + example);
+        // }
+
         //we want to bind the retreived example details to the form controls on the reactiveForm
-        console.log('inside loadRealDataPatchClick()');
+        //console.log('inside loadRealDataPatchClick()');
         this.reactiveFormGroup.patchValue({
             firstName: example.firstName,
             lastName: example.lastName,
@@ -193,23 +205,26 @@ export class ReactiveFormComponent implements OnInit {
             email: example.email,
             password: example.password
         });
-        console.log('example.exampleArray.COUNT = ' + example.exampleArray.length);
+        
         //Binding existing data to a form array, use the SET CONTROL method
         this.reactiveFormGroup.setControl('dynamicNestedGroup', this.setExistingDynamicFormGroupWithFakeData(example.exampleArray)) //use this method to replace an existing control (in this case, its the fff array)
     }
 
     setExistingDynamicFormGroupWithFakeData(dynamicExampleSet: IExampleArray[]): FormArray{
-        console.log('inside setExistingDynamicFormGroupWithFakeData method');
+        // console.log('inside setExistingDynamicFormGroupWithFakeData method');
         let formArray = new FormArray([]);
-        
-        //loop through each dynamicExample set
-        dynamicExampleSet.forEach(d => {
-            formArray.push( this.fb.group({
-                dynamicNestedGroupName: d.dynamicNestedGroupName,
-                dynamicExperienceInYears: d.dynamicExperienceInYears,
-                dynamicProficiency: d.dynamicProficiency
-            }));
-        });
+        if(dynamicExampleSet && dynamicExampleSet.length > 0){            
+            // console.log('THERE ARE dynamicExampleSet.');
+            //loop through each dynamicExample set
+            dynamicExampleSet.forEach(d => {
+                formArray.push( this.fb.group({
+                    dynamicNestedGroupName: d.dynamicNestedGroupName,
+                    dynamicExperienceInYears: d.dynamicExperienceInYears,
+                    dynamicProficiency: d.dynamicProficiency
+                }));
+            });
+
+        }
 
         return formArray;
     }
@@ -241,7 +256,7 @@ export class ReactiveFormComponent implements OnInit {
 
     loadFakeDataClick(): void {
 
-        console.log('inside loadFakeDataClick method');
+        //console.log('inside loadFakeDataClick method');
 
         //-------------------------- FormArray Example
         const formArray = new FormArray([//can create a Formarray like this, with the 'new' keyword
@@ -252,7 +267,7 @@ export class ReactiveFormComponent implements OnInit {
             new FormArray([])
         ]);
 
-        console.log(formArray.length);  //should print out the number '3' for each indece in the formArray
+        //console.log(formArray.length);  //should print out the number '3' for each indece in the formArray
 
         //iterate over each index (FormControl, FormGroup or FormArray) in the array
         for (const control of formArray.controls) {
@@ -324,13 +339,13 @@ export class ReactiveFormComponent implements OnInit {
 
         //now we're also logging to the console through the following method
         this.logValidationErrors(this.reactiveFormGroup);
-        console.log('loadFakeDataClick are ' + this.formErrors + '. FINISHED with the method');
+        //console.log('loadFakeDataClick are ' + this.formErrors + '. FINISHED with the method');
     }
 
     //This is the PATCH version that would NOT include the nested values. If you used the setValue in the "loadFakeDataClick()" function,
     //without the nested values, it will complain about not having the nested elements included
     loadFakeDataPatchClick(): void {
-        console.log('inside loadFakeDataPatchClick()');
+        //console.log('inside loadFakeDataPatchClick()');
         this.reactiveFormGroup.patchValue({
             firstName: 'FakeFirstname',
             lastName: 'FakeLastName',
@@ -342,12 +357,12 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.log('inside ReactiveForm\'s onSubmit()');
-        console.log(this.reactiveFormGroup.value);  //right now, just prints the object
+        //console.log('inside ReactiveForm\'s onSubmit()');
+        //console.log(this.reactiveFormGroup.value);  //right now, just prints the object
 
         if (this.mapFormValuesToExamplesModel()){
             //Do we care if it's a Register or an Update ???
-            console.log('mapFormValuesToExamplesModel returned TRUE');
+            //console.log('mapFormValuesToExamplesModel returned TRUE');
 
             if(this.isUpdate){
                 this.exampleService.updateExample(this.user).subscribe(  //subscribe to the observable that returns void
@@ -358,11 +373,11 @@ export class ReactiveFormComponent implements OnInit {
                 this._auth.registerUser(this.user)
                 .subscribe(
                     () => {
-                        console.log('user ' + this.user.userName + ' CREATED');
+                        //console.log('user ' + this.user.userName + ' CREATED');
                         this.router.navigate(['/examples/example', this.user.userName]);
                     },
                     (error: any)  => {
-                        console.log('Changes not saved');
+                        //console.log('Changes not saved');
                         //TODO - create a message to the user about the error(s)
                         console.log('ERROR inside onSubmit Creating User: ' + JSON.stringify(error));
                     });
@@ -371,7 +386,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     mapFormValuesToExamplesModel(): boolean{
-        console.log('inside mapFormValuesToExamplesModel(): ' + this.reactiveFormGroup.value.firstName + ' and ' + this.reactiveFormGroup.value.password);
+        //console.log('inside mapFormValuesToExamplesModel(): ' + this.reactiveFormGroup.value.firstName + ' and ' + this.reactiveFormGroup.value.password);
         try{
 
             //TODO - REMEMBER to check if there are values for the required fields. Required fields are established in the API, so if you send this will empty data, a 400 may get returned from the API
@@ -382,7 +397,7 @@ export class ReactiveFormComponent implements OnInit {
             this.user.userName = this.reactiveFormGroup.value.userName;
             this.user.administeringUserEmail = this._auth.loggedInUser.email;
             this.user.userType = { id: 2, name:''};
-            console.log('this._auth.loggedInUser.email = ' + this._auth.loggedInUser.email);
+            //console.log('this._auth.loggedInUser.email = ' + this._auth.loggedInUser.email);
             return true;
             
         } catch (ex){
@@ -394,7 +409,7 @@ export class ReactiveFormComponent implements OnInit {
     //An example of looping through each control in the group. useful for Rest of controls, enable/disable form controls validation set/clears, mark dirty/touch/etc..
     logValidationErrors(group: FormGroup = this.reactiveFormGroup): void {   //use " = this.reactiveFormGroup" to set it as the default value. doing this makes us not have to specify a value for this parameter when we call it from the template 
         //retreive all the keys we have in the group, and just prints them out to the log (notice it does NOT log the nested group)
-        console.log(Object.keys(group.controls));
+        //console.log(Object.keys(group.controls));
 
         //use a loop with a forEach
         Object.keys(group.controls).forEach((key: string) => {//get all the keys and loop over each key
@@ -432,7 +447,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     DisableNestFormClick() {    //example of disabling the NESTED controls only
-        console.log('DisableNestFormClick() method ENTERED');
+        //console.log('DisableNestFormClick() method ENTERED');
         const group = this.reactiveFormGroup;
         Object.keys(group.controls).forEach((key: string) => {//use a loop with a forEach to get all the keys and loop over each key
             //the abstractControl variable can be, either, a FormControl or a NESTED FormGroup, so we need to check which it is
@@ -463,7 +478,7 @@ export class ReactiveFormComponent implements OnInit {
 
     //dynamically add a dynamic formgrouping
     addDynamicFormGroup(): FormGroup {
-        console.log('addDynamicFormGroup - Adding a new Dynamic Group');
+        //console.log('addDynamicFormGroup - Adding a new Dynamic Group');
         return this.fb.group({
             dynamicNestedGroupName: ['', Validators.required],
             dynamicExperienceInYears: ['', Validators.required],
@@ -472,12 +487,12 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     addDynamicGroupButton_Click(): void {
-        console.log('addDynamicGroupButton_Click - ADDING a new Dynamic Group');
+        //console.log('addDynamicGroupButton_Click - ADDING a new Dynamic Group');
         (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup')).push(this.addDynamicFormGroup());   //need to type cast it into a FormArray to be able to use the 'push' method
     }
 
     removeDynamicGroup_click(index: number): void {
-        console.log('removeDynamicGroup_click - REMOVING an existing Dynamic Group');
+        //console.log('removeDynamicGroup_click - REMOVING an existing Dynamic Group');
         const exampleArray = (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup'));
         exampleArray.removeAt(index);
         exampleArray.markAsDirty();

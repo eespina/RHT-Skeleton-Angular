@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 //Services
 import { ExampleService } from './example.service'; //COULD have stayed in the root module, but moved here since this is specific to EXAMPLE things anyway
+import { ExampleSingletonService } from './exampleSingleton.service';
 
 //Components
 import { ExampleDisplayComponent } from './example-display.component';
@@ -31,7 +32,8 @@ import { ReactiveFormComponent } from '../user/reactiveForm.component';
     ExampleComponent
   ],
   providers: [
-    ExampleService
+    ExampleService,
+    ExampleSingletonService
   ],
   exports: [
 
