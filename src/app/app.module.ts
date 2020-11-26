@@ -50,16 +50,20 @@ import { NestedExampleTopComponent } from './nested/nested-example-top.component
         AppComponent,
         HomeComponent,
         LoginComponent,
-        NestedNavbarExampleComponent,
-        NestedExampleTopComponent,
-        NestedExampleChildOneComponent,
-        NestedExampleChildTwoComponent,
         // HeaderComponent,<!--depracated-->
         //NestedExampleTopComponent,    nested inside it's own module inside the NESTED folder
         NavbarComponent,
         // NavbarTopComponent,  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
         FooterComponent,
         RegisterComponent,
+
+        //I want these inside the 'NestedExampleModule', but the links don't work. There's no error, but the links are missing necessary angualr attributes
+        NestedNavbarExampleComponent,
+        NestedExampleTopComponent,
+        NestedExampleChildOneComponent,
+        NestedExampleChildTwoComponent,
+
+
         PageNotFoundComponent],
     bootstrap: [
         AppComponent
