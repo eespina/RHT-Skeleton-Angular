@@ -9,8 +9,8 @@
 <td>{{ example.firstName }}</td>
 <td [ngSwitch]="example.lastName"><!--Switch Case statement example-->
     <!--NOT WORKING at the moment, just shows the 'ngSwitchDefault' value , hmm-->
-    <span *ngSwitchCase="'Enrico'">Me</span>
-    <span *ngSwitchCase="'TestLastName'">NotMe</span>
+    <span *ngSwitchCase="'Enrico'">Me3</span>
+    <span *ngSwitchCase="'Kahoutek'">You</span>
     <span *ngSwitchDefault>{{ example.lastName | uppercase }}</span><!--NOT included are "Pipe" material such as CUSTOM Pipes, Pure or impure pipes. it's just this simple pipe example-->
 </td>
 

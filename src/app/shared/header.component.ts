@@ -1,3 +1,4 @@
+//<!--depracated, NOTHING in this file is being used (just reference, and can/should be deleted in a real project-->
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { Router } from '@angular/router'
@@ -6,6 +7,7 @@ import { Router } from '@angular/router'
     selector: 'app-header',
     templateUrl: './header.component.html'
 })
+//<!--depracated-->
 export class HeaderComponent implements OnInit {
     mobileW: string = '767';
     tabletW: string = '992';

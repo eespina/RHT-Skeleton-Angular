@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { ExampleSingletonService } from '../example/exampleSingleton.service';
+// import { ExampleSingletonService } from '../example/exampleSingleton.service';
 
 @Component({
     templateUrl: './home.component.html'
@@ -12,7 +12,7 @@ import { ExampleSingletonService } from '../example/exampleSingleton.service';
 })
 export class HomeComponent {
 
-    constructor(private _exampleSingletonService: ExampleSingletonService) { }
+    // constructor(private _exampleSingletonService: ExampleSingletonService) { }
 
     ngOnInit() {
         this.homeComponentHandler();
@@ -33,6 +33,7 @@ export class HomeComponent {
         //};
     }
 
+    /*  This has been moved
     get color(): string {
         return this._exampleSingletonService.colorPreference;
     }
@@ -40,4 +41,5 @@ export class HomeComponent {
     set color(value: string) {
         this._exampleSingletonService.colorPreference = value;
     }
+    */
 }

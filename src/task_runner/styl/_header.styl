@@ -1,90 +1,186 @@
 header
-	position fixed
-	width 100%
-	z-index 1
-#primary-nav
-	margin-top 0px
-	transition .6s ease-in-out
-	background-color $color-primary
-	.name-description
-		bottom 25px
-		left 10px
-		position absolute
-		display none
-		h1
-			font-size 24px
-			display inline
-			color $color-primary
-		p
-			display inline
-			color $color-primary
-		@media $desktop-up
-			position fixed
-			top 10px
-			display block
-	.nav-right-list
-		right 0px
-		list-style-type none
-		position fixed
-		li
-			display inline
-			margin 15px
-			a
-				color $color-primary
-#primary-nav.open
-	right 0px
-	.nav-right-list
+//Side-nav included version
+	.navbar//Bootstrap-Overrides
+		z-index 6
 		width 100%
-		background-color $color-primary
-		li
+	.sidenav
+		height 100%
+		width 250px
+		position fixed
+		z-index 1
+		top 0
+		left 0
+		background-color #111
+		overflow-x hidden
+		transition 0.5s
+		padding-top 60px
+		a
+			padding 8px 8px 8px 32px
+			text-decoration none
+			font-size 25px
+			color #818181
 			display block
-			a
-				color $color-off-white
+			transition 0.3s
+		.closebtn
+			position absolute
+			top 15px
+			right 15px
+			font-size 36px
+			margin-left 50px
+			background transparent
+			border none
+			color $color-off-white
+			transform rotate(135deg)
+			-webkit-transform rotate(135deg)
+			.arrow
+				border solid $color-off-white
+				border-width 0 5px 5px 0
+				display inline-block
+				padding 3px
+		.closebtn:focus
+			outline none !important
+	.sideNav-closed
+		height 100%
+		width 50px
+		position fixed
+		z-index 1
+		top 0
+		left 0
+		background-color #111
+		overflow-x hidden
+		transition 0.5s
+		padding-top 60px
+		ul
+			display none
+		.closebtn
+			position absolute
+			top 0
+			right 15px
+			font-size 36px
+			margin-left 50px
+			background transparent
+			border none
+			color $color-off-white
+			transform rotate(-45deg)
+			-webkit-transform rotate(-45deg)
+			.arrow
+				border solid $color-off-white
+				border-width 0 5px 5px 0
+				display inline-block
+				padding 3px
+		.closebtn:focus
+			outline none !important
+	@media screen and (max-height 450px)
+		.sidenav
+			padding-top 15px
+		.sidenav a
+			font-size 18px
+//Side-nav included version
 
-/*	Hamburger Button Styles */
-#mobile-button-section
-	background-color $color-primary
-	padding 15px 0px
-	min-height 70px
-	@media $desktop-up
-		display none
-#btn-nav-menu
-	width 40px
-	height 35px
-	position absolute
-	transform rotate(0deg)
-	transition .5s ease-in-out
-	cursor pointer
-	right 15px
-#btn-nav-menu span
-	display block
-	position absolute
-	height 6px
-	width 100%
-	background $color-secondary
-	border-radius 2px
-	opacity 1
-	left 0
-	transform rotate(0deg)
-	transition .25s ease-in-out
-#btn-nav-menu span:nth-child(1)
-	top 0px
-#btn-nav-menu span:nth-child(2), #btn-nav-menu span:nth-child(3)
-	top 15px
-#btn-nav-menu span:nth-child(4)
-	top 30px
-#btn-nav-menu.open span:nth-child(1)
-	top 18px
-	width 0%
-	left 50%
-#btn-nav-menu.open span:nth-child(2)
-	transform rotate(45deg)
-#btn-nav-menu.open span:nth-child(3)
-	transform rotate(-45deg)
-#btn-nav-menu.open span:nth-child(4)
-	top 18px
-	width 0%
-	left 50%
-#loginLogoutPlaceholder
-	cursor pointer
-	color $color-primary
+
+// //BELOW is the non-side Nav way of the header
+// 	position fixed
+// 	width 100%
+// 	z-index 1
+// 	.mr-auto-not-working
+// 		position fixed
+// 		right 0
+// 		top 0
+// 		li
+// 			margin-right 25px
+// 			margin-top 10px
+// #loginLogoutPlaceholder
+// 	cursor pointer
+// 	color $color-primary
+
+// //BELOW is the OLD way of the header (depracted)
+// header
+// 	position fixed
+// 	width 100%
+// 	z-index 1
+// #primary-nav
+// 	margin-top 0px
+// 	transition .6s ease-in-out
+// 	background-color $color-primary
+// 	.name-description
+// 		bottom 25px
+// 		left 10px
+// 		position absolute
+// 		display none
+// 		h1
+// 			font-size 24px
+// 			display inline
+// 			color $color-primary
+// 		p
+// 			display inline
+// 			color $color-primary
+// 		@media $desktop-up
+// 			position fixed
+// 			top 10px
+// 			display block
+// 	.nav-right-list
+// 		right 0px
+// 		list-style-type none
+// 		position fixed
+// 		li
+// 			display inline
+// 			margin 15px
+// 			a
+// 				color $color-primary
+// #primary-nav.open
+// 	right 0px
+// 	.nav-right-list
+// 		width 100%
+// 		background-color $color-primary
+// 		li
+// 			display block
+// 			a
+// 				color $color-off-white
+
+// /*	Hamburger Button Styles */
+// #mobile-button-section
+// 	background-color $color-primary
+// 	padding 15px 0px
+// 	min-height 70px
+// 	@media $desktop-up
+// 		display none
+// #btn-nav-menu
+// 	width 40px
+// 	height 35px
+// 	position absolute
+// 	transform rotate(0deg)
+// 	transition .5s ease-in-out
+// 	cursor pointer
+// 	right 15px
+// #btn-nav-menu span
+// 	display block
+// 	position absolute
+// 	height 6px
+// 	width 100%
+// 	background $color-secondary
+// 	border-radius 2px
+// 	opacity 1
+// 	left 0
+// 	transform rotate(0deg)
+// 	transition .25s ease-in-out
+// #btn-nav-menu span:nth-child(1)
+// 	top 0px
+// #btn-nav-menu span:nth-child(2), #btn-nav-menu span:nth-child(3)
+// 	top 15px
+// #btn-nav-menu span:nth-child(4)
+// 	top 30px
+// #btn-nav-menu.open span:nth-child(1)
+// 	top 18px
+// 	width 0%
+// 	left 50%
+// #btn-nav-menu.open span:nth-child(2)
+// 	transform rotate(45deg)
+// #btn-nav-menu.open span:nth-child(3)
+// 	transform rotate(-45deg)
+// #btn-nav-menu.open span:nth-child(4)
+// 	top 18px
+// 	width 0%
+// 	left 50%
+// #loginLogoutPlaceholder
+// 	cursor pointer
+// 	color $color-primary

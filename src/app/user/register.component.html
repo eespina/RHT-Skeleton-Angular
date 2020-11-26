@@ -36,7 +36,7 @@
                         </div>
 
                         <button type="button" (click)="registerUser(registrationForm)" class="btn btn-primary float-right" [disabled]="registrationForm.invalid" >Register</button>
-                        <label class="lbl-error" id="lblResult">Error Occurred</label>
+                        <label id="lblResult" [ngClass]="{ 'lbl-form-success' : isSuccessfulRegistration, 'lbl-form-error' : !isSuccessfulRegistration }" [hidden]="!isResultVisible">{{lblResultContent}}</label>
                     </form>
                 </div>
                 <!--/card-block-->
