@@ -5,7 +5,6 @@ import { NestedExampleChildOneComponent } from './nested-example-child-one.compo
 import { NestedExampleChildTwoComponent } from './nested-example-child-two.component';
 import { NestedExampleTopComponent } from './nested-example-top.component';
 
-
 const appRoutes: Routes = [
     //Lazy Loading requires that all the routes in the module to lazy load should have the same prefix.
     //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)    
