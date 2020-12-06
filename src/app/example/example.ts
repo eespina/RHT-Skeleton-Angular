@@ -8,7 +8,7 @@ export interface IExample { //we've mixed IUser and IExample (angular). Should N
     userName: string;
     createDate: Date;
     isActive: Boolean;
-    password: string;
+    //password: string;//this SHOULD no longer be needed in any manner since we're using request headers at the moment
     exampleArray: IExampleArray[];
 	nullExampleProperty?: string;   //This exists to show an example of possible null information (does NOT exist)
 

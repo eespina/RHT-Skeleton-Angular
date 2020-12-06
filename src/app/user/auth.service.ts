@@ -23,6 +23,8 @@ export class AuthService {
 
     encryptedUsername: string;
     encryptedPassword: string;
+    decryptedUsername: string;
+    decryptedPassword: string;
     redirectUrl: string;
     loggedInUser: IUser;
     isSessionLoggedIn: boolean;
@@ -31,7 +33,13 @@ export class AuthService {
         this.isSessionLoggedIn = false;
     }
 
-    registerUser(registeringUser): Observable<IUser> {
+    registerUser(registeringUser, formPassword): Observable<IUser> {
+        
+        //NOT tested, let's hope this works
+        this.encryptUsingAES256(formPassword, false);
+        let headers = new HttpHeaders();
+        headers = headers.append('password', formPassword.toString());
+
         let registrationResponse = this._http.post<IUser>(this._registerUrl, registeringUser)
             //.map((response: Response) => <IUser>response.json())  //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>.
             //You no longer need to call the '.map' function above yourself.
@@ -45,7 +53,6 @@ export class AuthService {
 
         this.encryptUsingAES256(loginUser.userName, true);
         this.encryptUsingAES256(loginUser.password, false);
-        // let sendingUser = { userName: loginUser.userName, password: loginUser.password } as ILoginInfo;
 
         let headers = new HttpHeaders();
         headers = headers.append('username', this.encryptedUsername.toString());
@@ -119,7 +126,7 @@ export class AuthService {
         console.log('Encrypted: ' + encrypted);
     }
 
-    decryptUsingAES256(decString) {
+    decryptUsingAES256(decString) : string {
         var decrypted = CryptoJS.AES.decrypt(decString, this.key, {
             keySize: 128 / 8,
             iv: this.iv,
@@ -128,5 +135,6 @@ export class AuthService {
         });
         // console.log('Decrypted: ' + decrypted);
         // console.log('utf8 = ' + decrypted.toString(CryptoJS.enc.Utf8));
+        return decrypted;
     }
 }

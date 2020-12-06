@@ -25,8 +25,11 @@ import { LoginComponent } from './user/login.component';
 // import { HeaderComponent } from './shared/header.component';<!--depracated-->
 import { NavbarComponent } from './shared/navbar.component';
 // import { NavbarTopComponent } from './shared/navbar-top.component';  //  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
-//import { NestedExampleTopComponent } from './nested/nested-example-top.component';    nested inside it's own module inside the NESTED folder
 import { FooterComponent } from './shared/footer.component';
+
+//I want these inside the 'NestedExampleModule', but the links don't work.
+//There's no error, but the links are missing necessary Angular attributes when inspected in a web browser
+//As such, there is no Lazy loading for the 'Nested' material
 import { NestedNavbarExampleComponent } from './nested/nested-navbar-example';
 import { NestedExampleChildOneComponent } from './nested/nested-example-child-one.component';
 import { NestedExampleChildTwoComponent } from './nested/nested-example-child-two.component';
@@ -57,7 +60,9 @@ import { NestedExampleTopComponent } from './nested/nested-example-top.component
         FooterComponent,
         RegisterComponent,
 
-        //I want these inside the 'NestedExampleModule', but the links don't work. There's no error, but the links are missing necessary angualr attributes
+        //I want these inside the 'NestedExampleModule', but the links don't work.
+        //There's no error, but the links are missing necessary Angular attributes when inspected in a web browser
+        //As such, there is no Lazy loading for the 'Nested' material
         NestedNavbarExampleComponent,
         NestedExampleTopComponent,
         NestedExampleChildOneComponent,

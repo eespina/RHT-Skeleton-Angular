@@ -19,7 +19,7 @@ export class ReactiveFormComponent implements OnInit {
     registerOrUpdate: string;
     example: IExample;
     user: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
-        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
+        firstName: '', lastName: '', userName: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
             , tokenHandleViewModel: { expiration: new Date(), token: ''}, isActive: true
         //, CurrentAdministeringUser: '', userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
     } as IUser; //needed to Updating and Registration
@@ -97,7 +97,7 @@ export class ReactiveFormComponent implements OnInit {
                 confirmEmail: ['', Validators.required]
             }, { validator: CustomValidators.matchEmailValidator }),//tie the customer validator function to the nested form group
             phone: [''],
-            password: [''],
+            formPassword: [''],
             nestedGroup: this.fb.group({
                 nestedGroupName: [''],
                 experienceInYears: ['6'],   /// '6' is an example of using the default value
@@ -203,7 +203,7 @@ export class ReactiveFormComponent implements OnInit {
             lastName: example.lastName,
             userName: example.userName,
             email: example.email,
-            password: example.password
+            formPassword: ''
         });
         
         //Binding existing data to a form array, use the SET CONTROL method
@@ -241,7 +241,7 @@ export class ReactiveFormComponent implements OnInit {
             userName: new FormControl(),
             email: new FormControl(),
             phone: new FormControl(),
-            password: new FormControl(),
+            formPassword: new FormControl(),
 
             //Nested Form Group Examples (not yet persisted in any kind of memory)
             nestedGroup: new FormGroup({
@@ -320,7 +320,7 @@ export class ReactiveFormComponent implements OnInit {
             lastName: '',
             userName: 'FakeUserName',
             phone: '1234568',
-            password: 'FakePassword',
+            formPassword: 'FakePassword',
             contactPreference: '',
 
             //Nested Form Group Examples (not yet persisted in any kind of memory)
@@ -352,7 +352,7 @@ export class ReactiveFormComponent implements OnInit {
             userName: 'FakeUserName',
             email: 'fake@email.com',
             phone: '1234568',
-            password: 'FakePassword'
+            formPassword: 'FakePassword'
         });
     }
 
@@ -365,12 +365,12 @@ export class ReactiveFormComponent implements OnInit {
             //console.log('mapFormValuesToExamplesModel returned TRUE');
 
             if(this.isUpdate){
-                this.exampleService.updateExample(this.user).subscribe(  //subscribe to the observable that returns void
+                this.exampleService.updateExample(this.user, this.reactiveFormGroup.value.formPassword).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
                     () => this.router.navigate(['/examples/example', this.example.userName]),
                     (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error)));
             } else {
-                this._auth.registerUser(this.user)
+                this._auth.registerUser(this.user, this.reactiveFormGroup.value.formPassword)
                 .subscribe(
                     () => {
                         //console.log('user ' + this.user.userName + ' CREATED');
@@ -392,7 +392,6 @@ export class ReactiveFormComponent implements OnInit {
             //TODO - REMEMBER to check if there are values for the required fields. Required fields are established in the API, so if you send this will empty data, a 400 may get returned from the API
             this.user.firstName = this.reactiveFormGroup.value.firstName;
             this.user.email = this.reactiveFormGroup.value.emailGroup.email;
-            this.user.password = this.reactiveFormGroup.value.password;
             this.user.lastName = this.reactiveFormGroup.value.lastName;
             this.user.userName = this.reactiveFormGroup.value.userName;
             this.user.administeringUserEmail = this._auth.loggedInUser.email;

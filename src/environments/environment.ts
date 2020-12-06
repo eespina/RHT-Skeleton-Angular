@@ -7,7 +7,8 @@ export const environment = {
   cryptoKey: '4139178281695088',
   registerUrl: 'http://localhost:53465/account/registeruser',
   loginUrl: 'http://localhost:53465/account/login',
-  logoutUrl: 'http://localhost:53465/account/logout'
+  logoutUrl: 'http://localhost:53465/account/logout',
+  baseUrl: 'http://localhost:53465/api/'
 };
 
 /*
