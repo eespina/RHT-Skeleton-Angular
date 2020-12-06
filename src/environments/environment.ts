@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  cryptoKey: '4139178281695088',
+  registerUrl: 'http://localhost:53465/account/registeruser',
+  loginUrl: 'http://localhost:53465/account/login',
+  logoutUrl: 'http://localhost:53465/account/logout'
 };
 
 /*

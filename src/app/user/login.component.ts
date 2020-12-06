@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
         //console.log('INSIDE loginUser. successfulLogin = ' + this.isSuccessfulLogin);
         if (this.loginUserInfo.userName != '' && this.loginUserInfo.password != '') {
-            //console.log('login INFO is NOT blank');
+            // console.log('login INFO is NOT blank' + JSON.stringify(this.loginUserInfo))
             this._auth.loginUser(this.loginUserInfo)
                 .subscribe(
                 res => {
