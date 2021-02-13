@@ -3,26 +3,25 @@ import { Router } from '@angular/router';
 import { IExample } from './example';
 // import { Http } from '@angular/http'; //import { Http, Response } from '@angular/http'; (NOT using Response here, it's been moved to the AuthService)
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../user/auth.service';
 // import 'rxjs/operator/map';
 // import 'rxjs/operator/catch';
 // import 'rxjs/observable/throw';
 import { IUser } from '../user/user';
 import 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 //import 'rxjs/add/Observable/of';    //perhaps ANOTHER way of doing a get from somewhere (probably from in-memory data)
 //import 'rxjs/add/operator/toPromise';
+import { environment } from '../../environments/environment';   //TODO - figure out how to use ALL environments. WHY can't I use it in a generic manner now??
 
 @Injectable()
 export class ExampleService {
     constructor(private _http: HttpClient, private _router: Router, private _auth: AuthService) { }
 
-    baseUrl: string = "http://localhost:53465/api/"
-
     getExamples(): Observable<IExample[]> {
         //var examples = this._http.get<IExample[]>('http://localhost:53465/api/examples').delay(4130)    //can ALSO use this as an alternative (includes the '<IExample[]>' as the type returned from the observable)
-        var examples = this._http.get<IExample[]>(`${this.baseUrl}examples/`)//.delay(4130)    //delay is just used to test the loading words and css animation
+        var examples = this._http.get<IExample[]>(environment.baseUrl + 'examples/')//.delay(4130)    //delay is just used to test the loading words and css animation
             //.map((response: Response) => <IExample[]>response.json())
             //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
 
@@ -36,7 +35,7 @@ export class ExampleService {
     }
 
     getExampleById(exampleUserName: string): Observable<IExample> {
-        return this._http.get<IExample>(`${this.baseUrl}examples/${exampleUserName}`)   //string literal examples
+        return this._http.get<IExample>(environment.baseUrl + 'examples/' + exampleUserName)   //string literal examples
             //.map((response: Response) => <IExample>response.json())
             //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
 
@@ -44,13 +43,34 @@ export class ExampleService {
             .pipe(catchError(error => this._auth.handleError(error)));
     }
 
-    updateExample(user: IUser): Observable<IUser> {
-        //console.log('inside updateExample()');
-        const httpOptions = { headers: new HttpHeaders({ 'Content-Type':  'application/json' }) };
-        var updatedUser = this._http.put<IUser>(`${this.baseUrl}examples/${user.userName}`, user, httpOptions)
-            .pipe(catchError(error => this._auth.handleError));
-        
-        return updatedUser;
+    //this currently does nothing, it just returns mocked data back from the server
+    updateExample(user: IUser, password: string): Observable<IUser> {
+        console.log('inside updateExample()');
+        if (password) {
+            this._auth.encryptUsingAES256(password, false);
+            const httpOptions = {
+                headers: new HttpHeaders(
+                    {
+                        'Content-Type': 'application/json',
+                        'old-password': this._auth.encryptedPassword.toString(),
+                        'new-password': this._auth.encryptedPassword.toString()
+                    })
+            };
+            
+            var updatedUser = this._http.put<IUser>(environment.baseUrl + 'examples/' + user.userName, user, httpOptions)
+            .pipe(
+                //TODO - use 'tap' if you ever wanna get response data. in this case, IUser is the equivelant to OwnerViewModel on the Server end
+                tap((newUser: IUser) => console.log(`added new user with userName = ${newUser.userName}`)),
+                catchError(error => this._auth.handleError(error))
+              );            
+
+            console.log('LEAVING updateExample()');
+
+            return updatedUser;
+
+        } else {
+            throwError('The Password\'s EMPTY')
+        }
     }
 
     //handleError(error: Response) {

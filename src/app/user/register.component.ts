@@ -12,8 +12,9 @@ export class RegisterComponent implements OnInit {
     isResultVisible: boolean = false;
     isSuccessfulRegistration: boolean = false;
     lblResultContent: string = '';
+    formPassword: string = '';
     registeringUser: IUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
-        firstName: '', lastName: '', userName: '', password: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
+        firstName: '', lastName: '', userName: '', email: '', administeringUserEmail: '', userType: { id: 0, name: '' }
             , tokenHandleViewModel: { expiration: new Date(), token: ''}, isActive: true
         //, CurrentAdministeringUser: '', userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
     } as IUser; //needed to Updating and Registration
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit {
         //keeps track of the created user after the exForm is RESET (this may not be completely necessary unless I have a redirect to the exampleList (user list) page)
         const exampleHolderObject: IUser = Object.assign({}, this.registeringUser);
 
-        this._auth.registerUser(exampleHolderObject)
+        this._auth.registerUser(exampleHolderObject, this.formPassword)
             .subscribe(
             res => {
                 //console.log('user ' + res.firstName + ' created');
