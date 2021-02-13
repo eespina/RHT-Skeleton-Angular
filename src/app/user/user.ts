@@ -5,7 +5,7 @@ export interface IUser {    //DO NOT use these for both User and a person (examp
     lastName: string;
     email: string;
     userName: string;
-    password: string;
+    // password: string;   //TODO - for UPDATE's, switch this to use HEADER info instead
     userType: IUserType;
     // CurrentAdministeringUser: string;
     administeringUserEmail: string;
@@ -24,6 +24,11 @@ export interface IUserType {
 export interface ITokenInfo {
     token: string;
     expiration: Date;
+}
+
+export interface ILoginInfo {
+    userName: string;
+    password: string;
 }
 
 //export class User implements IUser {

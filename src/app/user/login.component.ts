@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { Router } from '@angular/router'
-import { IUser } from '../user/user';
+import { ILoginInfo, IUser } from '../user/user';
 import { DataService } from '../shared/data.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     isUserCredentialsBlank: boolean = true;
     message:string;
 
-    loginUserInfo: IUser = { userName: '', password: '' } as IUser;
+    loginUserInfo: ILoginInfo = { userName: '', password: '' } as ILoginInfo;
     constructor(private _auth: AuthService, private _router: Router, private _dataService: DataService) {
         //console.log('INSIDE constructor. successfulLogin = ' + this.isSuccessfulLogin);
     }
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
         //console.log('INSIDE loginUser. successfulLogin = ' + this.isSuccessfulLogin);
         if (this.loginUserInfo.userName != '' && this.loginUserInfo.password != '') {
-            //console.log('login INFO is NOT blank');
+            // console.log('login INFO is NOT blank' + JSON.stringify(this.loginUserInfo))
             this._auth.loginUser(this.loginUserInfo)
                 .subscribe(
                 res => {
