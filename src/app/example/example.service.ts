@@ -26,7 +26,7 @@ export class ExampleService {
             //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
 
             //UPDATED the older way to 'catch'... previously was "  .catch(error => this._auth.handleError(error));    ". NOT sure this applies for " .map" function, but seems to work
-            .pipe(catchError(error => this._auth.handleError));
+            .pipe(catchError(error => this._auth.handleError(error)));
 
         //perhaps ANOTHER way of facilitating a get from somewhere (implements "import 'rxjs/add/Observable/of'; " from above)
             //return Observable.of();   // I think this is more used for 'in-memory' type data, since the parameter in the example tutorial I'm using 
