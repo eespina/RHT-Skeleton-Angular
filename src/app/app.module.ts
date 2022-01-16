@@ -30,10 +30,10 @@ import { FooterComponent } from './shared/footer.component';
 //I want these inside the 'NestedExampleModule', but the links don't work.
 //There's no error, but the links are missing necessary Angular attributes when inspected in a web browser
 //As such, there is no Lazy loading for the 'Nested' material
-import { NestedNavbarExampleComponent } from './nested/nested-navbar-example';
-import { NestedExampleChildOneComponent } from './nested/nested-example-child-one.component';
-import { NestedExampleChildTwoComponent } from './nested/nested-example-child-two.component';
-import { NestedExampleTopComponent } from './nested/nested-example-top.component';
+import { NestedNavbarExampleComponent } from './nested-example/nested-navbar-example';
+import { NestedExampleChildOneComponent } from './nested-example/nested-example-child-one.component';
+import { NestedExampleChildTwoComponent } from './nested-example/nested-example-child-two.component';
+import { NestedExampleTopComponent } from './nested-example/nested-example-top.component';
 
 @NgModule({
     imports: [
