@@ -17,7 +17,7 @@ const appRoutes: Routes = [
         data: {
             preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
         },
-        loadChildren: () => import('./nested/nested-example.module').then(m => m.NestedExampleModule)
+        loadChildren: () => import('./nested-example/nested-example.module').then(m => m.NestedExampleModule)
     },
     
     //, loadChildren: 'app/examples/example.module#ExampleModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,
