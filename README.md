@@ -4,7 +4,7 @@ Base template for creating quick web applications based upon Angular library tec
 # Setting Up
 	- Pull down the repo
 	- Travel to the directory where the 'package.json' file is located
-	- Open a shell and run "npm install"
+	- Open a shell and run "npm install" (must have node.js installed)
 	- In the shell, 'cd' to wherever the 'gulp.,js' is located (if not there in the same directory already) and run 'gulp' to begin the Gulp task-runner
 	- If there is an error concerning an 'UnhandledPromiseRejectionWarning', just try typing 'gulp' again to retry the gulp process (known issue)
 	
