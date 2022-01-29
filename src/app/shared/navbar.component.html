@@ -1,5 +1,5 @@
 <header>
-	<nav [ngClass]="isMobile() ? 'navbar navbar-expand-lg navbar-dark bg-dark' : navbarOpen ? 'sideNav-closed' : 'sidenav' ">
+	<nav *ngIf="!IsLoggedIn" [ngClass]="isMobile() ? 'navbar navbar-expand-lg navbar-dark bg-dark' : navbarOpen ? 'sideNav-closed' : 'sidenav' ">
 		<div class="name-description" [ngClass]="{ 'hide': !isMobile() }">
 			<span>Enrico Espina - Combat Ninja <i style="font-family: times;">(ret.)</i></span>
 		</div>

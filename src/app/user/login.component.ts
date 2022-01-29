@@ -2,7 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { Router } from '@angular/router'
 import { ILoginInfo, IUser } from '../user/user';
-import { DataService } from '../shared/data.service';
+import { AuthBehaviorService } from '../shared/auth-behavior.service';
 
 @Component({
     selector: 'app-login',
@@ -16,12 +16,12 @@ export class LoginComponent implements OnInit {
     message:string;
 
     loginUserInfo: ILoginInfo = { userName: '', password: '' } as ILoginInfo;
-    constructor(private _auth: AuthService, private _router: Router, private _dataService: DataService) {
+    constructor(private _auth: AuthService, private _router: Router, private _authBehaviorService: AuthBehaviorService) {
         //console.log('INSIDE constructor. successfulLogin = ' + this.isSuccessfulLogin);
     }
 
     ngOnInit() {
-        this._dataService.currentMessage.subscribe(message => this.message = message);
+        this._authBehaviorService.currentMessage.subscribe(message => this.message = message);
         //console.log('INSIDE ngOnInit(). successfulLogin = ' + this.isSuccessfulLogin);
     }
 
@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
                     //console.log('Login SUCCESSFULL');
                     localStorage.setItem('token', res.tokenHandleViewModel.token);
                     //console.log('CHANGING LogInOrOutStatus to \'Log Out\'');
-                    this._dataService.changeLogInOrOutStatus("Log Out");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
-                    this._dataService.changeLoggedInStatus(true);
+                    this._authBehaviorService.changeLogInOrOutStatus("Log Out");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
+                    this._authBehaviorService.changeLoggedInStatus(true);
                     this.isSuccessfulLogin = true;
                     this._router.navigate(['/home']);
                     this._auth.loggedInUser.email = res.email;

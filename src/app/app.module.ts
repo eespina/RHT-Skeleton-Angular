@@ -14,7 +14,7 @@ import { AuthService } from './user/auth.service';
 import { AuthGuard } from './user/auth-route-guard.service';
 import { TokenInterceptorService } from './user/token-interceptor.service';
 // import { ExampleSingletonService } from './example/exampleSingleton.service';    //Moved to Example Module for lazy loading demostration purposes
-import { DataService } from './shared/data.service';
+import { AuthBehaviorService } from './shared/auth-behavior.service';
 
 //Componenets
 import { AppComponent } from './app.component';
@@ -76,7 +76,7 @@ import { NestedExampleTopComponent } from './nested-example/nested-example-top.c
     providers: [    // placed here because it is used in multiple components
         AuthService,
         AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
-        DataService,    //Example of using a share-able service between the Login and Header Components (but can be used for much mroe userful shared services)
+        AuthBehaviorService,    //Example of using a share-able service between the Login and Header Components (but can be used for much mroe userful shared services)
         // ExampleSingletonService    //Moved to Example Module for lazy loading demostration purposes
     ]
 })

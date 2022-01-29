@@ -1,7 +1,7 @@
 //<!--depracated, NOTHING in this file is being used (just reference, and can/should be deleted in a real project-->
 import { Component } from '@angular/core';
 import { AuthService } from '../user/auth.service';
-import { DataService } from '../shared/data.service';
+import { AuthBehaviorService } from './auth-behavior.service';
 
 @Component({
     selector: 'navbar-top',
@@ -9,7 +9,7 @@ import { DataService } from '../shared/data.service';
 })
 export class NavbarTopComponent {
 //THIS ENTIRE COMPONENT ALONGSIDE THE HTML IS NOT BEING USED
-    constructor(private _auth: AuthService, private _dataService: DataService) { }
+    constructor(private _auth: AuthService, private _authBehaviorService: AuthBehaviorService) { }
     isCookieEnabled: boolean = true;
     navbarOpen: boolean;
     LogInOrLogOut: string;
@@ -23,8 +23,8 @@ export class NavbarTopComponent {
 
     ngOnInit(){
         //console.log('NavbarTopComponent inside ngOnInit()');
-        this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
-        this._dataService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
+        this._authBehaviorService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
+        this._authBehaviorService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
         this.isLoggedIn = this._auth.loggedIn();
     }
 

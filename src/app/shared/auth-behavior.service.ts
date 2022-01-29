@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 //for things that need a service of global attention... use this. for smaller things, use EventEmitter, etc..
 @Injectable()
-export class DataService {
+export class AuthBehaviorService {
     private messageSource = new BehaviorSubject<string>("Log In");
     public isLoggedInSource = new BehaviorSubject<boolean>(false);
     currentMessage = this.messageSource.asObservable();

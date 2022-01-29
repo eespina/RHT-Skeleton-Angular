@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
-import { DataService } from '../shared/data.service';
+import { AuthBehaviorService } from '../shared/auth-behavior.service';
 
 @Component({
     selector: 'nested-navbar-example',
@@ -8,7 +8,7 @@ import { DataService } from '../shared/data.service';
 })
 export class NestedNavbarExampleComponent implements OnInit {
 
-    constructor(private _auth: AuthService, private _dataService: DataService) { }
+    constructor(private _auth: AuthService, private _authBehaviorService: AuthBehaviorService) { }
     isCookieEnabled: boolean = true;
     navbarOpen: boolean;
     mobileW: string = '767';
@@ -19,7 +19,7 @@ export class NestedNavbarExampleComponent implements OnInit {
 
     ngOnInit(){
         //console.log('NestedNavbarExampleComponent inside ngOnInit()');
-        this._dataService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
+        this._authBehaviorService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
         //console.log('this._auth.loggedIn() = ' + this._auth.loggedIn());
         this.isLoggedIn = this._auth.loggedIn();
         //console.log('this._auth.loggedIn() AFTER = ' + this._auth.loggedIn());

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 import { Router } from '@angular/router'
-import { DataService } from '../shared/data.service';
+import { AuthBehaviorService } from './auth-behavior.service';
 
 @Component({
     selector: 'responsive-app-navbar',
@@ -9,7 +9,7 @@ import { DataService } from '../shared/data.service';
 })
 export class NavbarComponent {
 
-    constructor(private _auth: AuthService, private _router: Router, private _dataService: DataService) { }
+    constructor(private _auth: AuthService, private _router: Router, private _authBehaviorService: AuthBehaviorService) { }
     isCookieEnabled: boolean = true;
     navbarOpen: boolean;
     LogInOrLogOut: string;
@@ -24,7 +24,7 @@ export class NavbarComponent {
 
     ngOnInit(){
         //console.log('inside ngOnInit()');
-        this._dataService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
+        this._authBehaviorService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
         //console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
         this.checkCookie();
         //console.log('leaving ngOnInit()');
@@ -54,8 +54,8 @@ export class NavbarComponent {
                 res => {
                     // this.LogInOrLogOut = "Log In";
                     this._auth.logoutUserLocal(false);// no need to redirect because it will happen after this method is true
-                    this._dataService.changeLogInOrOutStatus("Log In");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
-                    this._dataService.changeLoggedInStatus(false);
+                    this._authBehaviorService.changeLogInOrOutStatus("Log In");//document.getElementById('loginLogoutPlaceholder').innerText = "Log Out";
+                    this._authBehaviorService.changeLoggedInStatus(false);
                 },
                 err => {
                     //Log something HERE to somewhere
