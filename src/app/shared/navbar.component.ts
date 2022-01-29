@@ -17,6 +17,7 @@ export class NavbarComponent {
     tabletW: string = '992';
     isPhone: boolean;
     isTablet: boolean;
+    isLoggedIn: boolean;
     
     toggleNavbar_click() {
         this.navbarOpen = !this.navbarOpen;
@@ -25,6 +26,7 @@ export class NavbarComponent {
     ngOnInit(){
         //console.log('inside ngOnInit()');
         this._authBehaviorService.currentMessage.subscribe(message => this.LogInOrLogOut = message);
+        this._authBehaviorService.loggedInStatus.subscribe(_isLoggedIn => this.isLoggedIn = _isLoggedIn);
         //console.log('LogInOrLogOut = ' + this.LogInOrLogOut);
         this.checkCookie();
         //console.log('leaving ngOnInit()');
