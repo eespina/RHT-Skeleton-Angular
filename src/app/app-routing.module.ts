@@ -9,7 +9,7 @@ import { AuthService } from './user/auth.service';
 import { CustomPreloadingService } from './custom-preloading.service';
 
 const appRoutes: Routes = [
-    { path: 'home', component: HomeComponent },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     {
