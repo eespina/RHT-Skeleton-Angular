@@ -1,0 +1,17 @@
+﻿<!--<td><a [routerLink]="['/users', user.userId, 'edit']">{{ user.userName }}</a></td>--><!--use 'edit' when placing a url distinguishing location-->
+<!--<td><a [routerLink]="['/users/'+ user.userId + '/edit']">{{ user.userName }}</a></td>--><!--Alternatively, may use full URL in a single string-->
+<!--<td><a [routerLink]="['/users', user.userId]" [queryParams]="{ filterBy: 'filter', showImage: true }">{{ user.userName }}</a></td>--><!--Query Parameters example-->
+<!--Finally, use [queryParamsHandling]="true" in an implementing element (i.e. btn-back or btn-cancel) to preserve the query parameter (would NOT implement on this html)-->
+
+<td><a (click)="onUser_click(user.userName)" class="linkCrappyAndDirtyVersion">{{ user.userName }}</a></td><!--DIRTY way of making a link, but because of lazy loading, the line ust below doesn't want to work anymore-->
+<!--<td><a [routerLink]="['/users/user', user.userName]">{{ user.userName }}</a></td>-->  <!--NOT working when there is no "AppRoutingModule" inside the UserModule class. switching to using onUser_click-->
+
+<td>{{ user.firstName }}</td>
+<td [ngSwitch]="user.lastName"><!--Switch Case statement example-->
+    <!--NOT WORKING at the moment, just shows the 'ngSwitchDefault' value , hmm-->
+    <span *ngSwitchCase="'Enrico'">Me3</span>
+    <span *ngSwitchCase="'Kahoutek'">You</span>
+    <span *ngSwitchDefault>{{ user.lastName | uppercase }}</span><!--NOT included are "Pipe" material such as CUSTOM Pipes, Pure or impure pipes. it's just this simple pipe example-->
+</td>
+
+<!--(above)Parent to Child data passing user-->

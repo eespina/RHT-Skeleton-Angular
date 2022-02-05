@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes, PreloadAllModules } from '@angular/router';  //Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel, 
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './user/login.component';
+import { LoginComponent } from './auth/login.component';
 import { PageNotFoundComponent } from './shared/pageNotFound.component';
-import { AuthGuard } from './user/auth-route-guard.service';
+import { AuthGuard } from './auth/auth-route-guard.service';
 // import { PreloaderService } from './shared/preloader.service';   TODO - maybe fix this
-import { AuthService } from './user/auth.service';
+import { AuthService } from './auth/auth.service';
 import { CustomPreloadingService } from './custom-preloading.service';
 
 const appRoutes: Routes = [
@@ -13,31 +13,31 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     {
-        path: 'nested-examples',
+        path: 'nested-users',
         data: {
             preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
         },
-        loadChildren: () => import('./nested-example/nested-example.module').then(m => m.NestedExampleModule)
+        loadChildren: () => import('./nested-user/nested-user.module').then(m => m.NestedUserModule)
     },
     
-    //, loadChildren: 'app/examples/example.module#ExampleModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,
+    //, loadChildren: 'app/users/user.moduleUserModule' }, //AFTER refactoring to Feature Modules, use this to implement, if desired,
     //Lazy Loading of Features in the future(ALSO, remove the 'path' attribute in the Feature Module's @ngModule RouterModule.forChild([ { path: [HERE] } ])..
     //should actually leave ONLY the Children(but outside the 'children' attrubite(so, should have curlybrace - separated array of path routes afterward)))
         //example above is from another tutorial. example below is from recent tutorial that is part of this Feature branch set.
-    // { path: 'examples', loadChildren: './example/example.module#ExampleModule' },
+    // { path: 'users', loadChildren: './user/user.moduleUserModule' },
     {
-        path: 'examples',
+        path: 'users',
         data: {
             preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
         },
-        loadChildren: () => import('./example/example.module').then(m => m.ExampleModule)
+        loadChildren: () => import('./user/user.module').then(m => m.UserModule)
     },
     //Lazy Loading requires that all the routes in the module to lazy load should have the same prefix.
     //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)
 
     //Below demonstrates a part of the Resolve Guard that would provide a service to not show undesired portions of a page until loading material/data have been fetched.
     //  We're handling it differntly by using a "loading... " UI display alongside an ' *ngIf ' element handler
-    //{ path: 'nonExistantPath', component: ExampleListComponent, resolve: { exampleList: ExampleListResolveService (service that does NOT exist) }}
+    //{ path: 'nonExistantPath', component: UserListComponent, resolve: { userList: UserListResolveService (service that does NOT exist) }}
     
     { path: '**', component: PageNotFoundComponent }    //Precedence matters, use this last as a'Catch All' route
 ];

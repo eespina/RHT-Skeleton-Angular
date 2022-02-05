@@ -1,51 +1,28 @@
-//we've mixed IUser and IExample (angular). Should NOT be an issue creating new POCO/POJO entities in the future
-export interface IUser {    //DO NOT use these for both User and a person (example.ts stuff), for this is too much together
-    // userId: string;
+﻿import { IUserArray } from './userArray';
+
+export interface IUser { //we've mixed IUser and IUser (angular). Should NOT be an issue creating new POCO/POJO entities in the future
+    userId: string;
+    email: string;
     firstName: string;
     lastName: string;
-    email: string;
     userName: string;
-    // password: string;   //TODO - for UPDATE's, switch this to use HEADER info instead
-    userType: IUserType;
-    // CurrentAdministeringUser: string;
-    administeringUserEmail: string;
-    tokenHandleViewModel: ITokenInfo;
+    createDate: Date;
+    isActive: Boolean;
+    //password: string;//this SHOULD no longer be needed in any manner since we're using request headers at the moment
+    userArray: IUserArray[];
+	nullUserProperty?: string;   //This exists to show an example of possible null information (does NOT exist)
 
-    // isAdmin: boolean;
-    isActive: boolean;
+    //userId: number;
+    //userString: string;
+    //userNumber: number;
+    //optionalEserProperty?: string;
 
-}
-
-export interface IUserType {
-    id: number;
-    name: string;
-}
-
-export interface ITokenInfo {
-    token: string;
-    expiration: Date;
-}
-
-export interface ILoginInfo {
-    userName: string;
-    password: string;
+    ////getuserNumber(userNumber: number): number;
 }
 
 //export class User implements IUser {
-//    id: number;
-//    username: string;
-//    email: string;
-//    isAdmin: boolean;
-//    token: string;
-//    password: string;
-
-//    firstName: string;
-//    lastName: string;
-//    createDate: Date;
-//    isActive: Boolean;
-
-//    //    getExampleUser(exampleUser: User): string {
-//    //        return this.exampleUser;
-//    //    }
-//    //constructor(public id: number, public username: string, public email: string) { }
+//    getUserNumber(userNumber: number): number {
+//        return this.userNumber;
+//    }
+//    constructor(public userId: number, public userString: string, public userNumber: number) { }
 //}
