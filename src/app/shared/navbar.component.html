@@ -26,6 +26,9 @@
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a class="linkCrappyAndDirtyVersion" routerLink="nested-users" routerLinkActive="active">Nested Users</a>
 				</li>
+				<li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a class="linkCrappyAndDirtyVersion" routerLink="/examples" routerLinkActive="active">Examples</a>
+				</li>
 				<!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes NOT BEING USED-->
 				<li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a class="linkCrappyAndDirtyVersion" (click)="loginOrOutUser()">{{LogInOrLogOut}}</a>
@@ -64,6 +67,9 @@
 				<!--(COMMENTED LINE)  The above uses the example below. this syntax, here, should be implemented as such elsewhere (SHOULD USE CODE INSTEAD)-->
 				<!-- <li routerActive="bootstrap-mimic-active" class="navbar-item">
 					<a routerLink="users/register" routerLinkActive="active">Template-Driven Form User</a>
+				</li> -->
+				<!-- <li routerActive="bootstrap-mimic-active" class="navbar-item">
+					<a routerLink="examples/example" routerLinkActive="active">Examples (NOT TESTED)</a>
 				</li> -->
 				<!--(COMMENTED LINE) [routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
 				<!-- <li routerActive="bootstrap-mimic-active" class="navbar-item">

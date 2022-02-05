@@ -2,9 +2,9 @@
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
 import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../user/user.service';
-import { IUser } from '../user/user';
-import { IUserArray } from '../user/userArray';
+import { UserService } from '../users/user.service';
+import { IUser } from '../users/user';
+import { IUserArray } from '../users/userArray';
 import { IAuthUser } from './authUser';
 import { AuthService } from './auth.service';
 import { of } from 'rxjs';  //this isn't being used
