@@ -48,12 +48,12 @@ export class UserListComponent {
         return this.filteredUsers.length;
     }
 
-    //Change these examples to align with the actual data.. we're comparing username but theres not a proper match with the actual data
+    //Change these users to align with the actual data.. we're comparing username but theres not a proper match with the actual data
     getTotalUsersOneCount(): number {
         return this.filteredUsers.filter(e => e.userName === 'One').length;
     }
 
-    //Change these examples to align with the actual data.. we're comparing username but theres not a proper match with the actual data
+    //Change these users to align with the actual data.. we're comparing username but theres not a proper match with the actual data
     getTotalUsersLessThanOneCount(): number {
         return this.filteredUsers.filter(e => e.userName === 'Zero').length;
     }

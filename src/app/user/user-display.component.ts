@@ -13,7 +13,7 @@ export class UserDisplayComponent implements OnInit, OnChanges {
     constructor(private _router: Router, private route: ActivatedRoute) { }
     ngOnInit() { }
 
-    //NOT implemented, because we're not switching users. The example I'm following uses an individual example instead of a list. The below still gets logged on component_load
+    //NOT implemented, because we're not switching users. The example I'm following uses an individual user instead of a list. The below still gets logged on component_load
     ngOnChanges(changes: SimpleChanges) {   //automatcially called whenever any of the @Input properties change
         //Demonstrates 'ngOnChanges' way of reacting to a detection change from the Parent to the Child component
         for (var p of Object.keys(changes)) {

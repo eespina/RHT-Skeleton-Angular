@@ -1,5 +1,5 @@
-//we've mixed IUser and IExample (angular). Should NOT be an issue creating new POCO/POJO entities in the future
-export interface IAuthUser {    //DO NOT use these for both User and a person (example.ts stuff), for this is too much together
+//we've mixed IUser and IUser (angular). Should NOT be an issue creating new POCO/POJO entities in the future
+export interface IAuthUser {    //DO NOT use these for both User and a person (authUser.ts stuff), for this is too much together
     // userId: string;
     firstName: string;
     lastName: string;
@@ -44,8 +44,8 @@ export interface ILoginInfo {
 //    createDate: Date;
 //    isActive: Boolean;
 
-//    //    getExampleUser(exampleUser: User): string {
-//    //        return this.exampleUser;
+//    //    getUserUser(userUser: User): string {
+//    //        return this.userUser;
 //    //    }
 //    //constructor(public id: number, public username: string, public email: string) { }
 //}

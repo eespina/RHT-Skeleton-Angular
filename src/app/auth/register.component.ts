@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
         //, CurrentAdministeringUser: '', userId: '0', isAdmin: false, tokenHandleViewModel: { expiration: '', token: ''}
     } as IAuthUser; //needed to Updating and Registration
 
-    @ViewChild('registrationForm') public createExampleForm: NgForm
+    @ViewChild('registrationForm') public createUserForm: NgForm
 
     constructor(private _auth: AuthService, private _router: Router) { }
 
@@ -33,10 +33,10 @@ export class RegisterComponent implements OnInit {
         //console.log('this._auth.loggedInUser.email = ' + this._auth.loggedInUser.email);
         //console.log('this.registeringUser.tokenHandleViewModel = ' + this.registeringUser.tokenHandleViewModel);
 
-        //keeps track of the created user after the exForm is RESET (this may not be completely necessary unless I have a redirect to the exampleList (user list) page)
-        const exampleHolderObject: IAuthUser = Object.assign({}, this.registeringUser);
+        //keeps track of the created user after the exForm is RESET (this may not be completely necessary unless I have a redirect to the userList (user list) page)
+        const userHolderObject: IAuthUser = Object.assign({}, this.registeringUser);
 
-        this._auth.registerUser(exampleHolderObject, this.formPassword)
+        this._auth.registerUser(userHolderObject, this.formPassword)
             .subscribe(
             res => {
                 //console.log('user ' + res.firstName + ' created');
@@ -48,8 +48,8 @@ export class RegisterComponent implements OnInit {
                 //console.log('isSuccessfulRegistration = ' + this.isSuccessfulRegistration);
 
                 exForm.reset(); //reset the form after the for is used. resets data, ie dirty, valid, etc..
-                //exForm.reset({ username: 'exampleName', isActive: false  }); //another version with default data being set after the reest
-                //this.createExampleForm.reset();   //can also reset the form using this if you have the property. can be used if you do njot want to use a parameter in this method
+                //exForm.reset({ username: 'userName', isActive: false  }); //another version with default data being set after the reest
+                //this.createUserForm.reset();   //can also reset the form using this if you have the property. can be used if you do njot want to use a parameter in this method
             },
             err => {
                 //console.log(err);

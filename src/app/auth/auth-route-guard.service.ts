@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         //therefore, I cannot check the 'dirty' form material, if it exists
     canDeactivate(component: RegisterComponent): boolean {
         //console.log('In canDeactivate: ' + RegisterComponent.name);
-        if (component.createExampleForm.dirty) {
+        if (component.createUserForm.dirty) {
             return confirm('Are you sure you want to \'discard\' your changes ?');
         }
         return true;

@@ -17,8 +17,8 @@ const appRoutes: Routes = [
 
     //This way uses /users/users (twice, instead of just once, which is less desiable to see as a link (thus it's commented out)). Also would need to be surrounded by curly braces
     // path: 'users', children: [   //Component-less Route because there's no component associated with it. It only has a path and child properties
-    //     { path: '', component: ExampleListComponent, canActivate: [AuthGuard] }, //data: { preload: true } (used for PreloaderService),
-    //     { path: 'user/:userName', component: ExampleComponent, canActivate: [AuthGuard] },  //{ path: 'users/:userName/:id', .....  - to use more parameters
+    //     { path: '', component: UserListComponent, canActivate: [AuthGuard] }, //data: { preload: true } (used for PreloaderService),
+    //     { path: 'user/:userName', component: UserComponent, canActivate: [AuthGuard] },  //{ path: 'users/:userName/:id', .....  - to use more parameters
     //     { path: 'register', component: RegisterComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] },
     //     { path: 'reactiveForm/:userName', component: ReactiveFormComponent, canActivate: [AuthGuard] }
     // ]

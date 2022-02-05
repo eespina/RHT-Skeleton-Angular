@@ -9,8 +9,8 @@ const appRoutes: Routes = [
     //Lazy Loading requires that all the routes in the module to lazy load should have the same prefix.
     //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)    
     { path: '', component: NestedUserTopComponent, canActivate: [AuthGuard] }, //data: { preload: true } (used for PreloaderService),
-    { path: 'nested-example-child-template-one', component: NestedUserChildTemplateOneComponent, canActivate: [AuthGuard] },
-    { path: 'nested-example-child-template-two', component: NesteduserChildTemplateTwoComponent, canActivate: [AuthGuard] }
+    { path: 'nested-user-child-template-one', component: NestedUserChildTemplateOneComponent, canActivate: [AuthGuard] },
+    { path: 'nested-user-child-template-two', component: NesteduserChildTemplateTwoComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

@@ -5,10 +5,10 @@ import { NestedUserRoutingModule } from './nested-user-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 //Components
-// import { NestedExampleChildOneComponent } from './nested-example-child-template-one.component';
-// import { NestedExampleChildTwoComponent } from './nested-example-child-template-two.component';
-// import { NestedExampleTopComponent } from './nested-example-top.component';
-// import { NestedNavbarExampleComponent } from './nested-navbar-user';
+// import { NestedUserChildOneComponent } from './nested-user-child-template-one.component';
+// import { NestedUserChildTwoComponent } from './nested-user-child-template-two.component';
+// import { NestedUserTopComponent } from './nested-user-top.component';
+// import { NestedNavbarUserComponent } from './nested-navbar-user';
 
 
 @NgModule({

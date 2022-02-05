@@ -20,7 +20,7 @@ export class UserComponent implements OnInit {
     constructor(private _userService: UserService, private _activatedRoute: ActivatedRoute, private _router: Router) {    }
 
     onBackButtonClick(): void {
-        this._router.navigate(['/user']);
+        this._router.navigate(['/users']);
 
         ////Example using Relative Path
         //this._router.navigate(['user'], { relativeTo; this.route });
