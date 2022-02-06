@@ -1,0 +1,26 @@
+<div class="py-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card rounded-0">
+                <div class="card-header">
+                    <h3 class="mb-0">Example Form Creation</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="exampleFormGroup" (ngSubmit)="onSubmit()">
+                        <div class="form-group" [ngClass]="{ 'has-error' : exampleFormErrors.exampleCharacteristic}">
+                            <label for="exampleCharacteristic" class="col-lg-3">Example Characteristic</label>
+                            <input id="exampleCharacteristic" type="text" class="form-control" formControlName="exampleCharacteristic" (blur)="logValidationErrors()"><!--"blur" is used to validate only what is focused-->
+                            <span class="lbl-form-error" *ngIf="exampleFormErrors.exampleCharacteristic">{{exampleFormErrors.exampleCharacteristic}}</span>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="btn-toolbar">
+                            <button class="btn btn-primary" type="submit">{{CreateOrUpdate}}</button><!--   TODO - Toggle the Button's value  -->
+                            <button class="btn btn-primary" type="button" (click)="DisableNestFormClick()">Disable Nest Form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

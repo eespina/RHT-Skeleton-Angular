@@ -1,0 +1,11 @@
+﻿<!--<td><a [routerLink]="['/examples', example.exampleId, 'edit']">{{ example.exampleCharacteristic }}</a></td>--><!--use 'edit' when placing a url distinguishing location-->
+<!--<td><a [routerLink]="['/examples/'+ example.exampleId + '/edit']">{{ example.exampleCharacteristic }}</a></td>--><!--Alternatively, may use full URL in a single string-->
+<!--<td><a [routerLink]="['/examples', example.exampleId]" [queryParams]="{ filterBy: 'filter', showImage: true }">{{ example.exampleCharacteristic }}</a></td>--><!--Query Parameters example-->
+<!--Finally, use [queryParamsHandling]="true" in an implementing element (i.e. btn-back or btn-cancel) to preserve the query parameter (would NOT implement on this html)-->
+
+<td><a (click)="onExample_click(example.exampleId)" class="linkCrappyAndDirtyVersion">{{ example.exampleId }}</a></td><!--DIRTY way of making a link, but because of lazy loading, the line ust below doesn't want to work anymore-->
+<!--<td><a [routerLink]="['/examples/example', example.exampleCharacteristic]">{{ example.exampleCharacteristic }}</a></td>-->  <!--NOT working when there is no "AppRoutingModule" inside the exampleModule class. switching to using onExample_click-->
+
+<td>{{ example.exampleCharacteristic }}</td>
+
+<!--(above)Parent to Child data passing example-->

@@ -32,6 +32,13 @@ const appRoutes: Routes = [
         },
         loadChildren: () => import('./users/user.module').then(m => m.UserModule)
     },
+    {
+        path: 'examples',
+        data: {
+            preload: true   //use this property to determine if we want a given lazy loaded property to be preloaded or not
+        },
+        loadChildren: () => import('./examples/example.module').then(m => m.ExampleModule)
+    },
     //Lazy Loading requires that all the routes in the module to lazy load should have the same prefix.
     //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)
 
