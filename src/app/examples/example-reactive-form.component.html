@@ -6,17 +6,32 @@
                     <h3 class="mb-0">Example Form Creation</h3>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="exampleFormGroup" (ngSubmit)="onSubmit()">
-                        <div class="form-group" [ngClass]="{ 'has-error' : exampleFormErrors.exampleCharacteristic}">
-                            <label for="exampleCharacteristic" class="col-lg-3">Example Characteristic</label>
+                    <form [formGroup]="exampleFormGroup" (ngSubmit)="onExampleFormSubmit()">
+                        <div class="form-group">
+                            <label for="exampleId" class="col-lg-12">Example Id</label>
+                            <br />
+                            <label for="exampleId" class="col-lg-12">{{ExampleIdValue}}</label>
+                        </div>
+                        <br />
+                        <div class="form-group" [ngClass]="{ 'has-error' : exampleFormErrors.exampleCharacteristic }">
+                            <label for="exampleCharacteristic" class="col-lg-12">Example Characteristic</label>
                             <input id="exampleCharacteristic" type="text" class="form-control" formControlName="exampleCharacteristic" (blur)="logValidationErrors()"><!--"blur" is used to validate only what is focused-->
                             <span class="lbl-form-error" *ngIf="exampleFormErrors.exampleCharacteristic">{{exampleFormErrors.exampleCharacteristic}}</span>
                         </div>
                         <br />
+                        <div class="form-group" [ngClass]="{ 'has-error' : exampleFormErrors.isActive }">
+                            <label for="isActive" class="col-lg-12">Example Active</label>
+                            <label class="radio-inline"><input type="radio" value="active" formControlName="isActiveControl" (blur)="logValidationErrors()" />active</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label class="radio-inline"><input type="radio" value="inactive" formControlName="isActiveControl" />inactive</label>
+                        </div>
                         <br />
                         <div class="btn-toolbar">
                             <button class="btn btn-primary" type="submit">{{CreateOrUpdate}}</button><!--   TODO - Toggle the Button's value  -->
+                            &nbsp;&nbsp;&nbsp;
                             <button class="btn btn-primary" type="button" (click)="DisableNestFormClick()">Disable Nest Form</button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" (click)="onExampleDelete()" [ngClass]="{ 'hide': !IsUpdate }">Delete</button>
                         </div>
                     </form>
                 </div>
@@ -24,3 +39,7 @@
         </div>
     </div>
 </div>
+
+<!-- <div style="background-color: cornflowerblue;">
+    <example-reactive-form></example-reactive-form> THIS WOULD work, but is nunnecessary, it's just implementing another component's selector, and then creates the html form. then works with the selector's component's logic
+</div> -->

@@ -33,14 +33,16 @@ export class AuthService {
         this.isSessionLoggedIn = false;
     }
 
-    registerUser(registeringUser, formPassword): Observable<IAuthUser> {
+    registerUser(registeringUser, reticulatingsplines): Observable<IAuthUser> {
+        // console.log('inside AuthService.registerUser()');
         
         //NOT tested, let's hope this works
-        this.encryptUsingAES256(formPassword, false);
+        this.encryptUsingAES256(reticulatingsplines, false);
         let headers = new HttpHeaders();
-        headers = headers.append('password', formPassword.toString());
+        // console.log('reticulatingsplines.toString(): ' + reticulatingsplines.toString());
+        headers = headers.append('reticulatingsplines', reticulatingsplines.toString());
 
-        let registrationResponse = this._http.post<IAuthUser>(this._registerUrl, registeringUser)
+        let registrationResponse = this._http.post<IAuthUser>(this._registerUrl, registeringUser, {headers})
             //.map((response: Response) => <IUser>response.json())  //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>.
             //You no longer need to call the '.map' function above yourself.
             .pipe(catchError(error => this.handleError(error)));  //UPDATED the older way to 'catch'... previously was "  .catch(error => this.handleError(error));
@@ -123,7 +125,7 @@ export class AuthService {
             this.encryptedPassword = encrypted;
         }
 
-        console.log('Encrypted: ' + encrypted);
+        // console.log('Encrypted: ' + encrypted);
     }
 
     decryptUsingAES256(decString) : string {

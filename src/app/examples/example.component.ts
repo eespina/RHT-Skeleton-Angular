@@ -42,16 +42,16 @@ export class ExampleComponent implements OnInit {
         this.subscription.unsubscribe();
     }
 
-    onEditButtonClick(exampleCharacteristic: string): void {
-        console.log(`inside onEditButtonClick() with ${exampleCharacteristic} as the parameter'd ID`);
-        this._router.navigate(['examples/example-reactive-form', exampleCharacteristic]); // "exampleName", which is the parameter value, MUST match the reactiveForm's 'params.get('exampleName');' syntax
+    onEditExampleButtonClick(exampleId: string): void {
+        console.log(`inside ExampleComponent onEditExampleButtonClick() with ${exampleId} as the parameter'd ID`);
+        this._router.navigate(['examples/example-reactive-form', exampleId]); // "exampleName", which is the parameter value, MUST match the reactiveForm's 'params.get('exampleName');' syntax
     }
 
     ngOnInit() {
         this._activatedRoute.paramMap.subscribe(
             params => {
                 let exCode = params.get('exampleId');    //TODO - MAY want to switch this 'exampleId' parameter to use an #ID instead. It's just more conventional
-                console.log('using "' + exCode + '" to get individual Example');
+                // console.log('using "' + exCode + '" to get individual Example');
                 //let qp = this._activatedRoute.snapshot.queryParams['filterBy'] || ''; //OPTIONAL query parameter receiving, use this to BIND a local variable that is used in the HTML
 
                 //may want to create ANOTHER method to seperate this logic from this .ts file
@@ -73,7 +73,7 @@ export class ExampleComponent implements OnInit {
                             this.statusMessage = 'Example Does NOT Exist';
                         } else {
                             this.example = exData;
-                            console.log(`RECEIVED exDATA of example ${exData.exampleId} in Obesrvable-Params version`);
+                            // console.log(`RECEIVED exDATA of example ${exData.exampleId} in Obesrvable-Params version`);
                         }
                     },
                     (error) => {

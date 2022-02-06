@@ -29,7 +29,7 @@ export class ExampleDisplayComponent implements OnInit, OnChanges {
     //  it errors the application due to multiple loading's of the "AppRoutingModule" module.
     //  Not every module that is to be lazy loaded should have to put up with that.
     onExample_click(exampleNameToPassAsParameter) {
-        console.log('inside ExampleDisplayComponent.onExample_click trying to use ' + exampleNameToPassAsParameter + ' as the passed parameter');
+        // console.log('inside ExampleDisplayComponent.onExample_click trying to use ' + exampleNameToPassAsParameter + ' as the passed parameter');
         this._router.navigate(['/examples/example', exampleNameToPassAsParameter]);
     }
 }

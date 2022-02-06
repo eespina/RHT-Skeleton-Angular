@@ -17,17 +17,19 @@
             <td>User Last Name</td>
             <td>{{ user.lastName }}</td>
         </tr>
-        <ng-container *ngFor="let eArray of User.UserArray">                
-            <tr>
-                <td>{{eArray.dynamicNestedGroupName}}</td>
-                <td>Experience ({{ eArray.dynamicExperienceInYears }})</td>
-            </tr>
-            <tr *ngIf="selectedUserCountRadioButton == 'All' || selectedUserCountRadioButton == user.userName">
+        <!-- Not Entirely sure the code, just below, has any use for the reactive for, or if it's just for the other form version (i.e. RegisterForm)-->
+        <!-- <ng-container *ngFor="let eArray of User.UserArray">                -->
+            <!-- <tr> -->
+                <!-- <td>{{eArray.dynamicNestedGroupName}}</td> -->
+                <!-- <td>Experience ({{ eArray.dynamicExperienceInYears }})</td> -->
+            <!-- </tr> -->
+            <!-- <tr *ngIf="selectedUserCountRadioButton == 'All' || selectedUserCountRadioButton == user.userName"> -->
                 <!--    below, we want to bind to the input property inside the "userListDisplayComponent" component called 'users' (in straight brackets) by passing the user object of the users set-->
-                <list-display-user [User]="user" [UserId]="user.email"></list-display-user> <!--Parent to Child data passing example-->
+                <!-- <list-display-user [User]="user" [UserId]="user.email"></list-display-user>-->
+                    <!--^^ Parent to Child data passing example -->
                 <!--    Styling is going to be crap, but it's just an example anyway. MOST styles'd be in Stylus (OR, some projects won't have Stylus, so just know that the Tables are in differnt html files, which causes style issues)-->
-            </tr>
-        </ng-container>
+            <!-- </tr> -->
+        <!-- </ng-container> -->
     </tbody>
 </table>
 <div *ngIf="!user">{{ statusMessage }}</div>

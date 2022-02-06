@@ -18,7 +18,7 @@
 <div *ngIf="!example">{{ statusMessage }}</div>
 <br />
 <div *ngIf="example && example.exampleId">
-    <input type="button" value="Edit Example" (click)="onEditButtonClick(example.exampleId)" />
+    <input type="button" value="Edit Example" (click)="onEditExampleButtonClick(example.exampleId)" />
 </div>
 <div>
     <input type="button" value="Back To Example List" (click)="onBackButtonClick()" />

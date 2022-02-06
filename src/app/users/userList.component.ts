@@ -33,7 +33,7 @@ export class UserListComponent {
     ngOnInit() {
         this._userService.getUsers()
             .subscribe((userList) => {
-                console.log('userList.length = ' + userList.length)
+                // console.log('userList.length = ' + userList.length)
                 this.users = userList;
                 this.filteredUsers = this.users;
                 this.showSpinner = false;

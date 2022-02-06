@@ -45,8 +45,10 @@ export class UserService {
 
     //this currently does nothing, it just returns mocked data back from the server
     updateUser(user: IAuthUser, password: string): Observable<IAuthUser> {
-        console.log('inside updateUser()');
+        // console.log('inside updateUser()');
+        // console.log('inside updateUser(), user:' + JSON.stringify(user));
         if (password) {
+            // console.log('inside updateUser(). password is not null/undefined');
             this._auth.encryptUsingAES256(password, false);
             const httpOptions = {
                 headers: new HttpHeaders(
@@ -57,14 +59,14 @@ export class UserService {
                     })
             };
             
-            var updatedUser = this._http.put<IAuthUser>(environment.baseUrl + 'users/' + user.userName, user, httpOptions)
+            var updatedUser = this._http.put<IAuthUser>(environment.baseUrl + 'user/' + user.userName, user, httpOptions)
             .pipe(
                 //TODO - use 'tap' if you ever wanna get response data. in this case, IUser is the equivelant to OwnerViewModel on the Server end
                 tap((newUser: IAuthUser) => console.log(`added new user with userName = ${newUser.userName}`)),
                 catchError(error => this._auth.handleError(error))
               );            
 
-            console.log('LEAVING updateUser()');
+            // console.log('LEAVING updateUser()');
 
             return updatedUser;
 

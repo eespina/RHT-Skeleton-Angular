@@ -31,7 +31,7 @@ export class ExampleListComponent {
     }
 
     ngOnInit() {
-        console.log('Initiating ExampleListComponent')
+        // console.log('Initiating ExampleListComponent')
         this._exampleService.getExamples()
             .subscribe((exampleList) => {
                 if(!exampleList)
@@ -44,7 +44,7 @@ export class ExampleListComponent {
                 {
                     console.log('exampleList.length is NULL.')
                 } else {
-                    console.log('exampleList.length = ' + exampleList.length)
+                    // console.log('exampleList.length = ' + exampleList.length)
                 }
                 this.examples = exampleList;
                 this.filteredExamples = this.examples;

@@ -83,8 +83,8 @@ export class ReactiveFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router, private _auth: AuthService) { }
 
     ngOnInit() {
-        //console.log("inside ReactiveFormComponent.ngOnInit");
-        //console.log("isUpdate is " + this.isUpdate);
+        // console.log("inside ReactiveFormComponent.ngOnInit");
+        // console.log("isUpdate is " + this.isUpdate);
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -100,7 +100,7 @@ export class ReactiveFormComponent implements OnInit {
             formPassword: [''],
             nestedGroup: this.fb.group({
                 nestedGroupName: [''],
-                experienceInYears: ['6'],   /// '6' is an example of using the default value
+                experienceInYears: ['0'],   /// '6' is an example of using the default value
                 proficiency: ['', Validators.required]
             }),
             dynamicNestedGroup: this.fb.array([
@@ -147,23 +147,23 @@ export class ReactiveFormComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             //create a const to store the passing parameter
             const userName = params.get('userName');
-            //console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
+            // console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
             if(userName && userName != '0'){
-                //console.log(`userId of ${userName} was passed`);
+                // console.log(`userId of ${userName} was passed`);
                 this.getEditUser(userName) //this MAY already be in another service (to get the specific user according to the ID)
                 this.isUpdate = true;
                 this.registerOrUpdate = 'UPDATE';
             }
             else{
                 //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
-                //console.log(`userId was NOT passed, so eID was ${userName}`);
+                console.log(`userId was NOT passed, so eID was ${userName}`);
                 this.isUpdate = false;
                 this.registerOrUpdate = 'REGISTER';
             }
-            //console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
+            // console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
         });
-        //console.log("isUpdate is " + this.isUpdate);
-        //console.log("Leaving ReactiveFormComponent.ngOnInit method");
+        // console.log("isUpdate is " + this.isUpdate);
+        // console.log("Leaving ReactiveFormComponent.ngOnInit method");
     }
 
     getEditUser(userName: string){
@@ -357,19 +357,23 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     onSubmit(): void {
-        //console.log('inside ReactiveForm\'s onSubmit()');
+        // console.log('inside ReactiveForm\'s onSubmit()');
         //console.log(this.reactiveFormGroup.value);  //right now, just prints the object
+        // console.log("isUpdate is " + this.isUpdate);
 
         if (this.mapFormValuesToUsersModel()){
             //Do we care if it's a Register or an Update ???
-            //console.log('mapFormValuesToUsersModel returned TRUE');
+            // console.log('mapFormValuesToUsersModel returned TRUE');
 
             if(this.isUpdate){
+                // console.log('ReactiveForm.onSubmit.updateUser');
                 this.userService.updateUser(this.authUser, this.reactiveFormGroup.value.formPassword).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
                     () => this.router.navigate(['/users/user', this.user.userName]),
-                    (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error)));
+                    (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error))
+                );
             } else {
+                // console.log('ReactiveForm.onSubmit.registerUser');
                 this._auth.registerUser(this.authUser, this.reactiveFormGroup.value.formPassword)
                 .subscribe(
                     () => {
