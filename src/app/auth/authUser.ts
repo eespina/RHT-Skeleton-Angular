@@ -14,6 +14,7 @@ export interface IAuthUser {    //DO NOT use these for both User and a person (a
     // isAdmin: boolean;
     isActive: boolean;
 
+    notes: string;
 }
 
 export interface IUserType {

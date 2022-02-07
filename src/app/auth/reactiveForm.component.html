@@ -8,17 +8,17 @@
                 <div class="card-body">
                     <form [formGroup]="reactiveFormGroup" (ngSubmit)="onSubmit()">
                         <div class="form-group" [ngClass]="{ 'has-error' : formErrors.firstName}">
-                            <label for="firstName" class="col-lg-3">First Name</label>
+                            <label for="firstName" class="col-lg-9">First Name</label>
                             <input id="firstName" type="text" class="form-control" formControlName="firstName" (blur)="logValidationErrors()"><!--"blur" is used to validate only what is focused-->
                             <span class="lbl-form-error" *ngIf="formErrors.firstName">{{formErrors.firstName}}</span>
                         </div>
                         <div class="form-group">
-                            <label for="lastName" class="col-lg-3">Last Name</label>
+                            <label for="lastName" class="col-lg-9">Last Name</label>
                             <input id="lastName" type="text" class="form-control" formControlName="lastName" (blur)="logValidationErrors()">
                             <span class="lbl-form-error" *ngIf="formErrors.lastName">{{formErrors.lastName}}</span>
                         </div>
                         <div class="form-group">
-                            <label for="userName" class="col-lg-3">Username</label>
+                            <label for="userName" class="col-lg-9">Username</label>
                             <input id="userName" type="text" class="form-control" formControlName="userName">
                         </div>
 
@@ -30,28 +30,36 @@
                         </div>
                         <div formGroupName="emailGroup">
                             <div class="form-group" [ngClass]="{ 'has-error' : formErrors.email}">
-                                <label for="email" class="col-lg-3">Email</label>
+                                <label for="email" class="col-lg-9">Email</label>
                                 <input id="email" type="text" class="form-control" formControlName="email" (blur)="logValidationErrors()">
                                 <span class="lbl-form-error" *ngIf="formErrors.email">{{formErrors.email}}</span>
                             </div>
-                            <div class="form-group" [ngClass]="{ 'has-error' : formErrors.confirmEmail || formErrors.emailGroup}"><!--should hide this if it's NOT an new form (i.e. if its an update) with some ngIf maigic-->
-                                <label for="confirmEmail" class="col-lg-3">Confirm Email</label>
+                            <div class="form-group" [ngClass]="{ 'has-error' : formErrors.confirmEmail || formErrors.emailGroup, 'hide': !IsEmailChanged }"><!--should hide this if it's NOT an new form (i.e. if its an update) with some ngIf maigic-->
+                                <label for="confirmEmail" class="col-lg-9">Confirm Email</label>
                                 <input id="confirmEmail" type="text" class="form-control" formControlName="confirmEmail" (blur)="logValidationErrors()">
                                 <span class="lbl-form-error" *ngIf="formErrors.confirmEmail || formErrors.emailGroup">
                                     {{formErrors.confirmEmail ? formErrors.confirmEmail : formErrors.emailGroup}}
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group" [ngClass]="{ 'has-error' : formErrors.phone}">
-                            <label for="phone" class="col-lg-3">Phone</label>
+                        
+                        <!--currently does NOT show validation when updateValueAndValidity() is called (it should)-->
+                        <!-- <div class="form-group" [ngClass]="{ 'has-error' : formErrors.phone}">
+                            <label for="phone" class="col-lg-9">Phone</label>
                             <input id="phone" type="text" class="form-control" formControlName="phone">
-                            <span class="lbl-form-error" *ngIf="formErrors.phone">{{formErrors.phone}}</span><!--currently does NOT show validation when updateValueAndValidity() is called (it should)-->
+                            <span class="lbl-form-error" *ngIf="formErrors.phone">{{formErrors.phone}}</span>
+                        </div> -->
+                        
+                        <div class="form-group" [ngClass]="{ 'hide': !ShowCurrentPasswordForm }">
+                            <label for="currentPassword" class="col-lg-9">Current Password</label>
+                            <input id="currentPassword" type="text" class="form-control" formControlName="currentPassword">
                         </div>
                         <div class="form-group">
-                            <label for="formPassword" class="col-lg-3">Password</label>
-                            <input id="formPassword" type="text" class="form-control" formControlName="formPassword">
+                            <label for="newPassword" class="col-lg-9">New Password</label>
+                            <input id="newPassword" type="text" class="form-control" formControlName="newPassword">
                         </div>
-
+                        <br />
+                        <textarea  (blur)="logValidationErrors()" rows="10" cols="52" formControlName="notes" placeholder="Notes Placeholder" ></textarea>
                         <br />
                         <div formGroupName="nestedGroup">
                             <div class="form-group">
@@ -99,6 +107,13 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>User Type</label>
+                            <label class="radio-inline"><input type="radio" value="admin" formControlName="usertype" />admin</label>
+                            <label class="radio-inline"><input type="radio" value="owner" formControlName="usertype" />owner</label>
+                            <label class="radio-inline"><input type="radio" value="vendor" formControlName="usertype" />vendor</label>
+                            <label class="radio-inline"><input type="radio" value="unassigned" formControlName="usertype" checked />unassigned</label>
                         </div>
                         <br />
                         <div class="btn-toolbar">

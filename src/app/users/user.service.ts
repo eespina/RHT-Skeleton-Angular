@@ -35,20 +35,17 @@ export class UserService {
     }
 
     getUserById(userUserName: string): Observable<IUser> {
-        return this._http.get<IUser>(environment.baseUrl + 'user/' + userUserName)   //string literal users
-            //.map((response: Response) => <IUser>response.json())
-            //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
-
-            //UPDATED the older way to 'catch'... previously was "  .catch(error => this._auth.handleError(error));    ". NOT sure this applies for " .map" function, but seems to work
-            .pipe(catchError(error => this._auth.handleError(error)));
+        return this._http.get<IUser>(environment.baseUrl + 'user/' + userUserName)
+        .pipe(catchError(error => this._auth.handleError(error)));
     }
 
     //this currently does nothing, it just returns mocked data back from the server
     updateUser(user: IAuthUser, password: string): Observable<IAuthUser> {
-        // console.log('inside updateUser()');
-        // console.log('inside updateUser(), user:' + JSON.stringify(user));
+        console.log('inside updateUser()');
+        console.log('inside updateUser(), user:' + JSON.stringify(user));
+        console.log('inside updateUser(), password:' + password);
         if (password) {
-            // console.log('inside updateUser(). password is not null/undefined');
+            console.log('inside updateUser(). password is not null/undefined');
             this._auth.encryptUsingAES256(password, false);
             const httpOptions = {
                 headers: new HttpHeaders(
@@ -66,7 +63,7 @@ export class UserService {
                 catchError(error => this._auth.handleError(error))
               );            
 
-            // console.log('LEAVING updateUser()');
+            console.log('LEAVING updateUser()');
 
             return updatedUser;
 

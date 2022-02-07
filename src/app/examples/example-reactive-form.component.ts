@@ -185,7 +185,7 @@ export class ExampleReactiveFormComponent implements OnInit {
             //TODO - REMEMBER to check if there are values for the required fields. Required fields are established in the API, so if you send this will empty data, a 400 may get returned from the API
             this.creatingExample.exampleCharacteristic = this.exampleFormGroup.value.exampleCharacteristic;
             this.creatingExample.exampleId = this.ExampleIdValue;
-            this.creatingExample.isActive = this.exampleFormGroup.value.isActiveControl.toString() == "active" ? true : false;
+            this.creatingExample.isActive = this.exampleFormGroup.value.isActiveControl.toString() == "active" ? true : false;  
             // console.log('Mapping exampleFormGroup values: ' + JSON.stringify(this.exampleFormGroup.value));
             // console.log('Mapped creatingExample values: ' + JSON.stringify(this.creatingExample));
             return true;

@@ -34,13 +34,12 @@ export class AuthService {
     }
 
     registerUser(registeringUser, reticulatingsplines): Observable<IAuthUser> {
-        // console.log('inside AuthService.registerUser()');
+        console.log('inside AuthService.registerUser()');
         
         //NOT tested, let's hope this works
         this.encryptUsingAES256(reticulatingsplines, false);
-        let headers = new HttpHeaders();
-        // console.log('reticulatingsplines.toString(): ' + reticulatingsplines.toString());
-        headers = headers.append('reticulatingsplines', reticulatingsplines.toString());
+        let headers = new HttpHeaders({ 'reticulatingsplines': this.encryptedPassword.toString() });
+        console.log('reticulatingsplines/encryptedPassword.toString(): ' + this.encryptedPassword.toString());
 
         let registrationResponse = this._http.post<IAuthUser>(this._registerUrl, registeringUser, {headers})
             //.map((response: Response) => <IUser>response.json())  //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>.
@@ -51,7 +50,7 @@ export class AuthService {
     }
 
     loginUser(loginUser): Observable<IAuthUser> {
-        // console.log('inside "loginUser" with key: ' + environment.cryptoKey);
+        console.log('inside "loginUser" with key: ' + environment.cryptoKey);
 
         this.encryptUsingAES256(loginUser.userName, true);
         this.encryptUsingAES256(loginUser.password, false);
@@ -108,35 +107,35 @@ export class AuthService {
     }
 
     encryptUsingAES256(data: string, isUserName: boolean) {
-        // console.log('Going to encrypt ' + encrypted);
+        console.log('Going to encrypt ' + encrypted);
         var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), this.key, {
             keySize: 128 / 8,
             iv: this.iv,
             mode: CryptoJS.mode.CBC,
             padding: CryptoJS.pad.Pkcs7
         });
+        console.log('encrypted: ' + encrypted);
 
         if(isUserName) {
-            // console.log('UserName, isUserName: ' + isUserName);
             this.encryptedUsername = encrypted;
+            console.log('encryptedUsername: ' + this.encryptedUsername);
 
         } else {
-            // console.log('Password, isUserName: ' + isUserName);
             this.encryptedPassword = encrypted;
+            console.log('encryptedPassword: ' + this.encryptedPassword);
         }
-
-        // console.log('Encrypted: ' + encrypted);
     }
 
     decryptUsingAES256(decString) : string {
+        console.log('decString: ' + decString);
         var decrypted = CryptoJS.AES.decrypt(decString, this.key, {
             keySize: 128 / 8,
             iv: this.iv,
             mode: CryptoJS.mode.CBC,
             padding: CryptoJS.pad.Pkcs7
         });
-        // console.log('Decrypted: ' + decrypted);
-        // console.log('utf8 = ' + decrypted.toString(CryptoJS.enc.Utf8));
+        console.log('Decrypted: ' + decrypted);
+        console.log('utf8 = ' + decrypted.toString(CryptoJS.enc.Utf8));
         return decrypted;
     }
 }

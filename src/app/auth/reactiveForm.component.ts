@@ -16,6 +16,9 @@ import { of } from 'rxjs';  //this isn't being used
 export class ReactiveFormComponent implements OnInit {
     reactiveFormGroup: FormGroup;
     isUpdate: boolean;
+    IsEmailChanged: boolean
+    CurrentEmailConstant: string
+    ShowCurrentPasswordForm: boolean
     registerOrUpdate: string;
     user: IUser;
     authUser: IAuthUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
@@ -83,8 +86,8 @@ export class ReactiveFormComponent implements OnInit {
     constructor(private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router, private _auth: AuthService) { }
 
     ngOnInit() {
-        // console.log("inside ReactiveFormComponent.ngOnInit");
-        // console.log("isUpdate is " + this.isUpdate);
+        console.log("inside ReactiveFormComponent.ngOnInit");
+        console.log("isUpdate is " + this.isUpdate);
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -92,12 +95,15 @@ export class ReactiveFormComponent implements OnInit {
             lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(42)]],
             userName: [''],
             contactPreference: ['email'],
+            usertype: [''],//unassigned
+            notes: [''],
             emailGroup: this.fb.group({
                 email: ['', [Validators.required, Validators.email, CustomValidators.emailDomainValidator('email.com')]],
                 confirmEmail: ['', Validators.required]
             }, { validator: CustomValidators.matchEmailValidator }),//tie the customer validator function to the nested form group
             phone: [''],
-            formPassword: [''],
+            currentPassword: [''],
+            newPassword: [''],
             nestedGroup: this.fb.group({
                 nestedGroupName: [''],
                 experienceInYears: ['0'],   /// '6' is an example of using the default value
@@ -108,6 +114,22 @@ export class ReactiveFormComponent implements OnInit {
             ])
 
             //when it comees to validators, there's 'required', 'requiredTrue', 'email', 'pattern', 'min', 'max', 'minLength', 'maxLength'
+        });
+        
+        this.ShowCurrentPasswordForm = false;
+
+        this.reactiveFormGroup.get('emailGroup.email').valueChanges.subscribe(value => {
+            //specify an annonymous function that gets executed everytime the value of the formControl changes
+            this.IsEmailChanged = value.toString() == this.CurrentEmailConstant ? !this.isUpdate : true;
+            // console.log('this.isUpdate: ' + this.isUpdate);
+            // console.log('this.IsEmailChanged: ' + this.IsEmailChanged);
+            // console.log('value: ' + value);
+            // console.log('this.CurrentEmailConstant: ' + this.CurrentEmailConstant);
+        });
+
+        this.reactiveFormGroup.get('newPassword').valueChanges.subscribe(value => {
+            //specify an annonymous function that gets executed everytime the value of the formControl changes
+             this.ShowCurrentPasswordForm = value != "" ? this.isUpdate : false;
         });
 
         //firstName - subscribe to the valueChanges observable of firstName formControl
@@ -143,13 +165,17 @@ export class ReactiveFormComponent implements OnInit {
             this.onContactPreference_Changed(data);
         });
 
+        this.reactiveFormGroup.get('usertype').valueChanges.subscribe((data: string) => {
+            this.onUserType_Changed(data);
+        });
+
         //Use the ActivatedRoute service and subscribe to it's paramMap observable. this helps move the ID of whichever user you wish to EDIT
         this.route.paramMap.subscribe(params => {
             //create a const to store the passing parameter
             const userName = params.get('userName');
-            // console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
+            console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
             if(userName && userName != '0'){
-                // console.log(`userId of ${userName} was passed`);
+                console.log(`userId of ${userName} was passed`);
                 this.getEditUser(userName) //this MAY already be in another service (to get the specific user according to the ID)
                 this.isUpdate = true;
                 this.registerOrUpdate = 'UPDATE';
@@ -160,20 +186,21 @@ export class ReactiveFormComponent implements OnInit {
                 this.isUpdate = false;
                 this.registerOrUpdate = 'REGISTER';
             }
-            // console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit");
+            console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit, leaving subscription");
         });
+
         // console.log("isUpdate is " + this.isUpdate);
         // console.log("Leaving ReactiveFormComponent.ngOnInit method");
     }
 
     getEditUser(userName: string){
-        //console.log('inside getEditUser');
+        console.log('inside getEditUser');
         this.userService.getUserById(userName).subscribe(
             (exData) => {
                 if (exData == null){
-                    //console.log('getUserById returned NO data');
+                    console.log('getUserById returned NO data');
                 } else {
-                    //console.log('User Array is = ' + JSON.stringify(exData));
+                    // console.log('User Array is = ' + JSON.stringify(exData));
                     this.loadRealDataPatchClick(exData);    //load the entire user data using this PATCH method
 
                     //populate the user property
@@ -181,29 +208,32 @@ export class ReactiveFormComponent implements OnInit {
                 }
             },
             (error) => {
-                //console.log(error);
+                console.log(error);
             });
     }
 
     loadRealDataPatchClick(user: IUser){  //NOT loading properly because we've collaborated IExampel and IUser irresposnsibly
-        // if(user){
-        //     if(user.user){
-        //         console.log('user.userArray.COUNT = ' + user.userArray.length);
-        //         console.log('User Array is = ' + JSON.stringify(user));
-        //     } else {
-        //         console.log('user.userArray is, unfortunately, at ' + user.userArray);
-        //     }
-        //     console.log('user is, unfortunately, at ' + user);
-        // }
+        // console.log('inside loadRealDataPatchClick()');
+        if(user){
+            // console.log('loadRealDataPatchClick Array is = ' + JSON.stringify(user));
+            if(user.userArray){
+                console.log('user.userArray.COUNT = ' + user.userArray.length);
+            } else {
+                console.log('user.userArray is, unfortunately, at ' + user.userArray);
+            }
+        }
+
+        this.CurrentEmailConstant = user.email;
 
         //we want to bind the retreived user details to the form controls on the reactiveForm
-        //console.log('inside loadRealDataPatchClick()');
         this.reactiveFormGroup.patchValue({
             firstName: user.firstName,
             lastName: user.lastName,
             userName: user.userName,
-            email: user.email,
-            formPassword: ''
+            emailGroup: { email: user.email },
+            notes: user.notes,
+            currentPassword: '',
+            newPassword: ''
         });
         
         //Binding existing data to a form array, use the SET CONTROL method
@@ -241,7 +271,7 @@ export class ReactiveFormComponent implements OnInit {
             userName: new FormControl(),
             email: new FormControl(),
             phone: new FormControl(),
-            formPassword: new FormControl(),
+            currentPassword: new FormControl(),
 
             //Nested Form Group Users (not yet persisted in any kind of memory)
             nestedGroup: new FormGroup({
@@ -320,8 +350,11 @@ export class ReactiveFormComponent implements OnInit {
             lastName: '',
             userName: 'FakeUserName',
             phone: '1234568',
-            formPassword: 'FakePassword',
+            currentPassword: 'FakePassword',
+            newPassword: 'FakeNewPassword',
             contactPreference: '',
+            notes: 'fake notes',
+            usertype: '',
 
             //Nested Form Group Users (not yet persisted in any kind of memory)
             nestedGroup: {
@@ -352,36 +385,38 @@ export class ReactiveFormComponent implements OnInit {
             userName: 'FakeUserName',
             email: 'fake@email.com',
             phone: '1234568',
-            formPassword: 'FakePassword'
+            notes: 'fake notes',
+            currentPassword: 'FakePassword',
+            newPassword: 'FakeNewPassword'
         });
     }
 
     onSubmit(): void {
-        // console.log('inside ReactiveForm\'s onSubmit()');
-        //console.log(this.reactiveFormGroup.value);  //right now, just prints the object
-        // console.log("isUpdate is " + this.isUpdate);
+        console.log('inside ReactiveForm\'s onSubmit()');
+        console.log("isUpdate is " + this.reactiveFormGroup.value.currentPassword);
 
         if (this.mapFormValuesToUsersModel()){
             //Do we care if it's a Register or an Update ???
-            // console.log('mapFormValuesToUsersModel returned TRUE');
+            console.log('mapFormValuesToUsersModel returned TRUE');
 
             if(this.isUpdate){
-                // console.log('ReactiveForm.onSubmit.updateUser');
-                this.userService.updateUser(this.authUser, this.reactiveFormGroup.value.formPassword).subscribe(  //subscribe to the observable that returns void
+                console.log('ReactiveForm.onSubmit.updateUser');
+                this.userService.updateUser(this.authUser, this.reactiveFormGroup.value.currentPassword).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
                     () => this.router.navigate(['/users/user', this.user.userName]),
                     (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error))
                 );
             } else {
-                // console.log('ReactiveForm.onSubmit.registerUser');
-                this._auth.registerUser(this.authUser, this.reactiveFormGroup.value.formPassword)
+                console.log('ReactiveForm.onSubmit.registerUser with this.reactiveFormGroup.value.newPassword = ' + this.reactiveFormGroup.value.newPassword);
+                this._auth.registerUser(this.authUser, this.reactiveFormGroup.value.newPassword)
                 .subscribe(
-                    () => {
-                        //console.log('user ' + this.user.userName + ' CREATED');
-                        this.router.navigate(['/users/user', this.authUser.userName]);
+                    (newUser) => {
+                        console.log('newUser: ' + JSON.stringify(newUser));
+                        console.log('user ' + newUser.userName + ' CREATED');
+                        this.router.navigate(['/users/user', newUser.userName]);
                     },
                     (error: any)  => {
-                        //console.log('Changes not saved');
+                        console.log('Changes not saved');
                         //TODO - create a message to the user about the error(s)
                         console.log('ERROR inside onSubmit Creating User: ' + JSON.stringify(error));
                     });
@@ -399,8 +434,11 @@ export class ReactiveFormComponent implements OnInit {
             this.authUser.lastName = this.reactiveFormGroup.value.lastName;
             this.authUser.userName = this.reactiveFormGroup.value.userName;
             this.authUser.administeringUserEmail = this._auth.loggedInUser.email;
-            this.authUser.userType = { id: 2, name:''};
-            //console.log('this._auth.loggedInUser.email = ' + this._auth.loggedInUser.email);
+            this.authUser.notes = this.reactiveFormGroup.value.notes;
+            this.authUser.userType = { id: 2, name:''};//todo get the user type
+            
+            console.log('Mapping reactiveFormGroup values: ' + JSON.stringify(this.reactiveFormGroup.value));
+            console.log('Mapped authUser values: ' + JSON.stringify(this.authUser));
             return true;
             
         } catch (ex){
@@ -467,6 +505,7 @@ export class ReactiveFormComponent implements OnInit {
 
     //dynamically set and clear validators on specific controls
     onContactPreference_Changed(selectedValue: string) {
+        console.log('Inside ReactiveFormComponent.onContactPreference_Changed with value: ' + selectedValue);
         const phoneControl = this.reactiveFormGroup.get('phone');
         if (selectedValue === 'phone') {
             if (Validators) {
@@ -477,6 +516,21 @@ export class ReactiveFormComponent implements OnInit {
         }
 
         phoneControl.updateValueAndValidity();  //immediately triggers the validation. in this example, we want this for forcing the user to enter a phone
+    }
+
+    //dynamically set and clear validators on specific controls
+    onUserType_Changed(selectedUserTypeValue: string) {
+        console.log('Inside ReactiveFormComponent.onUserType_Changed with value: ' + selectedUserTypeValue);
+        const userTypeControl = this.reactiveFormGroup.get('unassigned');
+        if (selectedUserTypeValue === 'unassigned') {
+            if (Validators) {
+                userTypeControl.setValidators([Validators.required, Validators.minLength(5)]);
+            }
+        } else {
+            userTypeControl.clearValidators();
+        }
+
+        userTypeControl.updateValueAndValidity();  //immediately triggers the validation. in this example, we want this for forcing the user to enter a phone
     }
 
     //dynamically add a dynamic formgrouping
