@@ -49,14 +49,15 @@
                             <input id="phone" type="text" class="form-control" formControlName="phone">
                             <span class="lbl-form-error" *ngIf="formErrors.phone">{{formErrors.phone}}</span>
                         </div> -->
-                        
-                        <div class="form-group" [ngClass]="{ 'hide': !ShowCurrentPasswordForm }">
-                            <label for="currentPassword" class="col-lg-9">Current Password</label>
-                            <input id="currentPassword" type="text" class="form-control" formControlName="currentPassword">
-                        </div>
-                        <div class="form-group">
-                            <label for="newPassword" class="col-lg-9">New Password</label>
-                            <input id="newPassword" type="text" class="form-control" formControlName="newPassword">
+                        <div class="form-group" [ngClass]="{ 'hide': !IsPasswordAreaVisible }">
+                            <div class="form-group">
+                                <label for="newPassword" class="col-lg-9">New Password</label>
+                                <input id="newPassword" type="text" class="form-control" formControlName="newPassword">
+                            </div>
+                            <div class="form-group" [ngClass]="{ 'hide': !ShowCurrentPasswordForm }">
+                                <label for="currentPassword" class="col-lg-9">Current Password</label>
+                                <input id="currentPassword" type="text" class="form-control" formControlName="currentPassword">
+                            </div>
                         </div>
                         <br />
                         <textarea  (blur)="logValidationErrors()" rows="10" cols="52" formControlName="notes" placeholder="Notes Placeholder" ></textarea>
@@ -121,6 +122,8 @@
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataClick()">Load Fake Data</button>
                             <button class="btn btn-primary" type="button" (click)="loadFakeDataPatchClick()">Load Fake PATCH Data</button>
                             <button class="btn btn-primary" type="button" (click)="DisableNestFormClick()">Disable Nest Form</button>
+                            <button class="btn btn-primary" type="button" (click)="onUserDelete()" [ngClass]="{ 'hide': IsPasswordAreaVisible || !IsUpdate }">Delete</button>
+                            <button class="btn btn-primary" type="button" (click)="onUserResetCredentials()" [ngClass]="{ 'hide': IsPasswordAreaVisible || !IsUpdate }">Reset Credentials</button>
                         </div>
                     </form>
                 </div>

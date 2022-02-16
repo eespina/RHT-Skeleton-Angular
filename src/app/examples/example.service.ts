@@ -49,6 +49,12 @@ export class ExampleService {
     //this currently does nothing, it just returns mocked data back from the server
     updateExample(example: IExample): Observable<IExample> {//todo, turn this into a update for Examples rahter than the iAUTH users
         console.log('Inside ExampleService.updateExample()');
+
+        example.createdBy = this._auth.loggedInUser.userId;
+        example.createdDate = new Date();
+        example.modifiedBy = this._auth.loggedInUser.userId;
+        example.modifiedDate = new Date();
+
         console.log('inside updateExample(), example:' + JSON.stringify(example));
         if (example) {
             console.log('inside ExampleService.updateExample() and "example" object is NOT empty or undefined/null');
@@ -84,6 +90,11 @@ export class ExampleService {
         // this.encryptUsingAES256(formPassword, false);
         // let headers = new HttpHeaders();
         // headers = headers.append('password', formPassword.toString());
+
+        creatingExample.createdBy = this._auth.loggedInUser.userId;
+        creatingExample.createdDate = new Date();
+        creatingExample.modifiedBy = this._auth.loggedInUser.userId;
+        creatingExample.modifiedDate = new Date();
 
         let exampleCreationResponse = this._http.post<IExample>(environment.baseUrl + 'example/', creatingExample)
             //.map((response: Response) => <IUser>response.json())  //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>.

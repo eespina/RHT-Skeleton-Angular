@@ -15,10 +15,11 @@ import { of } from 'rxjs';  //this isn't being used
 })
 export class ReactiveFormComponent implements OnInit {
     reactiveFormGroup: FormGroup;
-    isUpdate: boolean;
-    IsEmailChanged: boolean
-    CurrentEmailConstant: string
-    ShowCurrentPasswordForm: boolean
+    IsUpdate: boolean;
+    IsEmailChanged: boolean;
+    IsPasswordAreaVisible: boolean
+    CurrentEmailConstant: string;
+    ShowCurrentPasswordForm: boolean;
     registerOrUpdate: string;
     user: IUser;
     authUser: IAuthUser = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
@@ -87,7 +88,6 @@ export class ReactiveFormComponent implements OnInit {
 
     ngOnInit() {
         console.log("inside ReactiveFormComponent.ngOnInit");
-        console.log("isUpdate is " + this.isUpdate);
         this.reactiveFormGroup = this.fb.group({
             //create key/value pair (key is the name of the child control, and the value is an array)
             //1st element in the array is the default value (in this case, an empty string). The 2nd and 3rd parameters signify sync/async validators
@@ -120,7 +120,7 @@ export class ReactiveFormComponent implements OnInit {
 
         this.reactiveFormGroup.get('emailGroup.email').valueChanges.subscribe(value => {
             //specify an annonymous function that gets executed everytime the value of the formControl changes
-            this.IsEmailChanged = value.toString() == this.CurrentEmailConstant ? !this.isUpdate : true;
+            this.IsEmailChanged = value.toString() == this.CurrentEmailConstant ? !this.IsUpdate : true;
             // console.log('this.isUpdate: ' + this.isUpdate);
             // console.log('this.IsEmailChanged: ' + this.IsEmailChanged);
             // console.log('value: ' + value);
@@ -129,7 +129,7 @@ export class ReactiveFormComponent implements OnInit {
 
         this.reactiveFormGroup.get('newPassword').valueChanges.subscribe(value => {
             //specify an annonymous function that gets executed everytime the value of the formControl changes
-             this.ShowCurrentPasswordForm = value != "" ? this.isUpdate : false;
+             this.ShowCurrentPasswordForm = value != "" ? this.IsUpdate : false;
         });
 
         //firstName - subscribe to the valueChanges observable of firstName formControl
@@ -173,24 +173,15 @@ export class ReactiveFormComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             //create a const to store the passing parameter
             const userName = params.get('userName');
-            console.log(`inside "this.route.paramMap.subscription" with the userName being ${userName}`);
-            if(userName && userName != '0'){
-                console.log(`userId of ${userName} was passed`);
+            if(userName && userName != '0') {
                 this.getEditUser(userName) //this MAY already be in another service (to get the specific user according to the ID)
-                this.isUpdate = true;
-                this.registerOrUpdate = 'UPDATE';
+            } else {
+                this.IsPasswordAreaVisible = true;
             }
-            else{
-                //just use the existing code that shows pretty much nothing beside the number 6 in years of experience
-                console.log(`userId was NOT passed, so eID was ${userName}`);
-                this.isUpdate = false;
-                this.registerOrUpdate = 'REGISTER';
-            }
-            console.log("isUpdate is " + this.isUpdate + " INSIDE ReactiveFormComponent.ngOnInit, leaving subscription");
+            this.registerOrUpdate = userName && userName != '0' ? 'UPDATE' : 'REGISTER'
+            this.IsUpdate = userName && userName != '0' ? true : false;
+            console.log("IsPasswordAreaVisible is " + this.IsPasswordAreaVisible + " INSIDE getEditUser.");
         });
-
-        // console.log("isUpdate is " + this.isUpdate);
-        // console.log("Leaving ReactiveFormComponent.ngOnInit method");
     }
 
     getEditUser(userName: string){
@@ -200,11 +191,10 @@ export class ReactiveFormComponent implements OnInit {
                 if (exData == null){
                     console.log('getUserById returned NO data');
                 } else {
-                    // console.log('User Array is = ' + JSON.stringify(exData));
                     this.loadRealDataPatchClick(exData);    //load the entire user data using this PATCH method
-
-                    //populate the user property
                     this.user = exData;
+                    this.IsPasswordAreaVisible = this.user.userId.trim() === this._auth.loggedInUser.userId.trim();
+                    console.log("IsPasswordAreaVisible is " + this.IsPasswordAreaVisible + " INSIDE getEditUser.");
                 }
             },
             (error) => {
@@ -393,17 +383,14 @@ export class ReactiveFormComponent implements OnInit {
 
     onSubmit(): void {
         console.log('inside ReactiveForm\'s onSubmit()');
-        console.log("isUpdate is " + this.reactiveFormGroup.value.currentPassword);
 
         if (this.mapFormValuesToUsersModel()){
             //Do we care if it's a Register or an Update ???
-            console.log('mapFormValuesToUsersModel returned TRUE');
 
-            if(this.isUpdate){
-                console.log('ReactiveForm.onSubmit.updateUser');
-                this.userService.updateUser(this.authUser, this.reactiveFormGroup.value.currentPassword).subscribe(  //subscribe to the observable that returns void
+            if(this.IsUpdate){
+                this.userService.updateUser(this.authUser).subscribe(  //subscribe to the observable that returns void
                     //navigate the user to he list route once the update is complete
-                    () => this.router.navigate(['/users/user', this.user.userName]),
+                    (newUser) => this.router.navigate(['/users/user', newUser.userName]),
                     (error: any)  => console.log('ERROR inside onSubmit Editing User: ' + JSON.stringify(error))
                 );
             } else {
@@ -435,7 +422,8 @@ export class ReactiveFormComponent implements OnInit {
             this.authUser.userName = this.reactiveFormGroup.value.userName;
             this.authUser.administeringUserEmail = this._auth.loggedInUser.email;
             this.authUser.notes = this.reactiveFormGroup.value.notes;
-            this.authUser.userType = { id: 2, name:''};//todo get the user type
+            this.authUser.password = this.reactiveFormGroup.value.currentPassword + '|' + this.reactiveFormGroup.value.newPassword;
+            this.authUser.userType = { id: 2, name:''};//todo get the user type Whenever this is a REAL project
             
             console.log('Mapping reactiveFormGroup values: ' + JSON.stringify(this.reactiveFormGroup.value));
             console.log('Mapped authUser values: ' + JSON.stringify(this.authUser));
@@ -555,4 +543,30 @@ export class ReactiveFormComponent implements OnInit {
         userArray.markAsDirty();
         userArray.markAsTouched();
     }
+
+    onUserDelete(): void {
+        console.log('Inside onUserDelete' + JSON.stringify(this.user));
+        this.userService.deleteUserById(this.user.userId).subscribe(  //subscribe to the observable that returns void
+            //navigate the example to he list route once the update is complete
+            () => this.router.navigate(['/users']),
+            (error: any)  => console.log('ERROR inside onUserDelete example: ' + JSON.stringify(error))
+            );
+            console.log('Inside ReactiveFormComponent.onUserDelete() and "onUserDelete" method call is finished');
+        }
+        
+
+    onUserResetCredentials(): void {
+        console.log('Inside onUserResetCredentials: ' + JSON.stringify(this.user));
+        this._auth.resetUserCredentialsById(this.user.userId).subscribe(  //subscribe to the observable that returns void
+            //navigate the example to he list route once the update is complete
+            isSuccess => {
+                if(isSuccess){
+                    console.log('onUserResetCredentials isSuccess: ' + isSuccess);
+                }
+            },
+            error => {
+                console.log('ERROR inside onUserResetCredentials example: ' + JSON.stringify(error))
+            });
+            console.log('Inside ReactiveFormComponent.onUserResetCredentials(), call is finished');
+        }
 }

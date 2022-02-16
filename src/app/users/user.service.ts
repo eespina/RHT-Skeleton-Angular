@@ -40,36 +40,69 @@ export class UserService {
     }
 
     //this currently does nothing, it just returns mocked data back from the server
-    updateUser(user: IAuthUser, password: string): Observable<IAuthUser> {
+    updateUser(user: IAuthUser): Observable<IAuthUser> {
         console.log('inside updateUser()');
-        console.log('inside updateUser(), user:' + JSON.stringify(user));
-        console.log('inside updateUser(), password:' + password);
-        if (password) {
-            console.log('inside updateUser(). password is not null/undefined');
-            this._auth.encryptUsingAES256(password, false);
+        console.log('updateUser _auth.loggedInUser.CurrentAdministeringUser:' + this._auth.loggedInUser.CurrentAdministeringUser);
+
+        if (user.password != '|') {
+        // if (this._auth.loggedInUser.userId == this._auth.loggedInUser.CurrentAdministeringUser) {
+            user.isChangingCredentials = true;
+            user.CurrentAdministeringUser = this._auth.loggedInUser.CurrentAdministeringUser;
+            user.userId = this._auth.loggedInUser.userId;
+            let pws = user.password.split('|');
+            let currentPassword = pws[0];
+            let newPassword = pws[1];
+
+            if (typeof currentPassword !== 'undefined' && currentPassword !== '') {
+                throwError('The Password\'s EMPTY')                
+            }
+            this._auth.encryptUsingAES256(currentPassword, false);
+            let currentEncrPw = this._auth.encryptedPassword.toString();
+            this._auth.encryptUsingAES256(newPassword, false);
+            let newEncrPw = this._auth.encryptedPassword.toString();
+
             const httpOptions = {
                 headers: new HttpHeaders(
                     {
                         'Content-Type': 'application/json',
-                        'old-password': this._auth.encryptedPassword.toString(),
-                        'new-password': this._auth.encryptedPassword.toString()
+                        'old-password': currentEncrPw,
+                        'new-password': newEncrPw
                     })
             };
+
+            console.log('updateUser user:' + JSON.stringify(user));
             
-            var updatedUser = this._http.put<IAuthUser>(environment.baseUrl + 'user/' + user.userName, user, httpOptions)
+            var updatedSelfUser = this._http.put<IAuthUser>(environment.baseUrl + 'user/' + user.userName, user, httpOptions)
             .pipe(
                 //TODO - use 'tap' if you ever wanna get response data. in this case, IUser is the equivelant to OwnerViewModel on the Server end
-                tap((newUser: IAuthUser) => console.log(`added new user with userName = ${newUser.userName}`)),
+                tap((newUser: IAuthUser) => console.log(`Updated self user : ${newUser.userName}`)),
                 catchError(error => this._auth.handleError(error))
-              );            
-
-            console.log('LEAVING updateUser()');
-
-            return updatedUser;
-
+              );
+              return updatedSelfUser;
         } else {
-            throwError('The Password\'s EMPTY')
+            console.log('inside updateUser(). User is not changing self');
+            user.isChangingCredentials = false;
+            
+            var updatedUser = this._http.put<IAuthUser>(environment.baseUrl + 'user/' + user.userName, user)
+            .pipe(
+                //TODO - use 'tap' if you ever wanna get response data. in this case, IUser is the equivelant to OwnerViewModel on the Server end
+                tap((newUser: IAuthUser) => console.log(`Updated other user : ${newUser.userName}`)),
+                catchError(error => this._auth.handleError(error))
+              );
+              return updatedUser;
         }
+    }
+
+    deleteUserById(userId: string): Observable<boolean> {
+        if(!userId || userId === ""){
+            console.log('User parameter is NOT properly passed. no deletion of user occurred');
+        }
+        let link = environment.baseUrl + 'user/' + userId;
+        console.log('deleteUserById link: ' + link);
+        let isDeleted = this._http.delete<boolean>(link).pipe(catchError(error => this._auth.handleError(error)));
+
+        console.log('Finshed deleteExampleById, isDeleted: ' + isDeleted);
+        return isDeleted;
     }
 
     //handleError(error: Response) {

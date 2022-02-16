@@ -17,7 +17,7 @@ export class ExampleReactiveFormComponent implements OnInit {
     CreateOrUpdate: string;
     example: IExample;
     creatingExample: IExample = {  //for whatever reason, this not being here (initialized) would error out and complain at runtime
-        exampleCharacteristic:'', isActive: false, exampleId: ''
+        exampleCharacteristic:'', isActive: false, exampleId: '', modifiedBy: '', modifiedDate: new Date(), createdBy: '', createdDate: new Date()
     } as IExample; //needed to Updating and Registration
 
     //example showing how to use the Component class to hold the validation syntax instead of having it inside the .html
@@ -152,12 +152,12 @@ export class ExampleReactiveFormComponent implements OnInit {
                 // console.log('Inside ExampleReactiveFormComponent.onExampleFormSubmit() and "isUpdate" is FALSE');
                 this.exampleService.createExample(this.creatingExample)
                 .subscribe(
-                    (id) => {
-                        if (id == null){
+                    (newExample) => {
+                        if (newExample == null){
                             console.log('Creating a new Example didn\'t go quite as planned for some reason');
                         } else {
                             // console.log('example ' + id + ' CREATED');
-                            this.router.navigate(['/examples/example', id]);
+                            this.router.navigate(['/examples/example', newExample.exampleId]);
                         }
                     },
                     (error: any)  => {

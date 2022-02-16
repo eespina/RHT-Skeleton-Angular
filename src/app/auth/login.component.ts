@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
                     this._authBehaviorService.changeLoggedInStatus(true);
                     this.isSuccessfulLogin = true;
                     this._router.navigate(['/home']);
-                    this._auth.loggedInUser.email = res.email;
-                    this._auth.loggedInUser.tokenHandleViewModel = res.tokenHandleViewModel;
+                    this._auth.loggedInUser = res;
+                    console.log('After loggin in, loginUser:' + JSON.stringify(this._auth.loggedInUser));
                 },
                 err => {
                     console.log('ERROR INSIDE loginUser ' + err.message);
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
                     console.log('Err statusText = ' + err.statusText);
 
                     localStorage.removeItem('token')//probably wont have a token anyway, but whatever.
-
+                    this.loginUserInfo.password = ''
                     this.isSuccessfulLogin = false;
                 });
             this._auth.isSessionLoggedIn = true;//shouldn't this be inside the Subscribe ???
