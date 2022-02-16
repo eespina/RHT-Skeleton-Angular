@@ -7,7 +7,7 @@ Base template for creating quick web applications based upon Angular library tec
 - Open a shell and run "npm install"
   - Must have node.js installed, if not, Install it onto your hard drive
   - Ensure it is properly installed by running `node -v` inside Git Bash or cmd prompt
-- In the shell, 'cd' to wherever the 'gulp.,js' is located (if not there in the same directory already) and run 'gulp' to begin the Gulp task-runner
+- In the shell, 'cd' to wherever the 'gulp.js' is located (if not there in the same directory already) and run 'gulp' to begin the Gulp task-runner
   - Must have gulp installed, if not, Install it by running `npm install -g gulp` inside Git Bash or cmd prompt
   - Ensure it is properly installed by running `gulp -v` inside Git Bash or cmd prompt
 - If there is an error concerning an 'UnhandledPromiseRejectionWarning', just try typing 'gulp' again to retry the gulp process (known issue)	
