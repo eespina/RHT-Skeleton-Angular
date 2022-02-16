@@ -1,6 +1,6 @@
 //<!--depracated, NOTHING in this file is being used (just reference, and can/should be deleted in a real project-->
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AuthService } from '../user/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router'
 
 @Component({
