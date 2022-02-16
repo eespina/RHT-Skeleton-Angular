@@ -2,12 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+//  "http://localhost:53465/" will, basically, act as a ID Server gateway environment for all api call. Real world scenarios would probably varry
 export const environment = {
   production: false,
   cryptoKey: '4139178281695088',
   registerUrl: 'http://localhost:53465/account/registeruser',
   loginUrl: 'http://localhost:53465/account/login',
   logoutUrl: 'http://localhost:53465/account/logout',
+  resetCredentialsUrl: 'http://localhost:53465/account/resetusercreds',
   baseUrl: 'http://localhost:53465/api/'
 };
 

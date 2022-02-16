@@ -15,15 +15,21 @@
                 <a routerLink="/home" routerLinkActive="active" class="navbar-link">Home</a>
             </li>
             <li routerActive="bootstrap-mimic-active" class="navbar-item">
-                <a routerLink="/examples" routerLinkActive="active" class="navbar-link">Examples</a><!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
+                <a routerLink="/users" routerLinkActive="active" class="navbar-link">User</a><!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
             </li>
             <li routerActive="bootstrap-mimic-active" class="navbar-item">
-                <a routerLink="examples/reactiveForm/0" routerLinkActive="active">Reactive Form Example</a>
+                <a routerLink="users/reactiveForm/0" routerLinkActive="active">Reactive Form User</a>
             </li>
-            <!--<li routerActive="bootstrap-mimic-active"><a routerLink="[{ outlets: { secondaryExampleRouterOutlet: ['Another-Link-Parameters-Array-specifying-secondary-path'] } }]">Home</a></li>-->
+            <!--<li routerActive="bootstrap-mimic-active"><a routerLink="[{ outlets: { secondaryuserRouterOutlet: ['Another-Link-Parameters-Array-specifying-secondary-path'] } }]">Home</a></li>-->
             <!-- The above uses the example below. this syntax, here, should be implemented as such elsewhere (SHOULD USE CODE INSTEAD)-->
             <li routerActive="bootstrap-mimic-active" class="navbar-item">
-                <a routerLink="examples/register" routerLinkActive="active">Template-Driven Form Example</a>
+                <a routerLink="users/register" routerLinkActive="active">Template-Driven Form User</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="/examples" routerLinkActive="active">Examples</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="examples/example-reactive-form/0" routerLinkActive="active">Create Example</a>
             </li>
             <!--[routerLinkActiveOptions]="{ exact: true }" use this on only 1 li to eliminate multile ACTIVE class'd attributes-->
             <li routerActive="bootstrap-mimic-active" class="navbar-item">

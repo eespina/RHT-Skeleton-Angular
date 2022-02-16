@@ -1,0 +1,18 @@
+<div class="navbar-top" *ngIf="isLoggedIn">
+    <div class="navbar-collase" [ngClass]="{ 'show': navbarOpen }">
+        <ul>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="/nested-users" routerLinkActive="active">TOP</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="/nested-users/nested-user-child-template-one" routerLinkActive="active">One</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="/nested-users/nested-user-child-template-two" routerLinkActive="active">Two</a>
+            </li>
+            <li routerActive="bootstrap-mimic-active" class="navbar-item">
+                <a class="linkCrappyAndDirtyVersion" routerLink="/users" routerLinkActive="active">Other Users</a>
+            </li>
+        </ul>
+    </div>
+</div>
