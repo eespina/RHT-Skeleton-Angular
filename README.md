@@ -23,4 +23,5 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## P.S.
 
-Get rid of the *.css files inside the /app/ Angular/TypesScript files. You should be using *.styl and Gulp.js tactics for maintaining UI development architecture. Do not be afraid.
+  - Get rid of the *.css files inside the /app/ Angular/TypesScript files. You should be using *.styl and Gulp.js tactics for maintaining UI development architecture. Do not be afraid.
+  - Change anything named "RHT*" or "\*village\*" to whatever your project is designed to be named.
