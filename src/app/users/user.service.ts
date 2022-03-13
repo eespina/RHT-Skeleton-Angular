@@ -20,7 +20,7 @@ export class UserService {
     constructor(private _http: HttpClient, private _router: Router, private _auth: AuthService) { }
 
     getUsers(): Observable<IUser[]> {
-        //var users = this._http.get<IUser[]>('http://localhost:44372/api/user').delay(4130)    //can ALSO use this as an alternative (includes the '<IUser[]>' as the type returned from the observable)
+        //var users = this._http.get<IUser[]>('http://localhost:44367/api/user').delay(4130)    //can ALSO use this as an alternative (includes the '<IUser[]>' as the type returned from the observable)
         var users = this._http.get<IUser[]>(environment.userUrlBase + 'user/')//.delay(4130)    //delay is just used to test the loading words and css animation
             //.map((response: Response) => <IUser[]>response.json())
             //HttpClient.get() applies res.json() automatically and returns Observable<HttpResponse<string>>. You no longer need to call the '.map' function above yourself.
@@ -118,7 +118,7 @@ export class UserService {
 
     ////Promise technique
     //getUserById(exId: string): Promise<IUser> {
-    //    return this._http.get('http://localhost:42917/api/users/' + exId)
+    //    return this._http.get('http://localhost:44367/api/users/' + exId)
     //        .map((response: Response) => <IUser>response.json())
     //        .toPromise()
     //        .catch(this.handlePromiseError);
