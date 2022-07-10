@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
+import { UntypedFormGroup, FormControl, UntypedFormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
 import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExampleService as ExampleService } from '../examples/example.service';
@@ -11,7 +11,7 @@ import { IExample } from './example';
     templateUrl: 'example-reactive-form.component.html'
 })
 export class ExampleReactiveFormComponent implements OnInit {
-    exampleFormGroup: FormGroup;
+    exampleFormGroup: UntypedFormGroup;
     IsUpdate: boolean;
     ExampleIdValue: string;
     CreateOrUpdate: string;
@@ -43,7 +43,7 @@ export class ExampleReactiveFormComponent implements OnInit {
         'isActive': ''
     };    // no longer needed since the logValidationErrors method would take care of this at runtime
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router) { }
+    constructor(private fb: UntypedFormBuilder, private route: ActivatedRoute, private exampleService: ExampleService, private router: Router) { }
 
     ngOnInit() {
         // console.log("inside ExampleReactiveFormComponent.ngOnInit");
@@ -197,7 +197,7 @@ export class ExampleReactiveFormComponent implements OnInit {
     }
 
     //An example of looping through each control in the group. useful for Rest of controls, enable/disable form controls validation set/clears, mark dirty/touch/etc..
-    logValidationErrors(group: FormGroup = this.exampleFormGroup): void {   //use " = this.reactiveFormGroup" to set it as the default value. doing this makes us not have to specify a value for this parameter when we call it from the template 
+    logValidationErrors(group: UntypedFormGroup = this.exampleFormGroup): void {   //use " = this.reactiveFormGroup" to set it as the default value. doing this makes us not have to specify a value for this parameter when we call it from the template 
         //retreive all the keys we have in the group, and just prints them out to the log (notice it does NOT log the nested group)
         //console.log(Object.keys(group.controls));
 
@@ -220,7 +220,7 @@ export class ExampleReactiveFormComponent implements OnInit {
                 }
             }
 
-            if (abstractControl instanceof FormGroup) {
+            if (abstractControl instanceof UntypedFormGroup) {
                 this.logValidationErrors(abstractControl);   //recursively call the same method for the NESTED form group
             }
 
@@ -258,7 +258,7 @@ export class ExampleReactiveFormComponent implements OnInit {
         Object.keys(group.controls).forEach((key: string) => {//use a loop with a forEach to get all the keys and loop over each key
             //the abstractControl variable can be, either, a FormControl or a NESTED FormGroup, so we need to check which it is
             const abstractControl = group.get(key); //get the reference to its associated control by using that key
-            if (abstractControl instanceof FormGroup) {
+            if (abstractControl instanceof UntypedFormGroup) {
                 abstractControl.disable();  //this will disable the NESTED controls
             } else {
                 //if it's not a nested form, it will mark it as dirty (not useful, but an example of being able to use other in-house techniques)

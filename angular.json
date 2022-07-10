@@ -117,6 +117,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "RHT-Skeleton-Angular"
+    }
+  }
 }
