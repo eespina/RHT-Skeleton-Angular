@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';   //FormGroup and FormControl inherit from AbstractControl
 import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../users/user.service';
@@ -14,7 +14,7 @@ import { of } from 'rxjs';  //this isn't being used
     templateUrl: './reactiveForm.component.html'
 })
 export class ReactiveFormComponent implements OnInit {
-    reactiveFormGroup: FormGroup;
+    reactiveFormGroup: UntypedFormGroup;
     IsUpdate: boolean;
     IsEmailChanged: boolean;
     IsPasswordAreaVisible: boolean
@@ -84,7 +84,7 @@ export class ReactiveFormComponent implements OnInit {
         'dynamicProficiency': ''
     };    // no longer needed since the logValidationErrors method would take care of this at runtime
 
-    constructor(private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router, private _auth: AuthService) { }
+    constructor(private fb: UntypedFormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router, private _auth: AuthService) { }
 
     ngOnInit() {
         console.log("inside ReactiveFormComponent.ngOnInit");
@@ -230,9 +230,9 @@ export class ReactiveFormComponent implements OnInit {
         this.reactiveFormGroup.setControl('dynamicNestedGroup', this.setExistingDynamicFormGroupWithFakeData(user.userArray)) //use this method to replace an existing control (in this case, its the fff array)
     }
 
-    setExistingDynamicFormGroupWithFakeData(dynamicUserSet: IUserArray[]): FormArray{
+    setExistingDynamicFormGroupWithFakeData(dynamicUserSet: IUserArray[]): UntypedFormArray{
         // console.log('inside setExistingDynamicFormGroupWithFakeData method');
-        let formArray = new FormArray([]);
+        let formArray = new UntypedFormArray([]);
         if(dynamicUserSet && dynamicUserSet.length > 0){            
             // console.log('THERE ARE dynamicUserSet.');
             //loop through each dynamicUserSet set
@@ -279,34 +279,34 @@ export class ReactiveFormComponent implements OnInit {
         //console.log('inside loadFakeDataClick method');
 
         //-------------------------- FormArray Example
-        const formArray = new FormArray([//can create a Formarray like this, with the 'new' keyword
-            new FormControl('Glenn', Validators.required),
-            new FormGroup({
-                country: new FormControl('', Validators.required)
+        const formArray = new UntypedFormArray([//can create a Formarray like this, with the 'new' keyword
+            new UntypedFormControl('Glenn', Validators.required),
+            new UntypedFormGroup({
+                country: new UntypedFormControl('', Validators.required)
             }),
-            new FormArray([])
+            new UntypedFormArray([])
         ]);
 
         //console.log(formArray.length);  //should print out the number '3' for each indece in the formArray
 
         //iterate over each index (FormControl, FormGroup or FormArray) in the array
         for (const control of formArray.controls) {
-            if (control instanceof FormControl) {
+            if (control instanceof UntypedFormControl) {
                 //do something to the control that is a FormControl
             }
-            if (control instanceof FormGroup) {
+            if (control instanceof UntypedFormGroup) {
                 //do something to the control that is a FormGroup
             }
-            if (control instanceof FormArray) {
+            if (control instanceof UntypedFormArray) {
                 //do something to the control that is a FormArray
             }
         }
 
         //it's more common to use arrays with like types, however, you can use them with mixed types like the 'formArray' examples
         const formBuilderArray = this.fb.array([
-            new FormControl('Glenn', Validators.required),//name
-            new FormControl('IT', Validators.required),//department
-            new FormControl('', Validators.required)//Gender
+            new UntypedFormControl('Glenn', Validators.required),//name
+            new UntypedFormControl('IT', Validators.required),//department
+            new UntypedFormControl('', Validators.required)//Gender
         ]);
 
         //FormArray Useful METHODS
@@ -320,9 +320,9 @@ export class ReactiveFormComponent implements OnInit {
 
         //it's more common to use arrays with like types, however, you can use them with mixed types like the 'formArray' examples
         const formGroup = this.fb.group([
-            new FormControl('Glenn', Validators.required),//name
-            new FormControl('IT', Validators.required),//department
-            new FormControl('', Validators.required)//Gender
+            new UntypedFormControl('Glenn', Validators.required),//name
+            new UntypedFormControl('IT', Validators.required),//department
+            new UntypedFormControl('', Validators.required)//Gender
         ]);
 
         //DIFFERENCES between a formGroup and a formArray (as in the similarities between the two groups above) are that 
@@ -436,7 +436,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     //An example of looping through each control in the group. useful for Rest of controls, enable/disable form controls validation set/clears, mark dirty/touch/etc..
-    logValidationErrors(group: FormGroup = this.reactiveFormGroup): void {   //use " = this.reactiveFormGroup" to set it as the default value. doing this makes us not have to specify a value for this parameter when we call it from the template 
+    logValidationErrors(group: UntypedFormGroup = this.reactiveFormGroup): void {   //use " = this.reactiveFormGroup" to set it as the default value. doing this makes us not have to specify a value for this parameter when we call it from the template 
         //retreive all the keys we have in the group, and just prints them out to the log (notice it does NOT log the nested group)
         //console.log(Object.keys(group.controls));
 
@@ -459,7 +459,7 @@ export class ReactiveFormComponent implements OnInit {
                 }
             }
 
-            if (abstractControl instanceof FormGroup) {
+            if (abstractControl instanceof UntypedFormGroup) {
                 this.logValidationErrors(abstractControl);   //recursively call the same method for the NESTED form group
             }
 
@@ -481,7 +481,7 @@ export class ReactiveFormComponent implements OnInit {
         Object.keys(group.controls).forEach((key: string) => {//use a loop with a forEach to get all the keys and loop over each key
             //the abstractControl variable can be, either, a FormControl or a NESTED FormGroup, so we need to check which it is
             const abstractControl = group.get(key); //get the reference to its associated control by using that key
-            if (abstractControl instanceof FormGroup) {
+            if (abstractControl instanceof UntypedFormGroup) {
                 abstractControl.disable();  //this will disable the NESTED controls
             } else {
                 //if it's not a nested form, it will mark it as dirty (not useful, but an example of being able to use other in-house techniques)
@@ -522,7 +522,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     //dynamically add a dynamic formgrouping
-    addDynamicFormGroup(): FormGroup {
+    addDynamicFormGroup(): UntypedFormGroup {
         //console.log('addDynamicFormGroup - Adding a new Dynamic Group');
         return this.fb.group({
             dynamicNestedGroupName: ['', Validators.required],
@@ -533,12 +533,12 @@ export class ReactiveFormComponent implements OnInit {
 
     addDynamicGroupButton_Click(): void {
         //console.log('addDynamicGroupButton_Click - ADDING a new Dynamic Group');
-        (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup')).push(this.addDynamicFormGroup());   //need to type cast it into a FormArray to be able to use the 'push' method
+        (<UntypedFormArray>this.reactiveFormGroup.get('dynamicNestedGroup')).push(this.addDynamicFormGroup());   //need to type cast it into a FormArray to be able to use the 'push' method
     }
 
     removeDynamicGroup_click(index: number): void {
         //console.log('removeDynamicGroup_click - REMOVING an existing Dynamic Group');
-        const userArray = (<FormArray>this.reactiveFormGroup.get('dynamicNestedGroup'));
+        const userArray = (<UntypedFormArray>this.reactiveFormGroup.get('dynamicNestedGroup'));
         userArray.removeAt(index);
         userArray.markAsDirty();
         userArray.markAsTouched();
