@@ -68,7 +68,7 @@
     "stylus-type-utils": "0.0.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^5.1.6",
+    "typescript": "^4.9.3",
     "vinyl-paths": "^2.1.0"
   }
 }
