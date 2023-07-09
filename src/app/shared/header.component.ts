@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit {
                 },
                 err => {
                     //Log something HERE to somewhere
-                    console.log('Error Logging Out User');
+                    console.log('Error Logging Out User inside header.loginOrOutUser');
                     this._auth.handleError(err);
                 });
         }

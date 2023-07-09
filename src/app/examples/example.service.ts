@@ -21,11 +21,11 @@ export class ExampleService {
     constructor(private _http: HttpClient, private _router: Router, private _auth: AuthService) { }
 
     getExamples(): Observable<IExample[]> {
-        // console.log('Getting Examples');
+        console.log('Getting Examples');
         //var examples = this._http.get<IExample[]>('http://localhost:44372/api/example').delay(4130)    //can ALSO use this as an alternative (includes the '<IExample[]>' as the type returned from the observable)
         var examples = this._http.get<IExample[]>(environment.baseUrl + 'example/').pipe(catchError(error => this._auth.handleError(error)));
 
-        // console.log('Examples Finished');
+        console.log('Examples Finished');
         return examples;
     }
 

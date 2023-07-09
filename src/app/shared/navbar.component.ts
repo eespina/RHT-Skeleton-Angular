@@ -61,7 +61,7 @@ export class NavbarComponent {
                 },
                 err => {
                     //Log something HERE to somewhere
-                    console.log('Error Logging Out User');
+                    console.log('Error Logging Out User inside navbar.loginOrOutUser');
                     this._auth.handleError(err);
             });
         }

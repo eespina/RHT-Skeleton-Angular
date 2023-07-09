@@ -81,8 +81,10 @@ export class AuthService {
     logoutUserLocal(isRedirect) {
         this.loggedInUser = undefined;
         localStorage.removeItem('token');
+        console.log('logoutUserLocal TOKEN REMOVED');
         this.isSessionLoggedIn = false;
         if (isRedirect) {
+            console.log('logoutUserLocal being redirected');
             this._router.navigate(['/login']);
         }
     }
@@ -92,7 +94,9 @@ export class AuthService {
     }
 
     loggedIn() {
-        return (!!localStorage.getItem('token') && this.isSessionLoggedIn);
+        let mainMystery = (!!localStorage.getItem('token') && this.isSessionLoggedIn);
+        console.log('inside loggedIn() Checking if there\'s a token for a user. AND the user is ' + (mainMystery ? 'GOOD' : 'BAD') + '. TOKEN is ' + localStorage.getItem('token'));
+        return mainMystery;
     }
 
     resetUserCredentialsById(userId: string): Observable<boolean> {
@@ -115,6 +119,7 @@ export class AuthService {
         //Change this to pass the exception to some logging service
         console.error(error);
         if (error && error.status == 401) {
+            console.error('handleError 401 LOGOUT Processing');
             this.logoutUserLocal(true);
         }
 

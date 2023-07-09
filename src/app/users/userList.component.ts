@@ -33,12 +33,13 @@ export class UserListComponent {
     ngOnInit() {
         this._userService.getUsers()
             .subscribe((userList) => {
-                // console.log('userList.length = ' + userList.length)
+                console.log('userList.length = ' + userList.length)
                 this.users = userList;
                 this.filteredUsers = this.users;
                 this.showSpinner = false;
             },
             (error) => {
+                console.log('ERROR inside UserListComponent.ngOnInit.getUsers: ' + error.toString());
                 this.statusMessage = 'Problem with the Service, Please Try Again Soon';
                 this.showSpinner = false;
             });

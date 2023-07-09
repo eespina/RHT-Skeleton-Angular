@@ -180,7 +180,7 @@ export class ReactiveFormComponent implements OnInit {
             }
             this.registerOrUpdate = userName && userName != '0' ? 'UPDATE' : 'REGISTER'
             this.IsUpdate = userName && userName != '0' ? true : false;
-            console.log("IsPasswordAreaVisible is " + this.IsPasswordAreaVisible + " INSIDE getEditUser.");
+            console.log("IsPasswordAreaVisible is " + this.IsPasswordAreaVisible + " INSIDE ReactForm componenet's ngOnInit subscribe.");
         });
     }
 

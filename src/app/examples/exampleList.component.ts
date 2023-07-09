@@ -31,9 +31,10 @@ export class ExampleListComponent {
     }
 
     ngOnInit() {
-        // console.log('Initiating ExampleListComponent')
+        console.log('Initiating ExampleListComponent')
         this._exampleService.getExamples()
             .subscribe((exampleList) => {
+                console.log('inside getExamples Subscription');
                 if(!exampleList)
                 {
                     console.log('exampleList is NULL')
@@ -44,13 +45,14 @@ export class ExampleListComponent {
                 {
                     console.log('exampleList.length is NULL.')
                 } else {
-                    // console.log('exampleList.length = ' + exampleList.length)
+                    console.log('exampleList.length = ' + exampleList.length)
                 }
                 this.examples = exampleList;
                 this.filteredExamples = this.examples;
                 this.showSpinner = false;
             },
             (error) => {
+                console.log('inside getExamples Subscription ERROR area');
                 this.statusMessage = 'Problem with the Service, Please Try Again Soon';
                 this.showSpinner = false;
             });

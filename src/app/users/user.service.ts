@@ -20,6 +20,7 @@ export class UserService {
     constructor(private _http: HttpClient, private _router: Router, private _auth: AuthService) { }
 
     getUsers(): Observable<IUser[]> {
+        console.log('inside getUsers()');
         //var users = this._http.get<IUser[]>('http://localhost:44367/api/user').delay(4130)    //can ALSO use this as an alternative (includes the '<IUser[]>' as the type returned from the observable)
         var users = this._http.get<IUser[]>(environment.userUrlBase + 'user/')//.delay(4130)    //delay is just used to test the loading words and css animation
             //.map((response: Response) => <IUser[]>response.json())
@@ -30,7 +31,8 @@ export class UserService {
 
         //perhaps ANOTHER way of facilitating a get from somewhere (implements "import 'rxjs/add/Observable/of'; " from above)
             //return Observable.of();   // I think this is more used for 'in-memory' type data, since the parameter in the example tutorial I'm using 
-
+            console.log(users == undefined ? 'users is UNDEFINED' : 'users is ' + users);
+            console.log('Exiting getUsers()');
         return users;
     }
 
