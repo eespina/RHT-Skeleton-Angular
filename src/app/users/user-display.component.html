@@ -9,6 +9,7 @@
 <td>{{ user.firstName }}</td>
 <td [ngSwitch]="user.lastName"><!--Switch Case statement example-->
     <!--NOT WORKING at the moment, just shows the 'ngSwitchDefault' value, hmm-->
+    <!--    Angula17+ now defaults to a stricter '===' instead of '==', but still now sure HOW to use either and it may still not be working as expected-->
     <span *ngSwitchCase="'Enrico'">Me3</span>
     <span *ngSwitchCase="'Kahoutek'">You</span>
     <span *ngSwitchDefault>{{ user.lastName | uppercase }}</span><!--NOT included are "Pipe" material such as CUSTOM Pipes, Pure or impure pipes. it's just this simple pipe example-->

@@ -56,6 +56,7 @@ const appRoutes: Routes = [
         //the version above is commented out, but can be used as an out-of-the-box version of handling preloaded modules.
         //If used. it preloads the modules without caring if the module wants to be preloaded or not
         RouterModule.forRoot(appRoutes, { preloadingStrategy: CustomPreloadingService })
+            //IMPORTANT - these properties are now not part of the Router's public API, but not sure HOW to fix this if even needed
 
         // add ALL options together (i.e. preloadingStrategy AND enableTracing)
         //, { enableTracing: true }) //enables NavigationStart, RoutesRecognized, NavigationEnd, NavigationCanceled, NavigationError (and more, i think) which all can then be seen in the console
