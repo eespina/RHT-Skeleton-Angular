@@ -73,18 +73,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "disableHostCheck": true,
           "options": {
-            "browserTarget": "RHT-Skeleton-Angular:build"
+            "buildTarget": "RHT-Skeleton-Angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "RHT-Skeleton-Angular:build:production"
+              "buildTarget": "RHT-Skeleton-Angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "RHT-Skeleton-Angular:build"
+            "buildTarget": "RHT-Skeleton-Angular:build"
           }
         },
         "test": {
