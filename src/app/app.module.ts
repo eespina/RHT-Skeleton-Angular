@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 // import { UserModule } from './user/user.module';    //commented out to showcase Lazy Loading
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';  //HttpClientModule
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';  //HttpClientModule
 // import { HttpModule } from '@angular/http';
 //import {MatIconModule} from '@angular/animations/';
 // import { NestedUserModule } from './nested/nested-user.module';
@@ -35,21 +35,7 @@ import { NestedUserChildTemplateOneComponent } from './nested-user/nested-user-c
 import { NesteduserChildTemplateTwoComponent } from './nested-user/nested-user-child-template-two.component';
 import { NestedUserTopComponent } from './nested-user/nested-user-top.component';
 
-@NgModule({
-    imports: [
-        // HttpModule,
-        HttpClientModule,
-        BrowserModule,
-        FormsModule,
-
-        //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)
-        // UserModule,   //commented out to showcase Lazy Loading
-        // NestedUserModule,
-
-        AppRoutingModule
-        //InMemoryWebApiModule.forRoot()
-    ],
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
@@ -59,7 +45,6 @@ import { NestedUserTopComponent } from './nested-user/nested-user-top.component'
         // NavbarTopComponent,  NO LONGER BEING USED, NOW THAT EACH FOLDER HAS IT'S OWN NAV BAR MODULE
         FooterComponent,
         RegisterComponent,
-
         //I want these inside the 'NestedUserModule', but the links don't work.
         //There's no error, but the links are missing necessary Angular attributes when inspected in a web browser
         //As such, there is no Lazy loading for the 'Nested' material
@@ -67,17 +52,21 @@ import { NestedUserTopComponent } from './nested-user/nested-user-top.component'
         NestedUserTopComponent,
         NestedUserChildTemplateOneComponent,
         NesteduserChildTemplateTwoComponent,
-
-
-        PageNotFoundComponent],
+        PageNotFoundComponent
+    ],
     bootstrap: [
         AppComponent
-    ],
-    providers: [    // placed here because it is used in multiple components
+    ], imports: [BrowserModule,
+        FormsModule,
+        //Also, the module to lazy load should NOT be referenced in any other module (if referenced, the module is eager-loaded)
+        // UserModule,   //commented out to showcase Lazy Loading
+        // NestedUserModule,
+        AppRoutingModule
+        //InMemoryWebApiModule.forRoot()
+    ], providers: [
         AuthService,
         AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
-        AuthBehaviorService,    //Example of using a share-able service between the Login and Header Components (but can be used for much mroe userful shared services)
-        // UserSingletonService    //Moved to User Module for lazy loading demostration purposes
-    ]
-})
+        AuthBehaviorService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
