@@ -6,10 +6,10 @@
 export const environment = {
   production: false,
   cryptoKey: '4139178281695088',
-  registerUrl: 'http://localhost:53465/account/registeruser',
-  loginUrl: 'http://localhost:53465/account/login',
-  logoutUrl: 'http://localhost:53465/account/logout',
-  resetCredentialsUrl: 'http://localhost:53465/account/resetusercreds',
+  registerUrl: 'http://localhost:53465/api/account/registeruser',
+  loginUrl: 'http://localhost:53465/api/account/login',
+  logoutUrl: 'http://localhost:53465/api/account/logout',
+  resetCredentialsUrl: 'http://localhost:53465/api/account/resetusercreds',
   baseUrl: 'https://localhost:44372/api/',
   userUrlBase: 'https://localhost:44367/api/'
 };
